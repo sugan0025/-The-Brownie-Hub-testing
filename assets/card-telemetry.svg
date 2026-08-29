@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <defs>
+    <linearGradient id="borderTelem" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E37400;stop-opacity:0.95"/>
+      <stop offset="50%" style="stop-color:#F2994A;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#F2C94C;stop-opacity:0.6"/>
+    </linearGradient>
+    <filter id="glowTelem">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#E37400" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="436" height="226" rx="16" ry="16" fill="none" stroke="url(#borderTelem)" stroke-width="2" filter="url(#glowTelem)"/>
+  <rect x="4" y="4" width="432" height="222" rx="14" ry="14" fill="#0d1117" fill-opacity="0.88"/>
+  <rect x="4" y="4" width="432" height="222" rx="14" ry="14" fill="#24170e" fill-opacity="0.5"/>
+  
+  <rect x="22" y="22" width="4" height="38" rx="2" fill="#E37400"/>
+  <text x="36" y="40" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="18" font-weight="700" fill="#ffffff">📊 E-Commerce Telemetry &amp; CRO</text>
+  <text x="36" y="58" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" font-weight="600" fill="#F2C94C">GA4 MEASUREMENT ID: G-GWTWBBBDQ2  •  UTM ATTRIBUTION</text>
+  
+  <line x1="22" y1="72" x2="418" y2="72" stroke="#E37400" stroke-opacity="0.25" stroke-width="1"/>
+  
+  <text x="22" y="94" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="12" fill="#c9d1d9">Full discovery-to-checkout funnel instrumentation</text>
+  <text x="22" y="112" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="12" fill="#c9d1d9">tracking conversion velocity, cart abandonment, and campaign ROI.</text>
+  
+  <rect x="22" y="132" width="56" height="22" rx="11" fill="#E37400" fill-opacity="0.18"/>
+  <text x="32" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#E37400">GA4</text>
+  <rect x="86" y="132" width="94" height="22" rx="11" fill="#F2994A" fill-opacity="0.18"/>
+  <text x="96" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#F2994A">UTM Tracking</text>
+  <rect x="188" y="132" width="92" height="22" rx="11" fill="#F2C94C" fill-opacity="0.18"/>
+  <text x="198" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#F2C94C">Funnel Analytics</text>
+  <rect x="288" y="132" width="130" height="22" rx="11" fill="#388bfd" fill-opacity="0.18"/>
+  <text x="298" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#58a6ff">CRO Framework</text>
+
+  <text x="22" y="184" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#8b949e">🎯 <tspan fill="#3fb950" font-weight="600">view_item_list</tspan> ➔ <tspan fill="#58a6ff" font-weight="600">add_to_cart</tspan> ➔ <tspan fill="#E28743" font-weight="600">checkout</tspan> ➔ <tspan fill="#FFD700" font-weight="600">purchase</tspan></text>
+  <text x="22" y="206" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#F2C94C">Google Analytics 4 Enhanced E-Commerce Schema</text>
+</svg>

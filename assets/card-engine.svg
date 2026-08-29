@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <defs>
+    <linearGradient id="borderEngine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E28743;stop-opacity:0.95"/>
+      <stop offset="50%" style="stop-color:#FFB347;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:0.5"/>
+    </linearGradient>
+    <filter id="glowEngine">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#E28743" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="436" height="226" rx="16" ry="16" fill="none" stroke="url(#borderEngine)" stroke-width="2" filter="url(#glowEngine)"/>
+  <rect x="4" y="4" width="432" height="222" rx="14" ry="14" fill="#0d1117" fill-opacity="0.88"/>
+  <rect x="4" y="4" width="432" height="222" rx="14" ry="14" fill="#1f1610" fill-opacity="0.5"/>
+  
+  <!-- Header -->
+  <rect x="22" y="22" width="4" height="38" rx="2" fill="#E28743"/>
+  <text x="36" y="40" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="18" font-weight="700" fill="#ffffff">⚡ High-Speed SSG &amp; Storefront</text>
+  <text x="36" y="58" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" font-weight="600" fill="#FFB347">NEXT.JS 16 APP ROUTER  •  SUB-SECOND SSG COMPILE</text>
+  
+  <line x1="22" y1="72" x2="418" y2="72" stroke="#E28743" stroke-opacity="0.25" stroke-width="1"/>
+  
+  <!-- Description -->
+  <text x="22" y="94" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="12" fill="#c9d1d9">Ultra-fast static-site generated bakery storefront</text>
+  <text x="22" y="112" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="12" fill="#c9d1d9">eliminating 3rd-party commissions with 100% data ownership.</text>
+  
+  <!-- Tech Stack Pills -->
+  <rect x="22" y="132" width="76" height="22" rx="11" fill="#E28743" fill-opacity="0.18"/>
+  <text x="32" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#E28743">Next.js 16</text>
+  <rect x="106" y="132" width="76" height="22" rx="11" fill="#3178C6" fill-opacity="0.18"/>
+  <text x="116" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#58a6ff">TypeScript</text>
+  <rect x="190" y="132" width="82" height="22" rx="11" fill="#563d7c" fill-opacity="0.18"/>
+  <text x="198" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#d2a8ff">Vanilla CSS</text>
+  <rect x="280" y="132" width="62" height="22" rx="11" fill="#238636" fill-opacity="0.18"/>
+  <text x="290" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#3fb950">Vercel</text>
+  <rect x="350" y="132" width="68" height="22" rx="11" fill="#E28743" fill-opacity="0.18"/>
+  <text x="358" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#FFB347">App Router</text>
+
+  <!-- Metric badges -->
+  <text x="22" y="184" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#8b949e">⚡ <tspan fill="#ffffff" font-weight="600">&lt;900ms</tspan> Compile  •  🥐 <tspan fill="#ffffff" font-weight="600">54</tspan> Product Assets  •  📂 <tspan fill="#ffffff" font-weight="600">15</tspan> Categories</text>
+  <text x="22" y="206" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#E28743">▶ the-rolling-oven.vercel.app</text>
+</svg>

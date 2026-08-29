@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <defs>
+    <linearGradient id="borderSec" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f85149;stop-opacity:0.95"/>
+      <stop offset="50%" style="stop-color:#da3633;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#a371f7;stop-opacity:0.6"/>
+    </linearGradient>
+    <filter id="glowSec">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#f85149" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="436" height="226" rx="16" ry="16" fill="none" stroke="url(#borderSec)" stroke-width="2" filter="url(#glowSec)"/>
+  <rect x="4" y="4" width="432" height="222" rx="14" ry="14" fill="#0d1117" fill-opacity="0.88"/>
+  <rect x="4" y="4" width="432" height="222" rx="14" ry="14" fill="#251214" fill-opacity="0.5"/>
+  
+  <rect x="22" y="22" width="4" height="38" rx="2" fill="#f85149"/>
+  <text x="36" y="40" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="18" font-weight="700" fill="#ffffff">🛡️ Zero-Trust Security &amp; API Guard</text>
+  <text x="36" y="58" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" font-weight="600" fill="#ff7b72">SERVER-SIDE RECALCULATION  •  HONEYPOT SPAMBOT TRAP</text>
+  
+  <line x1="22" y1="72" x2="418" y2="72" stroke="#f85149" stroke-opacity="0.25" stroke-width="1"/>
+  
+  <text x="22" y="94" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="12" fill="#c9d1d9">Hardened checkout pipeline validating client payloads,</text>
+  <text x="22" y="112" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="12" fill="#c9d1d9">enforcing sliding-window rate limits, and verifying price totals.</text>
+  
+  <rect x="22" y="132" width="94" height="22" rx="11" fill="#f85149" fill-opacity="0.18"/>
+  <text x="32" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#ff7b72">Rate Limiter</text>
+  <rect x="124" y="132" width="92" height="22" rx="11" fill="#a371f7" fill-opacity="0.18"/>
+  <text x="134" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#d2a8ff">Zod Schemas</text>
+  <rect x="224" y="132" width="76" height="22" rx="11" fill="#f85149" fill-opacity="0.18"/>
+  <text x="234" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#ff7b72">Honeypot</text>
+  <rect x="308" y="132" width="110" height="22" rx="11" fill="#388bfd" fill-opacity="0.18"/>
+  <text x="318" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#58a6ff">Zero-Trust Price</text>
+
+  <text x="22" y="184" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#8b949e">🔒 <tspan fill="#ffffff" font-weight="600">IP Sliding Window</tspan>  •  🍯 <tspan fill="#ffffff" font-weight="600">b_website Trap</tspan>  •  🛡️ <tspan fill="#ffffff" font-weight="600">SSOT Catalog Check</tspan></text>
+  <text x="22" y="206" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#ff7b72">Enterprise-Grade Edge Defense against Cart Tampering</text>
+</svg>

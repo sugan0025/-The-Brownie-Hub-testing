@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620">
+  <defs>
+    <!-- Glow Filters -->
+    <filter id="glowClient"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#E28743" flood-opacity="0.45"/></filter>
+    <filter id="glowEdge"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#388bfd" flood-opacity="0.4"/></filter>
+    <filter id="glowSec"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#f85149" flood-opacity="0.45"/></filter>
+    <filter id="glowDB"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#3ecf8e" flood-opacity="0.45"/></filter>
+    <filter id="glowDisp"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#a371f7" flood-opacity="0.45"/></filter>
+    <filter id="glowTelem"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#E37400" flood-opacity="0.45"/></filter>
+
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="50%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+
+    <!-- Markers for clean arrows -->
+    <marker id="arrowOrange" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#E28743"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#f85149"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#3ecf8e"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#bc8cff"/>
+    </marker>
+  </defs>
+
+  <!-- Background Base Container -->
+  <rect width="900" height="620" rx="16" ry="16" fill="url(#bgGrad)" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Top Title Banner (Aligned) -->
+  <text x="40" y="38" font-family="'Segoe UI',Roboto,sans-serif" font-size="16" font-weight="800" fill="#FFB347">⚡ THE ROLLING OVEN — REAL-TIME SYSTEM ARCHITECTURE</text>
+  <text x="860" y="38" font-family="'Segoe UI',Roboto,sans-serif" font-size="11" fill="#8b949e" text-anchor="end">Vercel Edge • Supabase PostgreSQL • GA4 Telemetry</text>
+  <line x1="40" y1="48" x2="860" y2="48" stroke="#30363d" stroke-width="1"/>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TIER 1: CLIENT LAYER (Top Center: x=280 to 620, Center=450)    -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <g transform="translate(280, 65)">
+    <rect width="340" height="60" rx="12" fill="#24170e" stroke="#E28743" stroke-width="2" filter="url(#glowClient)"/>
+    <text x="170" y="28" font-family="'Segoe UI',Roboto,sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">📱 Customer Browser / Mobile Client</text>
+    <text x="170" y="47" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#FFB347" text-anchor="middle">Sathyamangalam • Erode • Coimbatore • Gobichettipalayam</text>
+  </g>
+
+  <!-- ─── CONNECTIONS FROM CLIENT ─── -->
+  <!-- Left: Client -> GA4 (Orange animated line) -->
+  <path d="M 330 125 L 235 165" stroke="#E28743" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowOrange)">
+    <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
+  </path>
+  <rect x="200" y="130" width="105" height="18" rx="9" fill="#0d1117" stroke="#E37400" stroke-width="1"/>
+  <text x="252" y="142" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" fill="#F2994A" text-anchor="middle">GA4 Event Stream</text>
+
+  <!-- Right: Client -> Storefront CDN (Blue animated line) -->
+  <path d="M 570 125 L 665 165" stroke="#58a6ff" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowBlue)">
+    <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
+  </path>
+  <rect x="595" y="130" width="95" height="18" rx="9" fill="#0d1117" stroke="#388bfd" stroke-width="1"/>
+  <text x="642" y="142" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" fill="#58a6ff" text-anchor="middle">HTTPS / Next.js SSG</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TIER 2: SYMMETRIC PARALLEL TIERS (y=165, height=135)            -->
+  <!-- Left: GA4 Telemetry (x=50 to 420) | Right: Edge CDN (x=480 to 850) -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  
+  <!-- Tier 2A: GA4 Telemetry Hub (Left Box: width=370) -->
+  <g transform="translate(50, 165)">
+    <rect width="370" height="135" rx="12" fill="#261405" stroke="#E37400" stroke-width="2" filter="url(#glowTelem)"/>
+    <text x="185" y="24" font-family="'Segoe UI',Roboto,sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">📊 E-Commerce Telemetry &amp; CRO Hub</text>
+    <text x="185" y="42" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#F2C94C" text-anchor="middle">GA4 PROPERTY ID: G-GWTWBBBDQ2</text>
+    <line x1="15" y1="52" x2="355" y2="52" stroke="#E37400" stroke-opacity="0.3" stroke-width="1"/>
+
+    <rect x="15" y="62" width="340" height="24" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="185" y="78" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#c9d1d9" text-anchor="middle">view_item_list ➔ select_item ➔ add_to_cart ➔ purchase</text>
+
+    <rect x="15" y="94" width="165" height="26" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="97" y="111" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" fill="#F2994A" text-anchor="middle">UTM Multi-Touch Attribution</text>
+
+    <rect x="190" y="94" width="165" height="26" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="272" y="111" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" fill="#F2C94C" text-anchor="middle">Regional Conversion Velocity</text>
+  </g>
+
+  <!-- Tier 2B: Vercel Edge CDN & SSG Storefront (Right Box: width=370) -->
+  <g transform="translate(480, 165)">
+    <rect width="370" height="135" rx="12" fill="#0d1b2a" stroke="#388bfd" stroke-width="2" filter="url(#glowEdge)"/>
+    <text x="185" y="24" font-family="'Segoe UI',Roboto,sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">⚡ Vercel Edge CDN &amp; Storefront Engine</text>
+    <text x="185" y="42" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#58a6ff" text-anchor="middle">Next.js 16 App Router (Build Compile &lt;900ms)</text>
+    <line x1="15" y1="52" x2="355" y2="52" stroke="#388bfd" stroke-opacity="0.3" stroke-width="1"/>
+
+    <rect x="15" y="62" width="165" height="24" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="97" y="78" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" font-weight="600" fill="#c9d1d9" text-anchor="middle">Modular Home Shelf</text>
+
+    <rect x="190" y="62" width="165" height="24" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="272" y="78" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" font-weight="600" fill="#c9d1d9" text-anchor="middle">15 Static Category Hubs</text>
+
+    <rect x="15" y="94" width="340" height="28" rx="6" fill="#1f1610" stroke="#E28743" stroke-width="1"/>
+    <text x="185" y="112" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" font-weight="700" fill="#FFB347" text-anchor="middle">🛒 Persistent Cart Drawer (localStorage Sync)</text>
+  </g>
+
+  <!-- ─── CONNECTION: STOREFRONT CART -> SECURITY GATEWAY ─── -->
+  <path d="M 665 300 L 490 335" stroke="#f85149" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowRed)">
+    <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
+  </path>
+  <rect x="520" y="308" width="140" height="18" rx="9" fill="#0d1117" stroke="#f85149" stroke-width="1"/>
+  <text x="590" y="320" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" fill="#ff7b72" text-anchor="middle">POST /api/order Payload</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TIER 3: ZERO-TRUST API SECURITY FIREWALL (Center: x=210 to 690) -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <g transform="translate(210, 335)">
+    <rect width="480" height="95" rx="12" fill="#251214" stroke="#f85149" stroke-width="2" filter="url(#glowSec)"/>
+    <text x="240" y="24" font-family="'Segoe UI',Roboto,sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">🛡️ Edge Security &amp; Zero-Trust Price Firewall</text>
+    <line x1="15" y1="34" x2="465" y2="34" stroke="#f85149" stroke-opacity="0.3" stroke-width="1"/>
+
+    <rect x="15" y="44" width="140" height="38" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="85" y="60" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" font-weight="700" fill="#ff7b72" text-anchor="middle">⏱️ IP Rate Limiter</text>
+    <text x="85" y="73" font-family="'Segoe UI',Roboto,sans-serif" font-size="8" fill="#8b949e" text-anchor="middle">5 req / min sliding window</text>
+
+    <rect x="170" y="44" width="140" height="38" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="240" y="60" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" font-weight="700" fill="#ff7b72" text-anchor="middle">🍯 Honeypot Trap</text>
+    <text x="240" y="73" font-family="'Segoe UI',Roboto,sans-serif" font-size="8" fill="#8b949e" text-anchor="middle">Silent drop on b_website</text>
+
+    <rect x="325" y="44" width="140" height="38" rx="6" fill="#261e08" stroke="#FFD700" stroke-width="1"/>
+    <text x="395" y="60" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" font-weight="700" fill="#FFD700" text-anchor="middle">⚖️ Server Price Engine</text>
+    <text x="395" y="73" font-family="'Segoe UI',Roboto,sans-serif" font-size="8" fill="#c9d1d9" text-anchor="middle">products.ts SSOT Recalc</text>
+  </g>
+
+  <!-- ─── CONNECTIONS FROM FIREWALL TO PERSISTENCE & DISPATCH ─── -->
+  <!-- Left to Supabase (Green line) -->
+  <path d="M 330 430 L 275 465" stroke="#3ecf8e" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowGreen)">
+    <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
+  </path>
+  <rect x="220" y="438" width="105" height="18" rx="9" fill="#0d1117" stroke="#3ecf8e" stroke-width="1"/>
+  <text x="272" y="450" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" fill="#3ecf8e" text-anchor="middle">Write Validated DB</text>
+
+  <!-- Right to Dual Dispatch (Purple line) -->
+  <path d="M 570 430 L 625 465" stroke="#bc8cff" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowPurple)">
+    <animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.2s" repeatCount="indefinite"/>
+  </path>
+  <rect x="575" y="438" width="105" height="18" rx="9" fill="#0d1117" stroke="#a371f7" stroke-width="1"/>
+  <text x="627" y="450" font-family="'Segoe UI',Roboto,sans-serif" font-size="9" fill="#bc8cff" text-anchor="middle">Trigger Dual Proxy</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TIER 4: PERSISTENCE & DISPATCH (Symmetric: y=465, height=130)  -->
+  <!-- Left: Supabase (x=120 to 430) | Right: Dual Dispatch (x=470 to 780) -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  
+  <!-- Tier 4A: Supabase PostgreSQL Database (Left Box: width=310) -->
+  <g transform="translate(120, 465)">
+    <rect width="310" height="130" rx="12" fill="#0d2118" stroke="#3ecf8e" stroke-width="2" filter="url(#glowDB)"/>
+    <text x="155" y="24" font-family="'Segoe UI',Roboto,sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">💾 Supabase PostgreSQL Database</text>
+    <text x="155" y="40" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#3ecf8e" text-anchor="middle">ACID-Compliant Transaction Ledger</text>
+    <line x1="15" y1="48" x2="295" y2="48" stroke="#3ecf8e" stroke-opacity="0.3" stroke-width="1"/>
+
+    <text x="25" y="68" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#c9d1d9">✓ Order Timestamp &amp; Audit UUID</text>
+    <text x="25" y="86" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#c9d1d9">✓ Validated Cart Item JSON &amp; Pricing</text>
+    <text x="25" y="104" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#c9d1d9">✓ Delivery Zone &amp; Customer Telemetry</text>
+  </g>
+
+  <!-- Tier 4B: Dual EmailJS Dispatch Gateway (Right Box: width=310) -->
+  <g transform="translate(470, 465)">
+    <rect width="310" height="130" rx="12" fill="#1a102f" stroke="#a371f7" stroke-width="2" filter="url(#glowDisp)"/>
+    <text x="155" y="24" font-family="'Segoe UI',Roboto,sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">📦 Dual Dispatch Gateway Proxy</text>
+    <text x="155" y="40" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#bc8cff" text-anchor="middle">Promise.allSettled Asynchronous Dispatch</text>
+    <line x1="15" y1="48" x2="295" y2="48" stroke="#a371f7" stroke-opacity="0.3" stroke-width="1"/>
+
+    <text x="25" y="68" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#c9d1d9">📧 Customer HTML Receipt (Instant Email)</text>
+    <text x="25" y="86" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#c9d1d9">🔔 Bakery Owner Alert (Immediate Notification)</text>
+    <text x="25" y="104" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" fill="#c9d1d9">🛡️ Non-Blocking Fault-Tolerant Execution</text>
+  </g>
+</svg>

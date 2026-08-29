@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <defs>
+    <linearGradient id="borderDisp" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3ecf8e;stop-opacity:0.95"/>
+      <stop offset="50%" style="stop-color:#2ea043;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#58a6ff;stop-opacity:0.6"/>
+    </linearGradient>
+    <filter id="glowDisp">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#3ecf8e" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="436" height="226" rx="16" ry="16" fill="none" stroke="url(#borderDisp)" stroke-width="2" filter="url(#glowDisp)"/>
+  <rect x="4" y="4" width="432" height="222" rx="14" ry="14" fill="#0d1117" fill-opacity="0.88"/>
+  <rect x="4" y="4" width="432" height="222" rx="14" ry="14" fill="#0d2118" fill-opacity="0.5"/>
+  
+  <rect x="22" y="22" width="4" height="38" rx="2" fill="#3ecf8e"/>
+  <text x="36" y="40" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="18" font-weight="700" fill="#ffffff">📦 Supabase Ledger &amp; Dual Proxy</text>
+  <text x="36" y="58" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" font-weight="600" fill="#3ecf8e">POSTGRESQL PERSISTENCE  •  PROMISE.ALLSETTLED DISPATCH</text>
+  
+  <line x1="22" y1="72" x2="418" y2="72" stroke="#3ecf8e" stroke-opacity="0.25" stroke-width="1"/>
+  
+  <text x="22" y="94" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="12" fill="#c9d1d9">Dual-channel asynchronous notification proxy delivering</text>
+  <text x="22" y="112" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="12" fill="#c9d1d9">instant customer receipts and real-time owner order alerts.</text>
+  
+  <rect x="22" y="132" width="134" height="22" rx="11" fill="#3ecf8e" fill-opacity="0.18"/>
+  <text x="32" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#3ecf8e">Supabase PostgreSQL</text>
+  <rect x="164" y="132" width="76" height="22" rx="11" fill="#58a6ff" fill-opacity="0.18"/>
+  <text x="174" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#58a6ff">EmailJS API</text>
+  <rect x="248" y="132" width="108" height="22" rx="11" fill="#a371f7" fill-opacity="0.18"/>
+  <text x="258" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#d2a8ff">Promise.allSettled</text>
+  <rect x="364" y="132" width="54" height="22" rx="11" fill="#3ecf8e" fill-opacity="0.18"/>
+  <text x="374" y="147" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="10" font-weight="600" fill="#3ecf8e">Ledger</text>
+
+  <text x="22" y="184" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#8b949e">📧 <tspan fill="#ffffff" font-weight="600">Customer Receipt</tspan>  •  🔔 <tspan fill="#ffffff" font-weight="600">Owner WhatsApp/Email</tspan>  •  💾 <tspan fill="#ffffff" font-weight="600">SQL Audit Record</tspan></text>
+  <text x="22" y="206" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#3ecf8e">Fault-Tolerant Non-Blocking Multi-Dispatch Gateway</text>
+</svg>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="230" viewBox="0 0 900 230">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="headerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="50%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+
+    <!-- Ocean Wave Gradients -->
+    <linearGradient id="oceanBackH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E28743" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#FFB347" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#E28743" stop-opacity="0.25"/>
+    </linearGradient>
+
+    <linearGradient id="oceanMidH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E28743" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#FF9800" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#E28743" stop-opacity="0.55"/>
+    </linearGradient>
+
+    <linearGradient id="oceanFrontH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d1117" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#E28743" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#FFB347" stop-opacity="1"/>
+      <stop offset="75%" stop-color="#FFD700" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0d1117" stop-opacity="1"/>
+    </linearGradient>
+
+    <linearGradient id="textGoldH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#FFD700">
+        <animate attributeName="stop-color" values="#FFD700;#FFA500;#FFD700" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+
+    <filter id="goldGlowH">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#FFB347" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="900" height="230" fill="url(#headerBg)"/>
+
+  <!-- Decorative Grid Lines -->
+  <line x1="0" y1="45" x2="900" y2="45" stroke="#30363d" stroke-opacity="0.25" stroke-width="1"/>
+  <line x1="0" y1="90" x2="900" y2="90" stroke="#30363d" stroke-opacity="0.25" stroke-width="1"/>
+  <line x1="0" y1="135" x2="900" y2="135" stroke="#30363d" stroke-opacity="0.25" stroke-width="1"/>
+
+  <!-- Main Title -->
+  <text x="450" y="72" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="42" font-weight="800" fill="url(#textGoldH)" text-anchor="middle" filter="url(#goldGlowH)">🥐 The Rolling Oven</text>
+
+  <!-- Subtitle -->
+  <text x="450" y="104" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="15" font-weight="600" fill="#E28743" text-anchor="middle" letter-spacing="1">HIGH-PERFORMANCE D2C STOREFRONT &amp; GROWTH ENGINE</text>
+
+  <!-- Tagline Text -->
+  <text x="450" y="130" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Next.js 16 SSG &lt;900ms  •  Supabase PostgreSQL Ledger  •  GA4 E-Commerce Telemetry</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- OCEAN WAVE 1: BACK LAYER (9s)                                   -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <path fill="url(#oceanBackH)" d="M0,170 C150,140 300,190 450,155 C600,120 750,180 900,160 L900,230 L0,230 Z">
+    <animate attributeName="d" dur="9s" repeatCount="indefinite"
+      values="M0,170 C150,140 300,190 450,155 C600,120 750,180 900,160 L900,230 L0,230 Z;
+              M0,170 C150,180 300,135 450,175 C600,150 750,130 900,175 L900,230 L0,230 Z;
+              M0,170 C150,135 300,175 450,140 C600,180 750,155 900,145 L900,230 L0,230 Z;
+              M0,170 C150,140 300,190 450,155 C600,120 750,180 900,160 L900,230 L0,230 Z" />
+  </path>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- OCEAN WAVE 2: MID LAYER (6s)                                    -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <path fill="url(#oceanMidH)" d="M0,180 C200,150 380,200 560,160 C720,130 820,190 900,170 L900,230 L0,230 Z">
+    <animate attributeName="d" dur="6s" repeatCount="indefinite"
+      values="M0,180 C200,150 380,200 560,160 C720,130 820,190 900,170 L900,230 L0,230 Z;
+              M0,180 C200,190 380,140 560,185 C720,160 820,140 900,185 L900,230 L0,230 Z;
+              M0,180 C200,140 380,180 560,145 C720,190 820,165 900,155 L900,230 L0,230 Z;
+              M0,180 C200,150 380,200 560,160 C720,130 820,190 900,170 L900,230 L0,230 Z" />
+  </path>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- OCEAN WAVE 3: FOREGROUND CREST (4.5s)                           -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <path fill="url(#oceanFrontH)" d="M0,190 C120,160 240,210 360,175 C480,145 600,205 720,165 C810,140 870,195 900,180 L900,230 L0,230 Z">
+    <animate attributeName="d" dur="4.5s" repeatCount="indefinite"
+      values="M0,190 C120,160 240,210 360,175 C480,145 600,205 720,165 C810,140 870,195 900,180 L900,230 L0,230 Z;
+              M0,190 C120,205 240,150 360,195 C480,170 600,150 720,190 C810,170 870,155 900,190 L900,230 L0,230 Z;
+              M0,190 C120,150 240,190 360,155 C480,200 600,175 720,150 C810,190 870,175 900,165 L900,230 L0,230 Z;
+              M0,190 C120,160 240,210 360,175 C480,145 600,205 720,165 C810,140 870,195 900,180 L900,230 L0,230 Z" />
+  </path>
+</svg>
