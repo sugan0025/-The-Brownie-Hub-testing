@@ -54,9 +54,9 @@ export default function Footer() {
             <ul className="footer-links">
               <li><a href="#builder">Custom Box Builder</a></li>
               <li><a href="#menu">Brownie Menu</a></li>
-              <li><a href="#workshops">Baking Workshops</a></li>
-              <li><a href="#founders">About the Founders</a></li>
+              <li><a href="#bestsellers">Bestsellers</a></li>
               <li><a href="#faq">Storage &amp; FAQ</a></li>
+              <li><a href="#contact">Contact &amp; Orders</a></li>
             </ul>
           </div>
 
@@ -76,7 +76,7 @@ export default function Footer() {
             <p style={{ color: 'var(--cream-muted)', fontSize: '0.86rem', lineHeight: '1.6' }}>
               📍 <strong style={{ color: 'var(--cream)' }}>Kitchen:</strong> Chennai, Tamil Nadu, India<br />
               ⏰ <strong style={{ color: 'var(--cream)' }}>Order Delivery:</strong> 10:00 AM – 09:00 PM<br />
-              🎓 <strong style={{ color: 'var(--cream)' }}>Workshops:</strong> Saturday &amp; Sunday Batches<br />
+              🛵 <strong style={{ color: 'var(--cream)' }}>Delivery:</strong> Hyper-fresh 60–90 min across Chennai<br />
               ✉️ <strong style={{ color: 'var(--cream)' }}>Inquiries:</strong> hi@thebrowniehub.com
             </p>
           </div>

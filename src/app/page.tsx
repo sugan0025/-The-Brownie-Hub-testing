@@ -4,8 +4,6 @@ import TrustBarSection from '../components/home/TrustBarSection';
 import BentoShowcaseSection from '../components/home/BentoShowcaseSection';
 import BoxBuilderSection from '../components/home/BoxBuilderSection';
 import MenuSection from '../components/home/MenuSection';
-import WorkshopSection from '../components/home/WorkshopSection';
-import FoundersSection from '../components/home/FoundersSection';
 import FaqSection from '../components/home/FaqSection';
 import ContactSection from '../components/home/ContactSection';
 
@@ -18,7 +16,7 @@ export default function HomePage() {
       {/* 2. Trust Bar — 4 Key Luxury Pillars */}
       <TrustBarSection />
 
-      {/* 3. Master Bento Showcase — Exact Reference Layout (Left: How It Works + Reviews, Right: Bestsellers + Stats, Bottom: Newsletter) */}
+      {/* 3. Master Bento Showcase — Exact Reference Layout */}
       <BentoShowcaseSection />
 
       {/* 4. Custom Box Builder — Interactive Magnetic Box Simulator */}
@@ -27,16 +25,10 @@ export default function HomePage() {
       {/* 5. Complete Menu — 100% Eggless & Farm Egg Bento & Curated Boxes */}
       <MenuSection />
 
-      {/* 6. Workshops — Offline Chennai Baking Masterclasses */}
-      <WorkshopSection />
-
-      {/* 7. Founders — The Artisanal Kitchen Team */}
-      <FoundersSection />
-
-      {/* 8. FAQ — Dark Luxury Accordion */}
+      {/* 6. FAQ — Dark Luxury Accordion */}
       <FaqSection />
 
-      {/* 9. Contact — Direct Kitchen Connection & WhatsApp Ordering */}
+      {/* 7. Contact — Direct Kitchen Connection & WhatsApp Ordering */}
       <ContactSection />
     </main>
   );

@@ -4,7 +4,6 @@ import Script from "next/script";
 import Navbar from "../components/Navbar";
 import CartDrawer from "../components/CartDrawer";
 import OrderModal from "../components/OrderModal";
-import WorkshopModal from "../components/WorkshopModal";
 import ToastContainer from "../components/ToastContainer";
 import Footer from "../components/Footer";
 import FloatingWhatsApp from "../components/FloatingWhatsApp";
@@ -31,11 +30,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "The Brownie Hub | Artisanal Brownies & Baking Workshops in Chennai",
+    default: "The Brownie Hub | Artisanal Belgian Brownies in Chennai",
     template: "%s | The Brownie Hub Chennai",
   },
   description:
-    "Handcrafted small-batch veg and egg brownies baked fresh daily in Chennai. Build your custom assorted box (4/6/12) and book hands-on offline baking workshops at our kitchen.",
+    "Handcrafted small-batch veg and egg brownies baked fresh daily in Chennai. Build your custom assorted gift box (4/6/12) with fast 60–90 min hyper-fresh delivery across Chennai.",
   keywords: [
     "The Brownie Hub",
     "The Brownie Hub Chennai",
@@ -147,17 +146,6 @@ export default function RootLayout({
                   "https://wa.me/917200015490",
                 ],
               },
-              {
-                "@context": "https://schema.org",
-                "@type": "Course",
-                "name": "The Brownie Hub Baking Workshops",
-                "description": "Hands-on, small-batch baking masterclasses in Chennai: Brownie Basics, Flavour Lab, and Kids Baking.",
-                "provider": {
-                  "@type": "Organization",
-                  "name": "The Brownie Hub",
-                  "sameAs": "https://the-brownie-hub.vercel.app",
-                },
-              },
             ]),
           }}
         />
@@ -180,9 +168,6 @@ export default function RootLayout({
 
         {/* ===== CHECKOUT ORDER MODAL ===== */}
         <OrderModal />
-
-        {/* ===== WORKSHOP RESERVATION MODAL ===== */}
-        <WorkshopModal />
 
         {/* ===== PAGE CONTENT ===== */}
         {children}
