@@ -1,6 +1,6 @@
 {
-  "name": "the-rolling-oven",
-  "version": "0.0.0",
+  "name": "the-brownie-hub",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,10 +9,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
     "@supabase/supabase-js": "^2.109.0",
     "next": "^16.3.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "three": "^0.185.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {

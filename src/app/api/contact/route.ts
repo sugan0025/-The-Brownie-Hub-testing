@@ -1,52 +1,44 @@
 import { NextResponse } from 'next/server';
-import { checkRateLimit } from '../../../lib/rate-limit';
+import { createClient } from '@supabase/supabase-js';
 import { contactSchema } from '../../../lib/validations';
+import { checkRateLimit } from '../../../lib/rate-limit';
 
 export async function POST(request: Request) {
   try {
     const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
     if (!checkRateLimit(`contact_${ip}`, 5, 60000)) {
-      return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+      return NextResponse.json({ error: 'Too many requests. Please wait a moment.' }, { status: 429 });
     }
 
     const body = await request.json();
-    const data = contactSchema.parse(body);
+    const validatedData = contactSchema.parse(body);
 
-    // Anti-spam honeypot detection: silently drop bot submissions
-    if (data.b_website && data.b_website.trim().length > 0) {
-      console.warn('Bot inquiry blocked via honeypot:', ip);
+    if (validatedData.b_website && validatedData.b_website.trim().length > 0) {
+      console.warn('Bot contact submission blocked:', ip);
       return NextResponse.json({ success: true });
     }
 
-    // Send inquiry notification to owner via EmailJS
-    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        service_id: process.env.EMAILJS_SERVICE_ID,
-        template_id: 'template_p0g9s8k',
-        user_id: process.env.EMAILJS_PUBLIC_KEY,
-        accessToken: process.env.EMAILJS_PRIVATE_KEY,
-        template_params: {
-          to_email: 'therollingoven26@gmail.com',
-          customer_name: data.name,
-          customer_email: data.email,
-          customer_phone: data.phone,
-          order_items: `Inquiry regarding: ${data.product}`,
-          total_amount: 'N/A (Inquiry)',
-          notes: data.message || 'No specific notes provided',
-        },
-      }),
-    });
-
-    if (!res.ok) {
-      const text = await res.text();
-      console.error('EmailJS contact error:', text);
+    // Persist inquiry to Supabase
+    try {
+      const supabaseUrl = process.env.SUPABASE_URL;
+      const supabaseKey = process.env.SUPABASE_ANON_KEY;
+      if (supabaseUrl && supabaseKey) {
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        await supabase.from('contacts').insert([
+          {
+            name: validatedData.name,
+            email: validatedData.email,
+            phone: validatedData.phone,
+            message: `[${validatedData.inquiry_type}] ${validatedData.message}`,
+          },
+        ]);
+      }
+    } catch (e) {
+      console.error('Supabase contact insert error:', e);
     }
 
     return NextResponse.json({ success: true });
   } catch (err: any) {
-    console.error('Contact API Error:', err);
     if (err.name === 'ZodError') {
       return NextResponse.json({ error: 'Validation failed', details: err.errors }, { status: 400 });
     }

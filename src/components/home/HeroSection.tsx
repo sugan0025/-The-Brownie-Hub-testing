@@ -1,58 +1,118 @@
+'use client';
+
+import React, { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+
+// Lazy-load Three.js particles to avoid SSR issues
+const HeroParticles = dynamic(() => import('./HeroParticles'), {
+  ssr: false,
+  loading: () => null,
+});
+
 export default function HeroSection() {
   return (
-    <section id="hero" className="hero-section">
-      <div className="hero-glow hero-glow-1"></div>
-      <div className="hero-glow hero-glow-2"></div>
-      <div className="hero-glow hero-glow-3"></div>
-      <div className="hero-content">
-        <div className="hero-badge">
-          <span className="badge-dot"></span>
-          <span>Freshly Baked Daily</span>
-        </div>
-        <img src="/images/logo.jpeg" alt="The Rolling Oven Logo" className="hero-logo" />
-        <h1 className="hero-title">
-          <span className="title-line">Your Cravings,</span>
-          <span className="title-line title-accent">Our Creations</span>
-        </h1>
-        <p className="hero-subtitle">
-          Freshly baked treats, made with love — crafted from the finest ingredients, delivered with warmth straight from our oven to your table.
-        </p>
-        <div className="hero-actions">
-          <a href="#showcase" className="btn btn-primary" id="explore-btn">
-            <span>Explore Our Bakes</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </a>
-          <a href="#about" className="btn btn-glass" id="story-btn">
-            <span>Our Story</span>
-          </a>
-        </div>
-        <div className="hero-stats">
-          <div className="stat-item">
-            <span className="stat-number" data-target="500">0</span><span className="stat-suffix">+</span>
-            <span className="stat-label">Happy Customers</span>
+    <section className="hero-section" id="hero">
+      {/* Three.js Floating Golden Ember Particle System */}
+      <Suspense fallback={null}>
+        <HeroParticles />
+      </Suspense>
+
+      {/* Ambient Dark Espresso Atmosphere */}
+      <div className="hero-atmosphere" aria-hidden="true"></div>
+
+      <div className="hero-container hero-layout">
+        {/* ─── LEFT: Typography & CTAs ─── */}
+        <div className="hero-content" data-reveal>
+          {/* Eyebrow Pill Badge */}
+          <div className="hero-pill-badge">
+            <span className="heart-icon">♡</span>
+            <span>HANDCRAFTED WITH LOVE</span>
           </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <span className="stat-number" data-target="50">0</span><span className="stat-suffix">+</span>
-            <span className="stat-label">Unique Recipes</span>
+
+          {/* Main Headline */}
+          <h1 className="hero-headline">
+            Premium Brownies,<br />
+            Made to <span className="gold-serif">Delight</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="hero-subtext">
+            Fudgy, rich &amp; irresistible brownies crafted with the finest ingredients for every chocolate lover.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="hero-cta-row">
+            <a href="#builder" className="btn-hero-order magnetic-btn" id="hero-order-cta">
+              <span>Order Now</span>
+              <span className="arrow-icon">&rarr;</span>
+            </a>
+            <a href="/menu" className="btn-hero-explore magnetic-btn" id="hero-explore-cta">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+              </svg>
+              <span>Explore Menu</span>
+            </a>
           </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <span className="stat-number" data-target="7">0</span>
-            <span className="stat-label">Categories</span>
+
+          {/* Social Proof Row */}
+          <div className="hero-social-proof">
+            <div className="rating-stars-badge">
+              <span className="star-icon">★</span>
+              <span className="star-icon">★</span>
+              <span className="star-icon">★</span>
+              <span className="star-icon">★</span>
+              <span className="star-icon">★</span>
+              <span className="rating-score-num">4.9/5</span>
+            </div>
+            <div className="social-proof-text">
+              <span className="social-proof-label">Loved by <strong data-counter="10000" data-suffix="+">10,000+</strong></span>
+              <span className="social-proof-sub">Brownie Lovers</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="scroll-indicator" id="scroll-indicator">
-        <span>Scroll to explore</span>
-        <div className="scroll-arrow">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 5v14" />
-            <path d="m19 12-7 7-7-7" />
-          </svg>
+
+        {/* ─── RIGHT: Brownie Visual ─── */}
+        <div className="hero-visual" data-reveal>
+          {/* Subtle Ambient Back-Glow */}
+          <div className="hero-visual-glow" aria-hidden="true"></div>
+
+          {/* Brownie Foreground Container */}
+          <div className="hero-brownie-wrapper">
+            <img
+              src="/images/brownies/hero.png"
+              alt="The Brownie Hub Handcrafted Fudgy Brownie Stack"
+              className="hero-brownie-img"
+              loading="eager"
+            />
+
+            {/* Floating 3D Chocolate Chunks */}
+            <div className="floating-choco-cube cube-top-left" aria-hidden="true"></div>
+            <div className="floating-choco-cube cube-mid-left" aria-hidden="true"></div>
+            <div className="floating-choco-cube cube-bot-left" aria-hidden="true"></div>
+            <div className="floating-choco-cube cube-top-right" aria-hidden="true"></div>
+            <div className="floating-choco-cube cube-mid-right" aria-hidden="true"></div>
+            <div className="floating-choco-cube cube-bot-right" aria-hidden="true"></div>
+            <div className="floating-crust-flake flake-1" aria-hidden="true"></div>
+            <div className="floating-crust-flake flake-2" aria-hidden="true"></div>
+            <div className="floating-crust-flake flake-3" aria-hidden="true"></div>
+          </div>
+
+          {/* Floating Glass Badge */}
+          <div className="hero-premium-glass-badge glass-card">
+            <div className="badge-leaf-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b66e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
+                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+              </svg>
+            </div>
+            <div className="badge-text-group">
+              <span className="badge-percent">100%</span>
+              <span className="badge-label">Premium<br />Ingredients</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

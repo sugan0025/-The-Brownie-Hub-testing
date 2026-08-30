@@ -1,1163 +1,1762 @@
 // ============================================
-// Dear programmer:
-// When I wrote this code, only God and
-// I knew how it worked.
-// Now, only God knows it!
-//
-// Therefore, if you are trying to optimize
-// this routine and it fails (most surely),
-// please increase this counter as a
-// warning for the next person.
-//
-// total_hours_wasted_here = 32
-// hours_of_sleep_sacrificed_to_the_oven_gods = 48
-// ============================================
-// THE ROLLING OVEN — Complete E-Commerce System
-// Cart, Email, Product Pages, Interactions, GA4 Tracking
+// THE BROWNIE HUB (CHENNAI) — MASTER CLIENT ENGINE v7.0
+// Aceternity & Magic UI Aesthetics, Ambient Golden Particle Flow,
+// 3D Floating Crust Dynamics, Custom Box Simulator, Cart & GA4 Telemetry
 // ============================================
 
-// ============================================
-// PRODUCT DATA — All 7 Categories
-// ============================================
-const CATEGORIES = {
-  cupcakes: {
-    name: 'Cupcakes',
-    tagline: 'Fluffy, moist, and topped with our signature buttercream swirl.',
-    description: 'Our fresh cupcakes are baked fresh daily in small batches. Each flavor is crafted with premium ingredients and topped with hand-piped buttercream.',
-    badge: 'Bestseller',
-    mainImage: '/images/products/cupcakes/Cupcake front image.png',
-    basePrice: 149,
-    items: [
-      { name: 'Vanilla Cupcake', image: '/images/products/cupcakes/Vanilla_Cupcake.png', price: 149 },
-      { name: 'Chocolate Cupcake', image: '/images/products/cupcakes/Chocolate_Cupcake.png', price: 159 },
-      { name: 'Red Velvet Cupcake', image: '/images/products/cupcakes/Red_Velvet_Cupcake.png', price: 179 },
-      { name: 'Strawberry Cupcake', image: '/images/products/cupcakes/Strawberry_Cupcake.png', price: 169 },
-      { name: 'Banana Cupcake', image: '/images/products/cupcakes/Banana_Cupcake.png', price: 159 },
-      { name: 'Carrot Cupcake', image: '/images/products/cupcakes/Carrot_Cupcake.png', price: 169 },
-      { name: 'Lemon Cupcake', image: '/images/products/cupcakes/Lemon_Cupcake.png', price: 159 },
-      { name: 'Peanut Butter Cupcake', image: '/images/products/cupcakes/Peanut_Butter_Cupcake.png', price: 179 },
-    ],
-  },
-  cookies: {
-    name: 'Cookies',
-    tagline: 'Crispy edges, chewy centers — cookie perfection.',
-    description: 'From classic chocolate chip to gourmet macaroons, our cookies are baked to golden perfection with the finest butter and real vanilla.',
-    badge: 'Popular',
-    mainImage: '/images/products/cookies/Chocolate_chip_cookies.png',
-    basePrice: 99,
-    items: [
-      { name: 'Chocolate Chip Cookies', image: '/images/products/cookies/Chocolate_chip_cookies.png', price: 99 },
-      { name: 'Butter Cookies', image: '/images/products/cookies/Butter_cookies.png', price: 89 },
-      { name: 'Oatmeal Raisin Cookies', image: '/images/products/cookies/Oatmeal_raisin_cookies.png', price: 99 },
-      { name: 'Peanut Butter Cookies', image: '/images/products/cookies/Peanut_butter_cookies.png', price: 109 },
-      { name: 'Double Chocolate Cookies', image: '/images/products/cookies/Double_chocolate_cookies.png', price: 119 },
-      { name: 'M&M Cookies', image: '/images/products/cookies/M&M_cookies.png', price: 109 },
-      { name: 'Snickerdoodle Cookies', image: '/images/products/cookies/Snickerdoodle_Cookie.png', price: 99 },
-      { name: 'Red Velvet Cookies', image: '/images/products/cookies/Red_velvet_cookies.png', price: 119 },
-      { name: 'Almond Cookies', image: '/images/products/cookies/Almond_cookies.png', price: 109 },
-      { name: 'Macadamia Nut Cookies', image: '/images/products/cookies/Macadamia_nut_cookies.png', price: 129 },
-      { name: 'Shortbread Cookies', image: '/images/products/cookies/Shortbread_Cookie.png', price: 89 },
-      { name: 'Biscotti', image: '/images/products/cookies/Biscotti.png', price: 99 },
-      { name: 'Macaroons', image: '/images/products/cookies/Macaroons.png', price: 149 },
-      { name: 'Cranberry White Chocolate Cookies', image: '/images/products/cookies/Cranberry_white_chocolate_cookies.png', price: 119 },
-    ],
-  },
-  muffins: {
-    name: 'Muffins',
-    tagline: 'Warm, fluffy, and bursting with flavor.',
-    description: 'Our muffins are baked until golden with a perfectly domed top. Made with real fruit, premium chocolate, and fragrant spices.',
-    badge: 'Fresh Daily',
-    mainImage: '/images/products/muffins/Blueberry_Muffin.png',
-    basePrice: 129,
-    items: [
-      { name: 'Blueberry Muffin', image: '/images/products/muffins/Blueberry_Muffin.png', price: 129 },
-      { name: 'Chocolate Chip Muffin', image: '/images/products/muffins/Chocolate_Chip_Muffin.png', price: 139 },
-      { name: 'Banana Nut Muffin', image: '/images/products/muffins/Banana_Nut_Muffin.png', price: 129 },
-      { name: 'Double Chocolate Muffin', image: '/images/products/muffins/Double_Chocolate_Muffin.png', price: 149 },
-      { name: 'Apple Cinnamon Muffin', image: '/images/products/muffins/Apple_Cinnamon_Muffin.png', price: 129 },
-      { name: 'Lemon Poppy Seed Muffin', image: '/images/products/muffins/Lemon_Poppy_Seed_Muffin.png', price: 129 },
-    ],
-  },
-  donuts: {
-    name: 'Donuts',
-    tagline: 'Glazed, frosted, and irresistibly soft.',
-    description: 'Our donuts are hand-rolled and fried to airy perfection, then glazed or frosted with our signature toppings.',
-    badge: 'Handmade',
-    mainImage: '/images/products/donuts/Classic_Glazed_Donut.png',
-    basePrice: 119,
-    items: [
-      { name: 'Classic Glazed Donut', image: '/images/products/donuts/Classic_Glazed_Donut.png', price: 119 },
-      { name: 'Chocolate Frosted Donut', image: '/images/products/donuts/Chocolate_Frosted_Donut.png', price: 139 },
-      { name: 'Strawberry Donut', image: '/images/products/donuts/Strawberry_Donut.png', price: 139 },
-      { name: 'Sprinkle Donut', image: '/images/products/donuts/Sprinkle_Donut.png', price: 129 },
-    ],
-  },
-  chocolava: {
-    name: 'Chocolava',
-    tagline: 'Molten chocolate magic in every bite.',
-    description: 'Our signature chocolava cakes feature a rich, gooey chocolate center that flows out when you break the crust. Pure indulgence.',
-    badge: 'Premium',
-    badgeClass: 'premium',
-    mainImage: '/images/products/chocolava/Classic_Chocolava.png',
-    basePrice: 249,
-    items: [
-      { name: 'Classic Chocolava', image: '/images/products/chocolava/Classic_Chocolava.png', price: 249 },
-      { name: 'Dark Chocolate Lava', image: '/images/products/chocolava/Dark_Chocolate_Lava_Cake.png', price: 279 },
-      { name: 'White Chocolate Lava', image: '/images/products/chocolava/White_Chocolate_Lava_Cake.png', price: 269 },
-    ],
-  },
-  tiramisu: {
-    name: 'Tiramisu',
-    tagline: 'Layers of coffee-soaked bliss.',
-    description: 'Our tiramisu is made with mascarpone, espresso-soaked ladyfingers, and dusted with premium cocoa. An Italian classic, perfected.',
-    badge: 'Signature',
-    mainImage: '/images/products/tiramisu/tiramisu.png',
-    basePrice: 349,
-    items: [
-      { name: 'Classic Tiramisu', image: '/images/products/tiramisu/tiramisu.png', price: 349 },
-      { name: 'Chocolate Tiramisu', image: '/images/products/tiramisu/Chocolate_Tiramisu.png', price: 379 },
-      { name: 'Mango Tiramisu', image: '/images/products/tiramisu/Mango_Tiramisu.png', price: 369 },
-    ],
-  },
-  croissants: {
-    name: 'Croissants',
-    tagline: 'Flaky, buttery, and baked to golden perfection.',
-    description: 'Our croissants are laminated with premium French butter, folded 27 layers for the ultimate flaky crunch.',
-    badge: 'Handcrafted',
-    mainImage: '/images/products/croissants/Butter_Croissant.png',
-    basePrice: 149,
-    items: [
-      { name: 'Butter Croissant', image: '/images/products/croissants/Butter_Croissant.png', price: 149 },
-      { name: 'Chocolate Croissant', image: '/images/products/croissants/Chocolate_Croissant.png', price: 179 },
-      { name: 'Almond Croissant', image: '/images/products/croissants/Almond_Croissant.png', price: 189 },
-      { name: 'Pistachio Croissant', image: '/images/products/croissants/Pistachio_Croissant.png', price: 199 },
-      { name: 'Raspberry Croissant', image: '/images/products/croissants/Raspberry_Croissant.png', price: 189 },
-      { name: 'Matcha Croissant', image: '/images/products/croissants/Matcha_Croissant.png', price: 199 },
-      { name: 'Matcha Cream Croissant', image: '/images/products/croissants/Matcha_Cream_Croissant.png', price: 209 },
-      { name: 'Tiramisu Croissant', image: '/images/products/croissants/Tiramisu_Croissant.png', price: 209 },
-      { name: 'Berries & Cream Croissant', image: '/images/products/croissants/Berries_and_Cream_Croissant.png', price: 199 },
-      { name: 'Lavender Croissant', image: '/images/products/croissants/Lavender_Croissant.png', price: 189 },
-      { name: 'Garlic Butter Croissant', image: '/images/products/croissants/Garlic_Butter_Croissant.png', price: 169 },
-      { name: 'Ube Croissant', image: '/images/products/croissants/Ube_Croissant.png', price: 199 },
-      { name: 'Smoked Salmon Croissant', image: '/images/products/croissants/Smoked_Salmon_Croissant.png', price: 229 },
-      { name: 'Gold Sprinkles Croissant', image: '/images/products/croissants/Gold_Sprinkles_Croissant.png', price: 219 },
-      { name: 'Prosciutto Gruyère Croissant', image: '/images/products/croissants/Prosciutto_Gruyere_Croissant.png', price: 239 },
-    ],
-  },
-};
+(function () {
+  'use strict';
 
-// Today's Favorites picks (one from each category with real images)
-const TODAYS_FAVORITES = [
-  { ...CATEGORIES.cupcakes.items[2], category: 'cupcakes', categoryName: 'Cupcakes', badge: 'Bestseller', desc: 'Fluffy, moist, topped with our signature cream cheese frosting.' },
-  { ...CATEGORIES.cookies.items[0], category: 'cookies', categoryName: 'Cookies', badge: 'Popular', desc: 'Classic chocolate chip with a gooey center and crispy edges.' },
-  { ...CATEGORIES.muffins.items[0], category: 'muffins', categoryName: 'Muffins', badge: 'Fresh Daily', desc: 'Bursting with fresh blueberries and a golden crumbly top.' },
-  { ...CATEGORIES.croissants.items[3], category: 'croissants', categoryName: 'Croissants', badge: 'Handcrafted', desc: 'Flaky buttery layers with a rich pistachio cream filling.' },
-  { ...CATEGORIES.chocolava.items[0], category: 'chocolava', categoryName: 'Chocolava', badge: 'Premium', badgeClass: 'premium', desc: 'Molten chocolate center that flows out with pure indulgence.' },
-  { ...CATEGORIES.tiramisu.items[0], category: 'tiramisu', categoryName: 'Tiramisu', badge: 'Signature', desc: 'Coffee-soaked mascarpone layers dusted with premium cocoa.' },
-  { ...CATEGORIES.donuts.items[0], category: 'donuts', categoryName: 'Donuts', badge: 'Handmade', desc: 'Hand-rolled, fried to perfection, with our signature glaze.' },
-];
+  // --- 1. BRAND CONFIG & PHONE ---
+  const BAKERY_PHONE = '917200015490';
+  const GA4_ID = 'G-GWTWBBBDQ2';
 
-// ============================================
-// CART STATE (persisted in localStorage)
-// ============================================
-let cart = JSON.parse(localStorage.getItem('tro_cart') || '[]');
-
-function saveCart() {
-  localStorage.setItem('tro_cart', JSON.stringify(cart));
-}
-
-function updateCartBadge() {
-  const badge = document.getElementById('cart-badge');
-  const navBtn = document.getElementById('nav-order-btn');
-  if (!badge) return;
-  const total = cart.reduce((sum, item) => sum + item.qty, 0);
-  if (total > 0) {
-    badge.style.display = 'flex';
-    badge.textContent = total;
-    if (navBtn) navBtn.style.display = 'flex';
-  } else {
-    badge.style.display = 'none';
-    if (navBtn) navBtn.style.display = 'none';
-  }
-}
-
-function addToCart(name, price, image, category) {
-  const existing = cart.find(item => item.name === name);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ name, price, image, category, qty: 1 });
-  }
-  saveCart();
-  updateCartBadge();
-  renderCart();
-
-  // Google Analytics Tracking
-  if (typeof gtag !== 'undefined') {
-    gtag('event', 'add_to_cart', {
-      currency: 'INR',
-      value: price,
-      items: [{ item_name: name, item_category: category, price: price, quantity: 1 }]
-    });
-  }
-
-  showToast('success', 'Added to Cart!', `${name} — ₹${price}`);
-}
-
-function removeFromCart(index) {
-  const item = cart[index];
-  cart.splice(index, 1);
-  saveCart();
-  updateCartBadge();
-  renderCart();
-
-  // Google Analytics Tracking: remove_from_cart
-  if (typeof gtag !== 'undefined' && item) {
-    gtag('event', 'remove_from_cart', {
-      currency: 'INR',
-      value: item.price * item.qty,
-      items: [{ item_name: item.name, item_category: item.category, price: item.price, quantity: item.qty }]
-    });
-  }
-
-  showToast('error', 'Removed', `${item.name} removed from cart`);
-}
-
-function changeQty(index, delta) {
-  cart[index].qty += delta;
-  if (cart[index].qty <= 0) {
-    removeFromCart(index);
-    return;
-  }
-  saveCart();
-  updateCartBadge();
-  renderCart();
-}
-
-function getCartTotal() {
-  return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-}
-
-function renderCart() {
-  const container = document.getElementById('cart-items');
-  const emptyEl = document.getElementById('cart-empty');
-  const footerEl = document.getElementById('cart-footer');
-  const totalEl = document.getElementById('cart-total-price');
-
-  if (cart.length === 0) {
-    container.innerHTML = `<div class="cart-empty" id="cart-empty">
-      <span class="cart-empty-icon">🧁</span>
-      <p>Your cart is empty</p>
-      <span class="cart-empty-sub">Add some delicious treats!</span>
-    </div>`;
-    footerEl.style.display = 'none';
-    return;
-  }
-
-  footerEl.style.display = 'block';
-  totalEl.textContent = `₹${getCartTotal()}`;
-
-  container.innerHTML = cart.map((item, i) => `
-    <div class="cart-item">
-      <img src="${item.image}" alt="${item.name} - Fresh Bakery Item in Tamil Nadu" loading="lazy" class="cart-item-img" />
-      <div class="cart-item-info">
-        <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-category">${item.category}</div>
-        <div class="cart-item-price">₹${item.price * item.qty}</div>
-      </div>
-      <div class="cart-item-actions">
-        <div class="cart-qty-controls">
-          <button class="cart-qty-btn" onclick="changeQty(${i}, -1)">−</button>
-          <span class="cart-qty-num">${item.qty}</span>
-          <button class="cart-qty-btn" onclick="changeQty(${i}, 1)">+</button>
-        </div>
-        <button class="cart-remove-btn" onclick="removeFromCart(${i})">Remove</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-// Make cart functions global
-window.changeQty = changeQty;
-window.removeFromCart = removeFromCart;
-
-// ============================================
-// TOAST SYSTEM
-// ============================================
-function showToast(type, title, message) {
-  const container = document.getElementById('toast-container');
-  const toast = document.createElement('div');
-
-  if (type === 'success' && title.includes('Cart')) {
-    toast.className = `toast premium-toast ${type}`;
-    toast.innerHTML = `
-      <div class="premium-cart-anim">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cart-svg">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <div class="cart-item-drop">✨</div>
-      </div>
-      <div class="toast-text"><strong>${title}</strong><span>${message}</span></div>
-    `;
-  } else {
-    const icons = { success: '✅', error: '❌', info: 'ℹ️' };
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-      <span class="toast-icon">${icons[type] || '🔔'}</span>
-      <div class="toast-text"><strong>${title}</strong><span>${message}</span></div>
-    `;
-  }
-
-  container.appendChild(toast);
-  setTimeout(() => toast.remove(), 3200);
-}
-
-
-
-
-// ============================================
-// SECURE BACKEND API INTEGRATION
-// ============================================
-async function sendOrderEmail(orderData) {
-  const payload = {
-    customer_name: orderData.name,
-    customer_email: orderData.email,
-    customer_phone: orderData.phone,
-    delivery_address: orderData.address,
-    pincode: orderData.pincode,
-    special_instructions: orderData.notes || 'None',
-    order_type: 'Cart Checkout',
-    items: orderData.items.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
-    total_amount: orderData.total.toString(),
-    // Attach UTM Parameters if they exist in session
-    utm_source: sessionStorage.getItem('utm_source') || null,
-    utm_medium: sessionStorage.getItem('utm_medium') || null,
-    utm_campaign: sessionStorage.getItem('utm_campaign') || null,
-    // Anti-spam Honeypot
-    b_website: orderData.b_website || null,
+  // --- 2. STATE MANAGEMENT ---
+  const state = {
+    cart: [],
+    builder: {
+      size: 6,
+      name: 'Box of 6',
+      price: 489,
+      savings: 45,
+      slots: [], // array of objects: { name, dietary, image }
+      activeFilter: 'all',
+    },
+    utm: {},
   };
 
-  const response = await fetch('/api/order', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+  // --- 3. UTM ATTRIBUTION CAPTURE ---
+  function initUtmCapture() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+    let found = false;
+    const captured = {};
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    console.error('Order API Error:', errorData);
-    throw new Error('Failed to process order via API');
-  }
-
-  return response.json();
-}
-
-async function sendContactForm(formData) {
-  const response = await fetch('/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)
-  });
-
-  if (!response.ok) throw new Error('Failed to send inquiry');
-  return response.json();
-}
-
-async function sendFeedback(formData) {
-  const response = await fetch('/api/feedback', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)
-  });
-
-  if (!response.ok) throw new Error('Failed to submit feedback');
-  return response.json();
-}
-
-// ============================================
-// RENDER SHOWCASE BELT (horizontal category row)
-// ============================================
-function renderShowcase() {
-  const row = document.getElementById('category-row');
-  if (!row) return;
-  const categoryKeys = Object.keys(CATEGORIES);
-
-  const html = categoryKeys.map(key => {
-    const cat = CATEGORIES[key];
-    return `
-      <a href="/category/${key}" class="showcase-card">
-        <div class="showcase-card-img-wrap">
-          <img src="${cat.mainImage}" alt="${cat.name}" class="showcase-card-img" loading="lazy" />
-        </div>
-        <div class="showcase-card-name">${cat.name}</div>
-      </a>
-    `;
-  }).join('');
-
-  // Duplicate multiple times to ensure seamless infinite scroll even on 4K screens
-  row.innerHTML = `
-    <div class="marquee-group">${html}</div>
-    <div class="marquee-group">${html}</div>
-    <div class="marquee-group">${html}</div>
-    <div class="marquee-group">${html}</div>
-  `;
-}
-
-// ============================================
-// RENDER TODAY'S FAVORITES (3D Carousel)
-// ============================================
-let currentCarouselIndex = 0;
-
-function renderFavorites() {
-  const stage = document.getElementById('carousel-stage');
-  if (!stage) return;
-
-  // We'll use all 7 favorites
-  stage.innerHTML = TODAYS_FAVORITES.map((item, i) => `
-    <div class="product-card" data-index="${i}">
-      <div class="card-glow"></div>
-      <div class="card-image-wrapper" data-category="${item.category}">
-        <div class="card-badge ${item.badgeClass || ''}">${item.badge}</div>
-        <img src="${item.image}" alt="${item.name} - Fresh Bakery Item in Tamil Nadu" loading="lazy" loading="lazy" />
-      </div>
-      <div class="card-content">
-        <div class="card-category">${item.categoryName}</div>
-        <h3 class="card-title">${item.name}</h3>
-        <p class="card-desc">${item.desc}</p>
-        <div class="card-footer">
-          <span class="card-price">₹${item.price}</span>
-          <button class="card-btn add-to-cart-btn"
-            data-name="${item.name}"
-            data-price="${item.price}"
-            data-image="${item.image}"
-            data-category="${item.categoryName}">
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-
-  updateCarousel();
-
-  document.getElementById('carousel-prev').addEventListener('click', () => {
-    currentCarouselIndex = (currentCarouselIndex - 1 + TODAYS_FAVORITES.length) % TODAYS_FAVORITES.length;
-    updateCarousel();
-  });
-
-  document.getElementById('carousel-next').addEventListener('click', () => {
-    currentCarouselIndex = (currentCarouselIndex + 1) % TODAYS_FAVORITES.length;
-    updateCarousel();
-  });
-
-  // Add to cart buttons
-  stage.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      addToCart(btn.dataset.name, parseInt(btn.dataset.price), btn.dataset.image, btn.dataset.category);
-    });
-  });
-
-  // Click image to navigate to category page (real links)
-  stage.querySelectorAll('.card-image-wrapper').forEach(wrap => {
-    wrap.addEventListener('click', () => {
-      window.location.href = '/category/' + wrap.dataset.category;
-    });
-  });
-}
-
-function updateCarousel() {
-  const cards = document.querySelectorAll('#carousel-stage .product-card');
-  const total = cards.length;
-  if (total === 0) return;
-
-  cards.forEach(c => c.className = 'product-card'); // reset
-
-  const centerIndex = currentCarouselIndex;
-  const prevIndex = (currentCarouselIndex - 1 + total) % total;
-  const nextIndex = (currentCarouselIndex + 1) % total;
-
-  cards[centerIndex].classList.add('active');
-  cards[prevIndex].classList.add('prev');
-  cards[nextIndex].classList.add('next');
-
-  // Allow clicking next/prev cards to navigate carousel
-  cards[prevIndex].onclick = () => { currentCarouselIndex = prevIndex; updateCarousel(); };
-  cards[nextIndex].onclick = () => { currentCarouselIndex = nextIndex; updateCarousel(); };
-  cards[centerIndex].onclick = null; // center handles its own clicks (add to cart, image)
-}
-
-// ============================================
-// CATEGORY PAGE — Wire up add-to-cart buttons
-// ============================================
-function initCategoryPage() {
-  const grid = document.getElementById('category-product-grid');
-  if (!grid) return;
-
-  // Google Analytics: view_item_list
-  if (typeof gtag !== 'undefined') {
-    const heading = document.querySelector('.category-hero h1')?.textContent || 'Category';
-    gtag('event', 'view_item_list', {
-      item_list_name: heading,
-    });
-  }
-
-  grid.querySelectorAll('.sub-add-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      addToCart(btn.dataset.name, parseInt(btn.dataset.price), btn.dataset.image, btn.dataset.category);
-    });
-  });
-}
-
-// ============================================
-// PARTICLE SYSTEM
-// ============================================
-class ParticleSystem {
-  constructor(canvas) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d');
-    this.particles = [];
-    this.mouse = { x: 0, y: 0 };
-    this.resize();
-    this.init();
-    window.addEventListener('resize', () => this.resize());
-    window.addEventListener('mousemove', (e) => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; });
-  }
-  resize() { this.canvas.width = window.innerWidth; this.canvas.height = window.innerHeight; }
-  init() {
-    const count = Math.min(60, Math.floor(window.innerWidth / 25));
-    for (let i = 0; i < count; i++) {
-      this.particles.push({
-        x: Math.random() * this.canvas.width, y: Math.random() * this.canvas.height,
-        size: Math.random() * 3 + 0.5, speedX: (Math.random() - 0.5) * 0.3,
-        speedY: -Math.random() * 0.4 - 0.1, opacity: Math.random() * 0.5 + 0.1,
-        hue: Math.random() * 30 + 25, pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: Math.random() * 0.02 + 0.005,
-      });
-    }
-  }
-  update() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    for (const p of this.particles) {
-      p.x += p.speedX; p.y += p.speedY; p.pulse += p.pulseSpeed;
-      const dx = this.mouse.x - p.x, dy = this.mouse.y - p.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 150) { p.x -= dx * 0.002; p.y -= dy * 0.002; }
-      if (p.y < -10) { p.y = this.canvas.height + 10; p.x = Math.random() * this.canvas.width; }
-      if (p.x < -10) p.x = this.canvas.width + 10;
-      if (p.x > this.canvas.width + 10) p.x = -10;
-      const curOp = p.opacity * (0.5 + 0.5 * Math.sin(p.pulse));
-      const size = p.size * (0.8 + 0.2 * Math.sin(p.pulse));
-      const grad = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 4);
-      grad.addColorStop(0, `hsla(${p.hue},60%,70%,${curOp * 0.5})`);
-      grad.addColorStop(1, `hsla(${p.hue},60%,70%,0)`);
-      this.ctx.fillStyle = grad;
-      this.ctx.beginPath(); this.ctx.arc(p.x, p.y, size * 4, 0, Math.PI * 2); this.ctx.fill();
-      this.ctx.fillStyle = `hsla(${p.hue},70%,80%,${curOp})`;
-      this.ctx.beginPath(); this.ctx.arc(p.x, p.y, size, 0, Math.PI * 2); this.ctx.fill();
-    }
-  }
-  animate() { this.update(); requestAnimationFrame(() => this.animate()); }
-}
-
-// ============================================
-// SCROLL & UI INTERACTIONS
-// ============================================
-function initScrollAnimations() {
-  const navbar = document.getElementById('main-nav');
-  const scrollIndicator = document.getElementById('scroll-indicator');
-
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    navbar.classList.toggle('scrolled', scrollY > 80);
-    if (scrollIndicator) scrollIndicator.style.opacity = Math.max(0, 1 - scrollY / 300);
-  });
-
-  // Active nav link & dynamic URL hash update on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          const href = link.getAttribute('href');
-          if (href === `#${id}` || href === `/#${id}`) link.classList.add('active');
-        });
-
-        // Dynamically update URL hash as user scrolls without cluttering browser history
-        if ((window.location.pathname === '/' || window.location.pathname === '') && window.location.hash !== `#${id}`) {
-          if (id === 'hero') {
-            history.replaceState(null, null, window.location.pathname);
-          } else {
-            history.replaceState(null, null, `#${id}`);
-          }
-        }
+    keys.forEach((key) => {
+      const val = urlParams.get(key);
+      if (val) {
+        captured[key] = val;
+        found = true;
       }
     });
-  }, { rootMargin: '-30% 0px -60% 0px' });
-  sections.forEach(s => observer.observe(s));
 
-  // Reveal animations
-  const reveals = document.querySelectorAll('.section-header, .product-card, .about-container, .testimonial-card, .contact-container, .feature-item, .contact-method');
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('reveal', 'visible'); revealObs.unobserve(entry.target); }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  reveals.forEach((el, i) => { el.classList.add('reveal'); el.style.transitionDelay = `${(i % 4) * 0.1}s`; revealObs.observe(el); });
-}
-
-function initStatCounters() {
-  document.querySelectorAll('.stat-number[data-target]').forEach(el => {
-    const obs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        const target = parseInt(el.dataset.target);
-        const start = performance.now();
-        const animate = (now) => {
-          const progress = Math.min((now - start) / 2000, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.floor(target * eased);
-          if (progress < 1) requestAnimationFrame(animate); else el.textContent = target;
-        };
-        requestAnimationFrame(animate);
-        obs.unobserve(el);
-      }
-    }, { threshold: 0.5 });
-    obs.observe(el);
-  });
-}
-
-function initMobileMenu() {
-  const menuBtn = document.getElementById('mobile-menu-btn');
-  const overlay = document.getElementById('mobile-menu-overlay');
-  if (!menuBtn || !overlay) return;
-
-  menuBtn.addEventListener('click', () => {
-    menuBtn.classList.toggle('active');
-    overlay.classList.toggle('active');
-    document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
-  });
-
-  overlay.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      menuBtn.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
-      // If on product page, go home first
-      if (document.getElementById('product-page').style.display !== 'none') {
-        navigateHome();
-      }
-    });
-  });
-}
-
-const BAKERY_WHATSAPP_NUMBER = '916383645415';
-
-function getWhatsAppCartMessage(cartItems, total) {
-  let text = `👋 *Hello The Rolling Oven!* I would like to place an order:\n\n`;
-  text += `🧁 *Order Items:*\n`;
-  cartItems.forEach(item => {
-    text += `• ${item.name} × ${item.qty} (₹${item.price * item.qty})\n`;
-  });
-  text += `\n💰 *Total Amount:* ₹${total}\n\n`;
-  text += `📍 *Delivery Area:* Sathyamangalam / Erode\n`;
-  text += `Please confirm availability and delivery details!`;
-  return encodeURIComponent(text);
-}
-
-function getWhatsAppCheckoutMessage(orderData) {
-  let text = `👋 *Hello The Rolling Oven!* I just placed an order on your website:\n\n`;
-  text += `📋 *Order Summary:*\n`;
-  orderData.items.forEach(item => {
-    text += `• ${item.name} × ${item.qty} (₹${item.price * item.qty})\n`;
-  });
-  text += `\n💰 *Total:* ₹${orderData.total}\n\n`;
-  text += `👤 *Customer Details:*\n`;
-  text += `• Name: ${orderData.name}\n`;
-  text += `• Phone: ${orderData.phone}\n`;
-  text += `• Address: ${orderData.address}\n`;
-  text += `• Pincode: ${orderData.pincode}\n`;
-  if (orderData.notes && orderData.notes.trim()) {
-    text += `• Instructions: ${orderData.notes}\n`;
-  }
-  text += `\nPlease confirm my delivery time. Thank you!`;
-  return encodeURIComponent(text);
-}
-
-function initCart() {
-  const closeBtn = document.getElementById('cart-close-btn');
-  const overlay = document.getElementById('cart-overlay');
-  const sidebar = document.getElementById('cart-sidebar');
-
-  function openCart() {
-    sidebar.classList.add('active');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeCart() {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  // Cart button in nav opens cart
-  const cartIconBtn = document.querySelector('.nav-cta');
-  if (cartIconBtn) {
-    if (cartIconBtn.querySelector('.cart-badge')) {
-      cartIconBtn.addEventListener('click', (e) => {
-        if (e.currentTarget.getAttribute('href') === '#') {
-          e.preventDefault();
-          openCart();
-        }
-      });
-    }
-  }
-
-  window.openCart = openCart;
-
-  closeBtn.addEventListener('click', closeCart);
-  overlay.addEventListener('click', closeCart);
-
-  // 1-Click WhatsApp Order Button in Cart (Saves to Supabase DB & Opens WhatsApp)
-  const waBtn = document.getElementById('whatsapp-order-btn');
-  if (waBtn) {
-    waBtn.addEventListener('click', async () => {
-      if (cart.length === 0) return;
-      const total = getCartTotal();
-      const itemsSnapshot = [...cart];
-      const msg = getWhatsAppCartMessage(itemsSnapshot, total);
-
-      const orderData = {
-        name: 'WhatsApp Direct Customer',
-        email: 'whatsapp-order@the-rolling-oven.com',
-        phone: 'WhatsApp Order',
-        address: 'Direct WhatsApp Checkout',
-        pincode: '638401',
-        notes: 'Order placed via 1-Click WhatsApp Button in Cart',
-        b_website: null,
-        items: itemsSnapshot,
-        total: total,
-        isDirectOrder: true
-      };
-
-      // Asynchronously log order into Supabase DB
+    if (found) {
       try {
-        sendOrderEmail({
-          ...orderData,
-          order_type: 'WhatsApp Direct Checkout'
-        });
-      } catch (err) {
-        console.warn('Background Supabase logging:', err);
-      }
-
-      // Google Analytics Tracking
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'purchase', {
-          transaction_id: 'WA_' + Math.floor(Math.random() * 1000000),
-          value: total,
-          currency: 'INR',
-          items: itemsSnapshot.map(i => ({ item_name: i.name, price: i.price, quantity: i.qty }))
-        });
-        gtag('event', 'whatsapp_order_click', {
-          currency: 'INR',
-          value: total
-        });
-      }
-
-      // Clear cart & notify user
-      cart = [];
-      saveCart();
-      updateCartBadge();
-      renderCart();
-      closeCart();
-
-      showToast('success', 'Order Logged! 💬', 'Opening WhatsApp to complete your order...');
-      window.open(`https://wa.me/${BAKERY_WHATSAPP_NUMBER}?text=${msg}`, '_blank');
-    });
+        localStorage.setItem('tbh_utm_params', JSON.stringify(captured));
+        state.utm = captured;
+      } catch (e) {}
+    } else {
+      try {
+        const stored = localStorage.getItem('tbh_utm_params');
+        if (stored) state.utm = JSON.parse(stored);
+      } catch (e) {}
+    }
   }
 
-  // Place order button in cart opens online checkout modal
-  document.getElementById('place-order-btn').addEventListener('click', () => {
-    if (cart.length === 0) return;
-    closeCart();
-    openOrderModal();
-  });
-
-  // Order Now button in nav opens order modal directly
-  const orderBtn = document.getElementById('nav-order-btn');
-  if (orderBtn) {
-    orderBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      openOrderModal();
-    });
+  // --- 4. GA4 SAFE TELEMETRY DISPATCHER ---
+  function trackGA4(eventName, params = {}) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, {
+        ...params,
+        ...state.utm,
+        send_to: GA4_ID,
+      });
+    }
   }
-}
 
-function openOrderModal() {
-  const overlay = document.getElementById('order-modal-overlay');
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  // --- 5. TOAST NOTIFICATIONS ---
+  function showToast(message) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
 
-  // Render order summary
-  const summaryBox = document.getElementById('order-summary-box');
-  if (summaryBox) {
-    summaryBox.style.display = 'block';
-    summaryBox.innerHTML = `
-      <strong style="display:block;margin-bottom:8px;color:var(--cream);">Order Summary</strong>
-      ${cart.map(item => `<div class="order-line"><span>${item.name} × ${item.qty}</span><span>₹${item.price * item.qty}</span></div>`).join('')}
-      <div class="order-line total"><span>Total</span><span>₹${getCartTotal()}</span></div>
-    `;
+    const toast = document.createElement('div');
+    toast.className = 'toast-item';
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(12px)';
+      toast.style.transition = 'all 0.3s ease';
+      setTimeout(() => toast.remove(), 300);
+    }, 2800);
   }
-}
 
-function closeOrderModal() {
-  document.getElementById('order-modal-overlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
+  // --- 6a. [REMOVED] Golden beam engine — replaced by Three.js HeroParticles React component ---
 
-function initOrderModal() {
-  document.getElementById('order-modal-close').addEventListener('click', closeOrderModal);
-  document.getElementById('order-modal-overlay').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) closeOrderModal();
-  });
+  // --- 6b. DIRECTIONAL BEZIER AROMA & COCOA PARTICLE ENGINE ---
+  function initParticles() {
+    const canvas = document.getElementById('particles-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-  document.getElementById('order-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('submit-order-btn');
-
-    // Prevent double submission immediately
-    if (btn.disabled) return;
-    const original = btn.innerHTML;
-    btn.innerHTML = '<span>Processing Order...</span>';
-    btn.disabled = true;
-
-    // Check honeypot
-    const hpVal = document.getElementById('order-hp')?.value || '';
-    if (hpVal.trim().length > 0) {
-      // Bot detected - simulate instant success
-      closeOrderModal();
-      document.getElementById('order-form').reset();
-      btn.innerHTML = original;
-      btn.disabled = false;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
 
-    const orderData = {
-      name: document.getElementById('order-name').value,
-      email: document.getElementById('order-email').value,
-      phone: document.getElementById('order-phone').value,
-      address: document.getElementById('order-address').value,
-      pincode: document.getElementById('order-pincode').value,
-      notes: document.getElementById('order-notes').value,
-      b_website: hpVal,
-      items: [...cart],
-      total: getCartTotal(),
-      isDirectOrder: false
-    };
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
-    try {
-      await sendOrderEmail(orderData);
+    let mouse = { x: -1000, y: -1000, radius: 120 };
 
-      // Google Analytics Tracking
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'purchase', {
-          transaction_id: 'ORDER_' + Math.floor(Math.random() * 1000000),
-          value: orderData.total === 'TBD' ? 0 : orderData.total,
-          currency: 'INR',
-          items: orderData.items.map(i => ({ item_name: i.name, price: i.price, quantity: i.qty }))
-        });
-        gtag('event', 'generate_lead', {
-          currency: 'INR',
-          value: orderData.total === 'TBD' ? 0 : orderData.total
-        });
-      }
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
 
-      cart = [];
-      saveCart();
-      updateCartBadge();
-      renderCart();
-      closeOrderModal();
-      document.getElementById('order-form').reset();
-      
-      // Notify user & trigger WhatsApp confirmation
-      showToast('success', 'Order Confirmed! 🎉', 'Opening WhatsApp to confirm delivery details with the bakery...');
-      const waMsg = getWhatsAppCheckoutMessage(orderData);
-      setTimeout(() => {
-        window.open(`https://wa.me/${BAKERY_WHATSAPP_NUMBER}?text=${waMsg}`, '_blank');
-      }, 1200);
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
 
-    } catch (err) {
-      console.error(err);
-      showToast('error', 'Error Processing Order', 'Please try again or contact us directly on WhatsApp.');
-    } finally {
-      btn.innerHTML = original;
-      btn.disabled = false;
-    }
-  });
-}
+    let brownieAnchor = null;
 
-function initContactForm() {
-  const contactForm = document.getElementById('contact-form');
-  if (!contactForm) return;
-
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('submit-inquiry');
-
-    // Prevent double submission immediately
-    if (btn.disabled) return;
-    const original = btn.innerHTML;
-    btn.innerHTML = '<span>Sending...</span>';
-    btn.disabled = true;
-
-    // Check honeypot
-    const hpVal = document.getElementById('contact-hp')?.value || '';
-    if (hpVal.trim().length > 0) {
-      contactForm.reset();
-      btn.innerHTML = original;
-      btn.disabled = false;
-      return;
-    }
-
-    const formData = {
-      name: document.getElementById('form-name').value,
-      email: document.getElementById('form-email').value,
-      phone: document.getElementById('form-phone').value,
-      product: document.getElementById('form-product').value,
-      message: document.getElementById('form-message').value,
-      b_website: hpVal,
-    };
-
-    try {
-      await sendContactForm(formData);
-
-      // Google Analytics event for inquiry
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'generate_lead', {
-          event_category: 'Contact',
-          event_label: formData.product,
-        });
-      }
-
-      showToast('success', 'Inquiry Sent! ✨', 'We\'ll get back to you soon.');
-      contactForm.reset();
-    } catch (err) {
-      console.error(err);
-      showToast('error', 'Error Sending Inquiry', 'Please try again or call us directly.');
-    } finally {
-      btn.innerHTML = original;
-      btn.disabled = false;
-    }
-  });
-}
-
-function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      const href = anchor.getAttribute('href');
-      if (!href || href === '#') {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    function updateBrownieAnchor() {
+      const el = document.querySelector('.hero-brownie-wrapper');
+      if (!el) {
+        brownieAnchor = null;
         return;
       }
-      e.preventDefault();
-      try {
-        const target = document.querySelector(href);
-        if (target) window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
-      } catch (err) { }
+      const rect = el.getBoundingClientRect();
+      if (rect.width < 10 || rect.bottom <= 0 || rect.top >= height) {
+        brownieAnchor = null;
+        return;
+      }
+      brownieAnchor = {
+        cx: rect.left + rect.width * 0.52,
+        cy: rect.top + rect.height * 0.42,
+        w: rect.width,
+        h: rect.height,
+      };
+    }
+
+    updateBrownieAnchor();
+    window.addEventListener('resize', updateBrownieAnchor);
+    window.addEventListener('scroll', updateBrownieAnchor, { passive: true });
+
+    function createAromaParticle(initialT = Math.random()) {
+      const rand = Math.random();
+      let layer = 'mid';
+      let size = 1.5;
+      let maxOpacity = 0.45;
+      let rgb = '201, 134, 60';
+      let isFlake = false;
+
+      if (rand < 0.35) {
+        // Layer 1: Background cocoa dust
+        layer = 'bg';
+        size = Math.random() * 1.2 + 0.8;
+        maxOpacity = Math.random() * 0.25 + 0.15;
+        rgb = Math.random() > 0.5 ? '247, 213, 139' : '180, 110, 50';
+      } else if (rand < 0.85) {
+        // Layer 2: Midground warm glowing amber / gold specks
+        layer = 'mid';
+        size = Math.random() * 1.8 + 1.8;
+        maxOpacity = Math.random() * 0.35 + 0.55;
+        rgb = Math.random() > 0.4 ? '247, 213, 139' : '232, 182, 110';
+      } else {
+        // Layer 3: Foreground brownie crust flakes
+        layer = 'fg';
+        size = Math.random() * 1.6 + 2.2;
+        maxOpacity = Math.random() * 0.3 + 0.45;
+        rgb = '65, 28, 12';
+        isFlake = true;
+      }
+
+      let originX, originY, spreadX, spreadY;
+      if (brownieAnchor) {
+        originX = brownieAnchor.cx;
+        originY = brownieAnchor.cy;
+        spreadX = brownieAnchor.w * 0.38;
+        spreadY = brownieAnchor.h * 0.32;
+      } else {
+        originX = width * 0.72;
+        originY = height * 0.55;
+        spreadX = width * 0.12;
+        spreadY = height * 0.16;
+      }
+      const p0x = originX + (Math.random() - 0.5) * spreadX;
+      const p0y = originY + (Math.random() - 0.3) * spreadY;
+
+      const p1x = p0x + (Math.random() - 0.4) * 220;
+      const p1y = p0y - (180 + Math.random() * 220);
+
+      const p2x = p1x + (Math.random() - 0.3) * 280;
+      const p2y = Math.max(-40, p1y - (160 + Math.random() * 200));
+
+      const speed = Math.random() * 0.0016 + 0.0012;
+
+      return {
+        p0: { x: p0x, y: p0y },
+        p1: { x: p1x, y: p1y },
+        p2: { x: p2x, y: p2y },
+        t: initialT,
+        speed: speed,
+        size: size,
+        layer: layer,
+        isFlake: isFlake,
+        rgb: rgb,
+        maxOpacity: maxOpacity,
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.015,
+        wobble: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.02 + 0.008,
+        lastX: null,
+        lastY: null,
+      };
+    }
+
+    const count = width > 768 ? 75 : 32;
+    const particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push(createAromaParticle(Math.random()));
+    }
+
+    let isVisible = true;
+    document.addEventListener('visibilitychange', () => {
+      isVisible = !document.hidden;
     });
-  });
-}
 
-// ============================================
-// FEEDBACK MODAL
-// ============================================
-function initFeedbackModal() {
-  const overlay = document.getElementById('feedback-modal-overlay');
-  if (!overlay) return;
+    function animate() {
+      if (!isVisible) {
+        requestAnimationFrame(animate);
+        return;
+      }
 
-  document.getElementById('open-feedback-btn')?.addEventListener('click', () => {
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  });
+      ctx.clearRect(0, 0, width, height);
 
-  const close = () => {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  };
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.t += p.speed;
+        p.rotation += p.rotSpeed;
+        p.wobble += p.wobbleSpeed;
 
-  document.getElementById('feedback-modal-close')?.addEventListener('click', close);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+        if (p.t >= 1) {
+          particles[i] = createAromaParticle(0);
+          continue;
+        }
 
-  document.getElementById('feedback-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('submit-feedback-btn');
-    const original = btn.innerHTML;
-    btn.innerHTML = '<span>Submitting...</span>';
-    btn.disabled = true;
+        const t = p.t;
+        const mt = 1 - t;
+        let curX = mt * mt * p.p0.x + 2 * mt * t * p.p1.x + t * t * p.p2.x;
+        let curY = mt * mt * p.p0.y + 2 * mt * t * p.p1.y + t * t * p.p2.y;
 
-    const formData = {
-      name: document.getElementById('feedback-name').value,
-      rating: parseInt(document.getElementById('feedback-rating').value),
-      message: document.getElementById('feedback-message').value
+        curX += Math.sin(p.wobble) * 0.8;
+
+        const dx = mouse.x - curX;
+        const dy = mouse.y - curY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          curX -= (dx / dist) * force * 2;
+          curY -= (dy / dist) * force * 2;
+        }
+
+        let alpha = p.maxOpacity;
+        if (t < 0.2) {
+          alpha = p.maxOpacity * (t / 0.2);
+        } else if (t > 0.7) {
+          alpha = p.maxOpacity * ((1 - t) / 0.3);
+        }
+        alpha = Math.max(0, Math.min(1, alpha));
+
+        if (!p.isFlake && p.lastX !== null) {
+          ctx.save();
+          ctx.strokeStyle = `rgba(${p.rgb}, ${alpha * 0.4})`;
+          ctx.lineWidth = p.size * 0.8;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(p.lastX, p.lastY);
+          ctx.lineTo(curX, curY);
+          ctx.stroke();
+          ctx.restore();
+        }
+        p.lastX = curX;
+        p.lastY = curY;
+
+        ctx.save();
+        ctx.translate(curX, curY);
+
+        if (p.isFlake) {
+          ctx.rotate(p.rotation);
+          ctx.fillStyle = `rgba(${p.rgb}, ${alpha})`;
+          ctx.beginPath();
+          ctx.moveTo(-p.size, -p.size * 0.6);
+          ctx.lineTo(p.size * 0.8, -p.size * 0.8);
+          ctx.lineTo(p.size, p.size * 0.7);
+          ctx.lineTo(-p.size * 0.5, p.size * 0.9);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.rgb}, ${alpha})`;
+          if (p.layer === 'mid') {
+            ctx.shadowColor = `rgba(${p.rgb}, 0.6)`;
+            ctx.shadowBlur = p.size * 3;
+          }
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+  }
+
+  // --- 7. CART MANAGEMENT ---
+  function loadCart() {
+    try {
+      const saved = localStorage.getItem('tbh_cart');
+      if (saved) {
+        state.cart = JSON.parse(saved);
+      }
+    } catch (e) {
+      state.cart = [];
+    }
+    renderCart();
+  }
+
+  function saveCart() {
+    try {
+      localStorage.setItem('tbh_cart', JSON.stringify(state.cart));
+    } catch (e) {}
+    renderCart();
+  }
+
+  function addToCart(name, price, breakdown = null, isBox = false, image = null) {
+    const existingIndex = state.cart.findIndex(
+      (item) => item.name === name && JSON.stringify(item.breakdown || []) === JSON.stringify(breakdown || [])
+    );
+
+    if (existingIndex > -1) {
+      state.cart[existingIndex].qty += 1;
+    } else {
+      state.cart.push({
+        id: `item_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
+        name: name,
+        price: Number(price) || 0,
+        qty: 1,
+        breakdown: breakdown || [],
+        isBox: isBox,
+        image: image || '/images/brownies/classic-fudge.jpg',
+      });
+    }
+
+    saveCart();
+    showToast(`Added "${name}" to your box! 🍫`);
+
+    trackGA4('add_to_cart', {
+      currency: 'INR',
+      value: price,
+      items: [{ item_name: name, price: price, quantity: 1 }],
+      custom_breakdown: breakdown ? breakdown.join(', ') : undefined,
+    });
+  }
+
+  function updateCartQty(index, delta) {
+    if (!state.cart[index]) return;
+    state.cart[index].qty += delta;
+    if (state.cart[index].qty <= 0) {
+      const removed = state.cart.splice(index, 1)[0];
+      showToast(`Removed "${removed.name}" from box.`);
+      trackGA4('remove_from_cart', {
+        currency: 'INR',
+        value: removed.price,
+        items: [{ item_name: removed.name, price: removed.price, quantity: 1 }],
+      });
+    }
+    saveCart();
+  }
+
+  function calculateCartTotal() {
+    return state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  }
+
+  function calculateTotalItemCount() {
+    return state.cart.reduce((sum, item) => sum + item.qty, 0);
+  }
+
+  function renderCart() {
+    const badge = document.getElementById('cart-count-badge');
+    const headerCount = document.getElementById('cart-header-count');
+    const totalDisplay = document.getElementById('cart-total-display');
+    const subtotalDisplay = document.getElementById('cart-subtotal-display');
+    const deliveryFeeDisplay = document.getElementById('cart-delivery-fee-display');
+    const itemsContainer = document.getElementById('cart-items-container');
+    const emptyState = document.getElementById('cart-empty-state');
+    const footer = document.getElementById('cart-footer');
+    const deliveryFill = document.getElementById('cart-delivery-fill');
+    const deliveryMsg = document.getElementById('cart-delivery-msg');
+    const noteSection = document.getElementById('cart-note-section');
+
+    const totalCount = calculateTotalItemCount();
+    const subtotal = calculateCartTotal();
+    const freeDeliveryThreshold = 500;
+    const isFreeDelivery = subtotal >= freeDeliveryThreshold;
+    const deliveryFee = isFreeDelivery ? 0 : 49;
+    const grandTotal = subtotal + deliveryFee;
+
+    if (badge) badge.textContent = String(totalCount);
+    if (headerCount) headerCount.textContent = `${totalCount} item${totalCount === 1 ? '' : 's'} selected`;
+    if (subtotalDisplay) subtotalDisplay.textContent = `₹${subtotal}`;
+    if (deliveryFeeDisplay) {
+      deliveryFeeDisplay.textContent = isFreeDelivery ? 'FREE' : '₹49';
+      deliveryFeeDisplay.style.color = isFreeDelivery ? '#51cf66' : 'var(--cream-muted)';
+    }
+    if (totalDisplay) totalDisplay.textContent = `₹${grandTotal}`;
+
+    // Update Chennai Free Delivery Progress Meter
+    if (deliveryFill && deliveryMsg) {
+      if (subtotal === 0) {
+        deliveryFill.style.width = '0%';
+        deliveryMsg.innerHTML = '<span>🛵 Add ₹500 more for <strong>FREE Delivery</strong> across Chennai!</span>';
+      } else if (isFreeDelivery) {
+        deliveryFill.style.width = '100%';
+        deliveryMsg.innerHTML = '<span>🎉 You unlocked <strong>FREE Delivery</strong> across Chennai!</span>';
+      } else {
+        const remaining = freeDeliveryThreshold - subtotal;
+        const pct = Math.min(99, Math.round((subtotal / freeDeliveryThreshold) * 100));
+        deliveryFill.style.width = `${pct}%`;
+        deliveryMsg.innerHTML = `<span>🛵 Add <strong>₹${remaining}</strong> more for <strong>FREE Delivery</strong> across Chennai!</span>`;
+      }
+    }
+
+    if (!itemsContainer) return;
+
+    if (state.cart.length === 0) {
+      if (emptyState) emptyState.style.display = 'block';
+      if (footer) footer.style.display = 'none';
+      if (noteSection) noteSection.style.display = 'none';
+      itemsContainer.innerHTML = '';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+    if (footer) footer.style.display = 'block';
+    if (noteSection) noteSection.style.display = 'block';
+
+    itemsContainer.innerHTML = state.cart
+      .map((item, idx) => {
+        const imageSrc = item.image || '/images/brownies/classic-fudge.jpg';
+        const breakdownHtml =
+          item.breakdown && item.breakdown.length > 0
+            ? `<div class="cart-item-tags">
+                ${item.breakdown.map((b) => `<span class="cart-tag-chip">${b}</span>`).join('')}
+               </div>`
+            : '';
+
+        return `
+          <div class="cart-item-card">
+            <img src="${imageSrc}" alt="${item.name}" class="cart-item-thumb" loading="lazy" />
+            <div class="cart-item-info">
+              <div class="cart-item-title-row">
+                <h4 class="cart-item-title">${item.name}</h4>
+                <button class="cart-item-delete-btn btn-cart-delete" data-index="${idx}" title="Remove item" aria-label="Remove item">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </div>
+
+              ${breakdownHtml}
+
+              <div class="cart-item-bottom-row">
+                <div class="cart-pill-stepper">
+                  <button class="stepper-btn btn-cart-minus" data-index="${idx}" aria-label="Decrease quantity">−</button>
+                  <span class="stepper-val mono-font">${item.qty}</span>
+                  <button class="stepper-btn btn-cart-plus" data-index="${idx}" aria-label="Increase quantity">+</button>
+                </div>
+                <span class="cart-item-price mono-font">₹${item.price * item.qty}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      })
+      .join('');
+  }
+
+  // Expose global cart API
+  window.tbhAddToCart = addToCart;
+
+  // --- 8. CART DRAWER TOGGLE ---
+  function initCartDrawer() {
+    const toggleBtn = document.getElementById('cart-toggle-btn');
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-overlay');
+    const closeBtn = document.getElementById('cart-close-btn');
+    const emptyBuilderBtn = document.getElementById('cart-empty-builder-btn');
+
+    function openCart() {
+      if (drawer) drawer.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      trackGA4('view_cart', {
+        currency: 'INR',
+        value: calculateCartTotal(),
+      });
+    }
+
+    function closeCart() {
+      if (drawer) drawer.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) toggleBtn.addEventListener('click', openCart);
+    if (closeBtn) closeBtn.addEventListener('click', closeCart);
+    if (overlay) overlay.addEventListener('click', closeCart);
+    if (emptyBuilderBtn) {
+      emptyBuilderBtn.addEventListener('click', () => {
+        closeCart();
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      const minusBtn = e.target.closest('.btn-cart-minus');
+      const plusBtn = e.target.closest('.btn-cart-plus');
+      const deleteBtn = e.target.closest('.btn-cart-delete');
+
+      if (minusBtn) {
+        const idx = parseInt(minusBtn.dataset.index, 10);
+        updateCartQty(idx, -1);
+      } else if (plusBtn) {
+        const idx = parseInt(plusBtn.dataset.index, 10);
+        updateCartQty(idx, 1);
+      } else if (deleteBtn) {
+        const idx = parseInt(deleteBtn.dataset.index, 10);
+        updateCartQty(idx, -999);
+      }
+    });
+  }
+
+  // --- 9. BESTSELLERS CAROUSEL CONTROLLER ---
+  function initBestsellersCarousel() {
+    const grid = document.getElementById('bestsellers-grid');
+    const prevBtn = document.getElementById('bestseller-prev');
+    const nextBtn = document.getElementById('bestseller-next');
+
+    if (!grid || !prevBtn || !nextBtn) return;
+
+    function getScrollStep() {
+      const card = grid.querySelector('.bestseller-card');
+      return card ? card.offsetWidth + 16 : 260;
+    }
+
+    function updateArrowStates() {
+      const atStart = grid.scrollLeft <= 6;
+      const atEnd = grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 6;
+      prevBtn.disabled = atStart;
+      nextBtn.disabled = atEnd;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      grid.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      grid.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+    });
+
+    grid.addEventListener('scroll', updateArrowStates, { passive: true });
+    window.addEventListener('resize', updateArrowStates);
+    setTimeout(updateArrowStates, 300);
+  }
+
+  // --- 10. CUSTOM BOX BUILDER CONTROLLER (SIMULATOR) ---
+  function initBoxBuilder() {
+    const tierPills = document.querySelectorAll('#builder-tier-selector .tier-pill');
+    const filterTabs = document.querySelectorAll('#builder-dietary-filter .filter-tab');
+    const flavorCards = document.querySelectorAll('#builder-flavor-list .flavor-pick-card');
+    const slotsGrid = document.getElementById('builder-slots-grid');
+    const boxCard = document.getElementById('builder-box-card');
+    const boxTitle = document.getElementById('builder-box-title');
+    const boxBadge = document.getElementById('builder-box-badge');
+    const slotsText = document.getElementById('builder-slots-text');
+    const progressFill = document.getElementById('builder-progress-fill');
+    const priceDisplay = document.getElementById('builder-price-display');
+    const addCartBtn = document.getElementById('builder-add-cart-btn');
+    const whatsappBtn = document.getElementById('builder-whatsapp-btn');
+    const clearBtn = document.getElementById('builder-clear-btn');
+
+    const tierPrices = { 4: 329, 6: 489, 12: 929 };
+
+    function renderBuilderSlots() {
+      if (!slotsGrid) return;
+
+      const size = state.builder.size;
+      const count = state.builder.slots.length;
+      const remaining = size - count;
+      const pct = Math.round((count / size) * 100);
+
+      if (boxTitle) boxTitle.textContent = state.builder.name;
+      if (boxBadge) boxBadge.textContent = `${count} / ${size} Selected`;
+      if (slotsText) slotsText.textContent = `${count} of ${size} slots filled`;
+      if (progressFill) progressFill.style.width = `${pct}%`;
+      if (priceDisplay) priceDisplay.textContent = `₹${state.builder.price}`;
+
+      if (boxCard) {
+        if (count === size) {
+          boxCard.classList.add('border-beam-card');
+        } else {
+          boxCard.classList.remove('border-beam-card');
+        }
+      }
+
+      if (addCartBtn) {
+        if (count === size) {
+          addCartBtn.removeAttribute('disabled');
+          addCartBtn.classList.add('pulse-gold');
+          addCartBtn.innerHTML = `<span>Pack &amp; Add Box to Cart &bull; ₹${state.builder.price} &rarr;</span>`;
+          addCartBtn.style.opacity = '1';
+        } else {
+          addCartBtn.setAttribute('disabled', 'true');
+          addCartBtn.classList.remove('pulse-gold');
+          addCartBtn.innerHTML = `<span>Pick ${remaining} more brownie${remaining > 1 ? 's' : ''} to pack box</span>`;
+          addCartBtn.style.opacity = '0.65';
+        }
+      }
+
+      // Update WhatsApp link with pre-filled flavor breakdown
+      if (whatsappBtn) {
+        const counts = {};
+        state.builder.slots.forEach((s) => {
+          const label = `${s.name} (${s.dietary === 'veg' ? 'Veg' : 'Egg'})`;
+          counts[label] = (counts[label] || 0) + 1;
+        });
+        const breakdownStr = Object.entries(counts).map(([f, c]) => `${c}x ${f}`).join(', ') || 'Custom Assorted';
+        const msg = `Hi The Brownie Hub! I would like to order a ${state.builder.name} (₹${state.builder.price}) with: ${breakdownStr}. Please confirm delivery in Chennai!`;
+        whatsappBtn.href = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(msg)}`;
+      }
+
+      // Generate visual slots with image thumbnails
+      let html = '';
+      for (let i = 0; i < size; i++) {
+        if (i < count) {
+          const slot = state.builder.slots[i];
+          const isVeg = slot.dietary === 'veg';
+          html += `
+            <div class="slot-item filled">
+              <img src="${slot.image}" alt="${slot.name}" class="slot-item-thumb" />
+              <div style="display:flex;align-items:center;gap:4px;width:100%;justify-content:center;">
+                <span class="dietary-dot ${isVeg ? 'veg' : 'nonveg'}" style="width:7px;height:7px;flex-shrink:0;"></span>
+                <span class="slot-item-name">${slot.name}</span>
+              </div>
+              <button class="slot-item-remove btn-slot-remove" data-index="${i}" title="Remove" aria-label="Remove brownie">✕</button>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="slot-item">
+              <span style="font-size:0.75rem;font-weight:700;color:var(--caramel-bright);background:rgba(201,134,60,0.18);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;">${i + 1}</span>
+              <span style="font-size:0.68rem;opacity:0.65;color:var(--cream-muted);">+ Drop Flavor</span>
+            </div>
+          `;
+        }
+      }
+      slotsGrid.innerHTML = html;
+    }
+
+    // Step 1: Tier Selector
+    tierPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        tierPills.forEach((p) => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const size = parseInt(pill.dataset.size, 10);
+        state.builder.size = size;
+        state.builder.name = pill.dataset.name || `Box of ${size}`;
+        state.builder.price = tierPrices[size] || 489;
+        state.builder.slots = [];
+
+        renderBuilderSlots();
+        trackGA4('select_box_tier', { box_size: size, price: state.builder.price });
+      });
+    });
+
+    // Step 2: Dietary Filter Tabs
+    filterTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.dataset.filter;
+        state.builder.activeFilter = filter;
+
+        flavorCards.forEach((card) => {
+          const dietary = card.dataset.dietary;
+          if (filter === 'all' || dietary === filter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Step 3: Flavor Picker Cards
+    flavorCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        if (state.builder.slots.length >= state.builder.size) {
+          showToast(`Your ${state.builder.name} is full (${state.builder.size}/${state.builder.size})! Click "Add to Cart" or remove a slot.`);
+          return;
+        }
+
+        const name = card.dataset.name;
+        const dietary = card.dataset.dietary;
+        const image = card.dataset.image || '/images/brownies/classic-fudge.jpg';
+
+        state.builder.slots.push({
+          name: name,
+          dietary: dietary,
+          image: image,
+        });
+
+        renderBuilderSlots();
+        showToast(`Dropped ${name} into slot ${state.builder.slots.length}! 📦`);
+      });
+    });
+
+    // Remove slot
+    document.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('.btn-slot-remove');
+      if (removeBtn) {
+        const idx = parseInt(removeBtn.dataset.index, 10);
+        state.builder.slots.splice(idx, 1);
+        renderBuilderSlots();
+      }
+    });
+
+    // Clear Selection
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        state.builder.slots = [];
+        renderBuilderSlots();
+        showToast('Cleared custom box selection.');
+      });
+    }
+
+    // Add Custom Box to Cart
+    if (addCartBtn) {
+      addCartBtn.addEventListener('click', () => {
+        if (state.builder.slots.length < state.builder.size) {
+          showToast(`Please fill all ${state.builder.size} slots before adding to cart.`);
+          return;
+        }
+
+        const counts = {};
+        state.builder.slots.forEach((s) => {
+          const label = `${s.name} (${s.dietary === 'veg' ? 'Veg' : 'Egg'})`;
+          counts[label] = (counts[label] || 0) + 1;
+        });
+        const breakdownList = Object.entries(counts).map(([f, c]) => `${c}x ${f}`);
+
+        addToCart(
+          `Custom ${state.builder.name}`,
+          state.builder.price,
+          breakdownList,
+          true,
+          '/images/brownies/luxury-box-mockup.jpg'
+        );
+
+        trackGA4('customize_box', {
+          box_size: state.builder.size,
+          flavors_count: state.builder.slots.length,
+          selected_flavors: state.builder.slots.map((s) => s.name).join(', '),
+          value: state.builder.price,
+          currency: 'INR',
+        });
+
+        // Open Cart Drawer
+        const drawer = document.getElementById('cart-drawer');
+        const overlay = document.getElementById('cart-overlay');
+        if (drawer) drawer.classList.add('open');
+        if (overlay) overlay.classList.add('open');
+
+        // Reset builder slots
+        state.builder.slots = [];
+        renderBuilderSlots();
+      });
+    }
+
+    renderBuilderSlots();
+  }
+
+  // --- 11. MENU SECTION ADD-TO-CART CONTROLLER ---
+  function initMenuActions() {
+    document.addEventListener('click', (e) => {
+      const addBtn = e.target.closest('.add-cart-btn');
+      if (addBtn) {
+        const name = addBtn.dataset.name;
+        const price = Number(addBtn.dataset.price) || 0;
+        const isBox = addBtn.dataset.isBox === 'true';
+        const image = addBtn.dataset.image || '/images/brownies/classic-fudge.jpg';
+
+        addToCart(name, price, null, isBox, image);
+      }
+    });
+  }
+
+  // --- 12. CHECKOUT & ORDER MODAL CONTROLLER ---
+  function initOrderModal() {
+    const modal = document.getElementById('order-modal');
+    const overlay = document.getElementById('order-modal-overlay');
+    const closeBtn = document.getElementById('order-modal-close-btn');
+    const openCheckoutBtn = document.getElementById('cart-checkout-btn');
+    const itemCountSpan = document.getElementById('order-modal-item-count');
+    const totalSpan = document.getElementById('order-modal-total');
+    const orderForm = document.getElementById('order-checkout-form');
+    const formStep = document.getElementById('order-form-step');
+    const successStep = document.getElementById('order-success-step');
+    const submitBtn = document.getElementById('order-submit-btn');
+    const paymentTabs = document.querySelectorAll('.payment-tab');
+    const paymentMethodInput = document.getElementById('order-payment-method');
+
+    function renderModalOrderSummary() {
+      const itemsList = document.getElementById('order-modal-items-list');
+      const subtotalSpan = document.getElementById('order-modal-subtotal');
+      const totalSpan = document.getElementById('order-modal-total');
+      const countBadge = document.getElementById('order-modal-item-count');
+      const deliveryFeeElem = document.getElementById('order-modal-delivery-fee');
+
+      const totalCount = calculateTotalItemCount();
+      const subtotal = calculateCartTotal();
+      const isFreeDelivery = subtotal >= 500;
+      const deliveryFee = isFreeDelivery ? 0 : 49;
+      const grandTotal = subtotal + deliveryFee;
+
+      if (countBadge) countBadge.textContent = `${totalCount} item${totalCount === 1 ? '' : 's'}`;
+      if (subtotalSpan) subtotalSpan.textContent = `₹${subtotal}`;
+      if (deliveryFeeElem) {
+        deliveryFeeElem.textContent = isFreeDelivery ? 'FREE' : '₹49';
+        deliveryFeeElem.style.color = isFreeDelivery ? '#51cf66' : 'var(--cream-muted)';
+      }
+      if (totalSpan) totalSpan.textContent = `₹${grandTotal}`;
+
+      if (!itemsList) return;
+
+      if (state.cart.length === 0) {
+        itemsList.innerHTML = '<div style="text-align:center;padding:16px;color:var(--cream-muted);font-size:0.88rem;">Your box is empty. Pick brownies from our menu!</div>';
+        return;
+      }
+
+      let html = '';
+      state.cart.forEach((item, idx) => {
+        const hasBreakdown = item.breakdown && item.breakdown.length > 0;
+        const chipsHtml = hasBreakdown
+          ? `<div class="rolling-item-chips">${item.breakdown.map((b) => `<span class="rolling-chip">${b}</span>`).join('')}</div>`
+          : '';
+
+        html += `
+          <div class="rolling-item-row">
+            <img src="${item.image || '/images/brownies/classic-fudge.jpg'}" alt="${item.name}" class="rolling-item-thumb" />
+            <div class="rolling-item-info">
+              <div class="rolling-item-name">${item.name}</div>
+              ${chipsHtml}
+            </div>
+            <div class="rolling-item-stepper">
+              <button type="button" class="rolling-stepper-btn btn-modal-minus" data-index="${idx}">-</button>
+              <span class="rolling-stepper-val">${item.qty}</span>
+              <button type="button" class="rolling-stepper-btn btn-modal-plus" data-index="${idx}">+</button>
+            </div>
+            <div class="rolling-item-price">₹${item.price * item.qty}</div>
+          </div>
+        `;
+      });
+      itemsList.innerHTML = html;
+    }
+
+    function openModal() {
+      if (state.cart.length === 0) {
+        showToast('Your cart is empty! Pick your favorite brownies first 🍫');
+        return;
+      }
+
+      const drawer = document.getElementById('cart-drawer');
+      const cartOverlay = document.getElementById('cart-overlay');
+      if (drawer) drawer.classList.remove('open');
+      if (cartOverlay) cartOverlay.classList.remove('open');
+
+      renderModalOrderSummary();
+
+      if (formStep) formStep.style.display = 'block';
+      if (successStep) successStep.style.display = 'none';
+
+      if (modal) modal.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      trackGA4('begin_checkout', {
+        currency: 'INR',
+        value: calculateCartTotal(),
+        items: state.cart.map((i) => ({ item_name: i.name, price: i.price, quantity: i.qty })),
+      });
+    }
+
+    function closeModal() {
+      if (modal) modal.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (openCheckoutBtn) openCheckoutBtn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+
+    // Stepper buttons inside Rolling Modal
+    document.addEventListener('click', (e) => {
+      const modalMinus = e.target.closest('.btn-modal-minus');
+      const modalPlus = e.target.closest('.btn-modal-plus');
+
+      if (modalMinus) {
+        const idx = parseInt(modalMinus.dataset.index, 10);
+        updateCartQty(idx, -1);
+        renderModalOrderSummary();
+      } else if (modalPlus) {
+        const idx = parseInt(modalPlus.dataset.index, 10);
+        updateCartQty(idx, 1);
+        renderModalOrderSummary();
+      }
+    });
+
+    // WhatsApp Direct Order inside Rolling Modal
+    const modalWaBtn = document.getElementById('order-modal-wa-btn');
+    if (modalWaBtn) {
+      modalWaBtn.addEventListener('click', () => {
+        if (state.cart.length === 0) {
+          showToast('Please add items to your cart first!');
+          return;
+        }
+        const name = document.getElementById('order-customer-name')?.value || 'Foodie';
+        const address = document.getElementById('order-delivery-address')?.value || 'Chennai';
+        const phone = document.getElementById('order-customer-phone')?.value || '';
+        const instructions = document.getElementById('order-instructions')?.value || '';
+
+        const itemsText = state.cart
+          .map((i) => {
+            const bd = i.breakdown && i.breakdown.length > 0 ? ` (${i.breakdown.join(', ')})` : '';
+            return `${i.qty}x ${i.name}${bd}`;
+          })
+          .join(', ');
+
+        const grandTotal = calculateCartTotal() >= 500 ? calculateCartTotal() : calculateCartTotal() + 49;
+        const msg = `Hi The Brownie Hub! I'd like to place an order:%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A*Address:* ${encodeURIComponent(address)}%0A*Items:* ${encodeURIComponent(itemsText)}%0A*Total:* ₹${grandTotal}${instructions ? `%0A*Note:* ${encodeURIComponent(instructions)}` : ''}%0A%0APlease confirm delivery in Chennai!`;
+
+        window.open(`https://wa.me/${BAKERY_PHONE}?text=${msg}`, '_blank');
+      });
+    }
+
+    paymentTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        paymentTabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        const mode = tab.dataset.payment;
+        if (paymentMethodInput) paymentMethodInput.value = mode;
+
+        const upiBox = document.getElementById('upi-payment-box');
+        if (upiBox) {
+          upiBox.style.display = mode.includes('UPI') ? 'block' : 'none';
+        }
+      });
+    });
+
+    if (orderForm) {
+      orderForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Processing Order... ⏳';
+        }
+
+        const formData = new FormData(orderForm);
+        const customerName = formData.get('customer_name');
+        const customerPhone = formData.get('customer_phone');
+        const customerEmail = formData.get('customer_email');
+        const deliveryAddress = formData.get('delivery_address');
+        const pincode = formData.get('pincode');
+        const specialInstructions = formData.get('special_instructions');
+        const paymentMethod = formData.get('payment_method') || 'UPI / QR Code';
+        const honeypot = formData.get('b_website');
+
+        const payload = {
+          customer_name: customerName,
+          customer_phone: customerPhone,
+          customer_email: customerEmail,
+          delivery_address: deliveryAddress,
+          pincode: pincode,
+          special_instructions: specialInstructions || '',
+          payment_method: paymentMethod,
+          order_type: 'The Brownie Hub Direct Web Order',
+          items: state.cart.map((item) => ({
+            name: item.name,
+            qty: item.qty,
+            price: item.price,
+            breakdown: item.breakdown || [],
+          })),
+          total_amount: calculateCartTotal(),
+          utm_source: state.utm.utm_source || '',
+          utm_medium: state.utm.utm_medium || '',
+          utm_campaign: state.utm.utm_campaign || '',
+          b_website: honeypot || '',
+        };
+
+        try {
+          const res = await fetch('/api/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await res.json();
+
+          if (res.ok && data.success) {
+            const orderId = data.order_id || `TBH-${Date.now().toString().slice(-6)}`;
+            const finalTotal = data.verified_total || payload.total_amount;
+
+            const orderIdElem = document.getElementById('success-order-id');
+            const orderAmountElem = document.getElementById('success-order-amount');
+            const whatsappLink = document.getElementById('success-whatsapp-link');
+
+            if (orderIdElem) orderIdElem.textContent = orderId;
+            if (orderAmountElem) orderAmountElem.textContent = `₹${finalTotal}`;
+
+            const itemsText = state.cart
+              .map((i) => {
+                const bd = i.breakdown && i.breakdown.length > 0 ? `\n    (${i.breakdown.join(', ')})` : '';
+                return `• ${i.name} (x${i.qty}) - ₹${i.price * i.qty}${bd}`;
+              })
+              .join('\n');
+
+            const waMessage =
+              `🍫 *NEW ORDER CONFIRMATION — THE BROWNIE HUB*\n` +
+              `------------------------------------\n` +
+              `*Order ID:* ${orderId}\n` +
+              `*Customer:* ${customerName}\n` +
+              `*Phone:* ${customerPhone}\n` +
+              `*Delivery Address:* ${deliveryAddress} (PIN: ${pincode})\n` +
+              `*Payment Mode:* ${paymentMethod}\n\n` +
+              `*Items Ordered:*\n${itemsText}\n\n` +
+              `*Total Amount:* ₹${finalTotal}\n` +
+              `*Notes:* ${specialInstructions || 'None'}\n` +
+              `------------------------------------\n` +
+              `Please confirm my order & dispatch status!`;
+
+            if (whatsappLink) {
+              whatsappLink.href = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waMessage)}`;
+            }
+
+            trackGA4('purchase', {
+              transaction_id: orderId,
+              value: finalTotal,
+              currency: 'INR',
+              payment_type: paymentMethod,
+              items: state.cart.map((i) => ({ item_name: i.name, price: i.price, quantity: i.qty })),
+            });
+
+            state.cart = [];
+            saveCart();
+
+            if (formStep) formStep.style.display = 'none';
+            if (successStep) successStep.style.display = 'block';
+            showToast('Order confirmed! Opening WhatsApp sync...');
+          } else {
+            showToast(`Error: ${data.error || 'Failed to place order.'}`);
+          }
+        } catch (err) {
+          console.error('Order submission error:', err);
+          showToast('Network error while placing order. Please try WhatsApp checkout.');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Confirm Order & Complete';
+          }
+        }
+      });
+    }
+  }
+
+  // --- 13. 1-CLICK WHATSAPP CART CHECKOUT ---
+  function initWhatsAppCheckout() {
+    const waCheckoutBtn = document.getElementById('cart-whatsapp-checkout-btn');
+    if (!waCheckoutBtn) return;
+
+    waCheckoutBtn.addEventListener('click', async () => {
+      if (state.cart.length === 0) {
+        showToast('Your cart is empty!');
+        return;
+      }
+
+      const total = calculateCartTotal();
+      const itemsList = state.cart
+        .map((i) => {
+          const bd = i.breakdown && i.breakdown.length > 0 ? `\n    ↳ [${i.breakdown.join(', ')}]` : '';
+          return `• ${i.name} (x${i.qty}) - ₹${i.price * i.qty}${bd}`;
+        })
+        .join('\n');
+
+      const giftNoteElem = document.getElementById('cart-gift-note');
+      const giftNote = giftNoteElem && giftNoteElem.value.trim() ? giftNoteElem.value.trim() : '';
+      const giftNoteStr = giftNote ? `\n*Gift / Delivery Note:* ${giftNote}` : '';
+
+      const utmParts = [];
+      if (state.utm.utm_source) utmParts.push(`Source=${state.utm.utm_source}`);
+      if (state.utm.utm_campaign) utmParts.push(`Campaign=${state.utm.utm_campaign}`);
+      if (state.utm.utm_medium) utmParts.push(`Medium=${state.utm.utm_medium}`);
+      const utmInfo = utmParts.length > 0 ? `\n*Ref:* ${utmParts.join(' | ')}` : '';
+
+      const waText =
+        `🍫 *1-CLICK WHATSAPP ORDER — THE BROWNIE HUB*\n` +
+        `------------------------------------\n` +
+        `Hello! I'd like to place an order from your online store:\n\n` +
+        `*Items Ordered:*\n${itemsList}\n\n` +
+        `*Total Amount:* ₹${total}\n` +
+        `*Delivery Location:* Chennai, Tamil Nadu${giftNoteStr}${utmInfo}\n` +
+        `------------------------------------\n` +
+        `Please confirm my order & send your UPI payment QR!`;
+
+      trackGA4('whatsapp_order_click', {
+        value: total,
+        items_count: calculateTotalItemCount(),
+        currency: 'INR',
+      });
+
+      try {
+        fetch('/api/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customer_name: 'WhatsApp Direct Shopper',
+            customer_phone: 'WhatsApp Chat',
+            customer_email: 'whatsapp@thebrowniehub.com',
+            delivery_address: 'Direct WhatsApp Delivery',
+            pincode: '600001',
+            order_type: 'WhatsApp Direct 1-Click Checkout',
+            payment_method: 'WhatsApp Pay / UPI',
+            special_instructions: giftNote,
+            items: state.cart.map((i) => ({ name: i.name, qty: i.qty, price: i.price, breakdown: i.breakdown || [] })),
+            total_amount: total,
+            utm_source: state.utm.utm_source || 'whatsapp_1click',
+            utm_medium: state.utm.utm_medium || '',
+            utm_campaign: state.utm.utm_campaign || '',
+          }),
+        });
+      } catch (e) {}
+
+      window.open(`https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waText)}`, '_blank');
+    });
+  }
+
+  // --- 14. WORKSHOP RESERVATION ENGINE CONTROLLER ---
+  function initWorkshopModal() {
+    const modal = document.getElementById('workshop-modal');
+    const overlay = document.getElementById('workshop-modal-overlay');
+    const closeBtn = document.getElementById('workshop-modal-close-btn');
+    const bookingForm = document.getElementById('workshop-booking-form');
+    const formStep = document.getElementById('workshop-form-step');
+    const successStep = document.getElementById('workshop-success-step');
+    const calculatedTotalElem = document.getElementById('ws-calculated-total');
+    const seatsSelect = document.getElementById('ws-seats-count');
+    const slotSelect = document.getElementById('ws-select-slot');
+
+    const inputWsId = document.getElementById('ws-input-id');
+    const inputWsName = document.getElementById('ws-input-name');
+    const inputWsPrice = document.getElementById('ws-input-unit-price');
+    const modalBadge = document.getElementById('workshop-modal-badge');
+    const modalTitle = document.getElementById('workshop-modal-title');
+    const submitBtn = document.getElementById('ws-submit-btn');
+
+    const workshopSchedules = {
+      'brownie-basics': [
+        'Saturday, Sep 5 — 10:30 AM to 12:30 PM (3 seats left)',
+        'Sunday, Sep 6 — 03:30 PM to 05:30 PM (5 seats left)',
+        'Saturday, Sep 12 — 10:30 AM to 12:30 PM (6 seats left)',
+      ],
+      'flavour-lab': [
+        'Sunday, Sep 6 — 11:00 AM to 02:00 PM (2 seats left)',
+        'Sunday, Sep 20 — 11:00 AM to 02:00 PM (4 seats left)',
+      ],
+      'kids-family-baking': [
+        'Sunday, Sep 13 — 10:00 AM to 11:30 AM (3 seats left)',
+        'Sunday, Sep 27 — 10:00 AM to 11:30 AM (5 seats left)',
+      ],
     };
 
-    try {
-      await sendFeedback(formData);
-      showToast('success', 'Thank You!', 'Your review has been submitted.');
-      e.target.reset();
-      close();
-    } catch (err) {
-      console.error(err);
-      showToast('error', 'Oops!', 'Something went wrong. Please try again.');
-    } finally {
-      btn.innerHTML = original;
-      btn.disabled = false;
+    function recalculateWorkshopTotal() {
+      const unit = Number(inputWsPrice ? inputWsPrice.value : 1499);
+      const seats = parseInt(seatsSelect ? seatsSelect.value : '1', 10);
+      const total = unit * seats;
+      if (calculatedTotalElem) calculatedTotalElem.textContent = `₹${total.toLocaleString('en-IN')}`;
     }
-  });
-}
 
-// ============================================
-// PREMIUM ORDER SUCCESS OVERLAY
-// ============================================
-function showOrderSuccess(orderData) {
-  // Create the full-screen overlay
-  const overlay = document.createElement('div');
-  overlay.id = 'order-success-overlay';
-  overlay.innerHTML = `
-    <div class="order-success-content">
-      <div class="success-checkmark">
-        <svg viewBox="0 0 52 52" class="success-svg">
-          <circle class="success-circle" cx="26" cy="26" r="25" fill="none"/>
-          <path class="success-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-        </svg>
-      </div>
-      <h2 class="success-title">Order Placed Successfully!</h2>
-      <p class="success-subtitle">${orderData.isDirectOrder
-      ? 'We\'ll reach out to you with pricing details shortly.'
-      : `Your order of <strong>₹${orderData.total}</strong> has been confirmed.`
-    }</p>
-      <p class="success-detail">A confirmation email is on its way to <strong>${orderData.email}</strong></p>
-      <div class="success-divider"></div>
-      <p class="success-tagline">Thank you for choosing The Rolling Oven 🧁</p>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-  document.body.style.overflow = 'hidden';
+    if (seatsSelect) seatsSelect.addEventListener('change', recalculateWorkshopTotal);
 
-  // Trigger entrance animation
-  requestAnimationFrame(() => {
-    overlay.classList.add('active');
-  });
+    document.addEventListener('click', (e) => {
+      const bookBtn = e.target.closest('.workshop-book-btn');
+      if (bookBtn) {
+        const id = bookBtn.dataset.id || 'brownie-basics';
+        const name = bookBtn.dataset.name || 'Brownie Basics';
+        const price = Number(bookBtn.dataset.price) || 1499;
+        const level = bookBtn.dataset.level || 'Masterclass';
 
-  // Auto-fade after 4 seconds
-  setTimeout(() => {
-    overlay.classList.add('fade-out');
-    setTimeout(() => {
-      overlay.remove();
-      document.body.style.overflow = '';
-    }, 800);
-  }, 4000);
+        if (inputWsId) inputWsId.value = id;
+        if (inputWsName) inputWsName.value = name;
+        if (inputWsPrice) inputWsPrice.value = String(price);
+        if (modalBadge) modalBadge.textContent = `${level} Masterclass`;
+        if (modalTitle) modalTitle.textContent = `Book ${name}`;
 
-  // Click to dismiss early
-  overlay.addEventListener('click', () => {
-    overlay.classList.add('fade-out');
-    setTimeout(() => {
-      overlay.remove();
-      document.body.style.overflow = '';
-    }, 800);
-  });
-}
+        if (slotSelect && workshopSchedules[id]) {
+          slotSelect.innerHTML = workshopSchedules[id]
+            .map((slot) => `<option value="${slot}">${slot}</option>`)
+            .join('');
+        }
 
-// ============================================
-// LENIS SMOOTH SCROLL
-// ============================================
-function initLenisScroll() {
-  // Respect reduced motion preferences
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        recalculateWorkshopTotal();
 
-  const script = document.createElement('script');
-  script.src = 'https://unpkg.com/lenis@1.1.14/dist/lenis.min.js';
-  script.onload = () => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 2,
+        if (formStep) formStep.style.display = 'block';
+        if (successStep) successStep.style.display = 'none';
+
+        if (modal) modal.classList.add('open');
+        if (overlay) overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+
+        trackGA4('view_workshop_details', { workshop_id: id, workshop_name: name });
+      }
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    function closeWorkshopModal() {
+      if (modal) modal.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      document.body.style.overflow = '';
     }
-    requestAnimationFrame(raf);
 
-    // Store globally so smooth scroll nav can use it
-    window.__lenis = lenis;
-  };
-  document.head.appendChild(script);
-}
+    if (closeBtn) closeBtn.addEventListener('click', closeWorkshopModal);
+    if (overlay) overlay.addEventListener('click', closeWorkshopModal);
 
-// ============================================
-// INITIALIZE
-// ============================================
-function initApp() {
-  // Particles
-  const particleCanvas = document.getElementById('particles-canvas');
-  if (particleCanvas) { new ParticleSystem(particleCanvas).animate(); }
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-  // Render content (only on homepage)
-  renderShowcase();
-  renderFavorites();
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Generating Ticket Pass... ⏳';
+        }
 
-  // Init interactions
-  initScrollAnimations();
-  initStatCounters();
-  initMobileMenu();
-  initCart();
-  initOrderModal();
-  initContactForm();
-  initSmoothScroll();
-  initFeedbackModal();
-  initLenisScroll();
-  initTracking();
+        const formData = new FormData(bookingForm);
+        const wsId = formData.get('workshop_id') || 'brownie-basics';
+        const wsName = formData.get('workshop_name') || 'Brownie Basics';
+        const slot = formData.get('selected_slot') || '';
+        const seats = parseInt(formData.get('seats') || '1', 10);
+        const name = formData.get('attendee_name');
+        const phone = formData.get('attendee_phone');
+        const email = formData.get('attendee_email');
+        const notes = formData.get('special_notes');
+        const honeypot = formData.get('b_website');
 
-  // Category page specific
-  initCategoryPage();
+        const unit = Number(inputWsPrice ? inputWsPrice.value : 1499);
+        const total = unit * seats;
 
-  // Restore cart badge on load
-  updateCartBadge();
-  renderCart();
-}
+        const payload = {
+          workshop_id: wsId,
+          workshop_name: wsName,
+          selected_date: slot.split('—')[0]?.trim() || slot,
+          selected_slot: slot,
+          seats: seats,
+          attendee_name: name,
+          attendee_phone: phone,
+          attendee_email: email,
+          special_notes: notes || '',
+          total_amount: total,
+          utm_source: state.utm.utm_source || '',
+          b_website: honeypot || '',
+        };
 
+        try {
+          const res = await fetch('/api/workshop', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
-} else {
-  initApp();
-}
+          const data = await res.json();
 
-// ============================================
-// DIGITAL MARKETING & UTM TRACKING
-// ============================================
-function initTracking() {
-  const params = new URLSearchParams(window.location.search);
-  const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
-  let hasUTM = false;
+          if (res.ok && data.success) {
+            const bookingId = data.booking_id || `TBH-WS-${Date.now().toString().slice(-6)}`;
 
-  utmParams.forEach(param => {
-    const value = params.get(param);
-    if (value) {
-      sessionStorage.setItem(param, value);
-      hasUTM = true;
+            const successId = document.getElementById('ws-success-id');
+            const successWorkshop = document.getElementById('ws-success-workshop');
+            const successSeats = document.getElementById('ws-success-seats');
+            const passLink = document.getElementById('ws-whatsapp-pass-link');
+
+            if (successId) successId.textContent = bookingId;
+            if (successWorkshop) successWorkshop.textContent = `${wsName} (${slot})`;
+            if (successSeats) successSeats.textContent = `${seats} Seat${seats > 1 ? 's' : ''} (₹${total})`;
+
+            const waPassText =
+              `🎟️ *WORKSHOP RESERVATION PASS — THE BROWNIE HUB*\n` +
+              `------------------------------------\n` +
+              `*Booking ID:* ${bookingId}\n` +
+              `*Masterclass:* ${wsName}\n` +
+              `*Schedule:* ${slot}\n` +
+              `*Seats Reserved:* ${seats} Seat(s)\n` +
+              `*Attendee Name:* ${name}\n` +
+              `*Contact Phone:* ${phone}\n` +
+              `*Total Workshop Fee:* ₹${total}\n` +
+              `*Special Note:* ${notes || 'None'}\n` +
+              `------------------------------------\n` +
+              `Please verify my workstation slot and send payment confirmation!`;
+
+            if (passLink) {
+              passLink.href = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waPassText)}`;
+            }
+
+            trackGA4('book_workshop', {
+              workshop_name: wsName,
+              selected_date: slot,
+              seats_count: seats,
+              value: total,
+              currency: 'INR',
+            });
+
+            if (formStep) formStep.style.display = 'none';
+            if (successStep) successStep.style.display = 'block';
+            showToast('Workshop seat reserved! Ticket pass ready.');
+          } else {
+            showToast(`Error: ${data.error || 'Could not complete reservation.'}`);
+          }
+        } catch (err) {
+          console.error('Workshop booking error:', err);
+          showToast('Network error. Please reserve via WhatsApp.');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Reserve Seat & Get WhatsApp Pass';
+          }
+        }
+      });
     }
-  });
-
-  if (hasUTM) {
-    console.log('UTM parameters captured and stored in session.');
   }
-}
+
+  // --- 15. CONTACT & INQUIRY FORM CONTROLLER ---
+  function initContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('contact-submit-btn');
+
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending Message... ⏳';
+      }
+
+      const formData = new FormData(contactForm);
+      const payload = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        inquiry_type: formData.get('inquiry_type') || 'General Inquiry',
+        message: formData.get('message'),
+        b_website: formData.get('b_website') || '',
+        utm_source: state.utm.utm_source || '',
+      };
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          contactForm.reset();
+          showToast('Thank you! Your message was sent to our Chennai kitchen.');
+          trackGA4('contact_inquiry_sent', { type: payload.inquiry_type });
+        } else {
+          showToast(`Error: ${data.error || 'Failed to send inquiry.'}`);
+        }
+      } catch (err) {
+        showToast('Network error while sending message.');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }
+      }
+    });
+  }
+
+  // --- 16. FAQ ACCORDION & SCROLL SPY ---
+  function initFaqAndNavScroll() {
+    document.querySelectorAll('.faq-question').forEach((item) => {
+      item.addEventListener('click', () => {
+        const parent = item.parentElement;
+        const wasOpen = parent.classList.contains('open');
+
+        document.querySelectorAll('.faq-item').forEach((f) => f.classList.remove('open'));
+
+        if (!wasOpen) {
+          parent.classList.add('open');
+        }
+      });
+    });
+
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileDrawer = document.getElementById('mobile-nav-drawer');
+
+    if (mobileBtn && mobileDrawer) {
+      mobileBtn.addEventListener('click', () => {
+        mobileDrawer.classList.toggle('open');
+      });
+
+      document.querySelectorAll('.mobile-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileDrawer.classList.remove('open');
+        });
+      });
+    }
+
+    // Scroll Spy for Navlinks
+    const sections = document.querySelectorAll('section[id], header[id]');
+    const navLinks = document.querySelectorAll('.capsule-nav-links .capsule-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollPos = window.scrollY + 140;
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach((link) => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // --- 17. PREMIUM ANIMATION SYSTEMS ---
+
+  // --- 17a. SCROLL REVEAL (GSAP ScrollTrigger with Instant Visibility Guard) ---
+  function initScrollReveals() {
+    // Guarantee instant visibility so page navigation never displays an empty screen
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
+      el.classList.add('revealed');
+    });
+
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      return;
+    }
+
+    try {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.refresh();
+    } catch (e) {}
+  }
+
+  // --- 17b. LENIS SMOOTH SCROLL ---
+  function initLenisSmooth() {
+    if (typeof Lenis === 'undefined') return;
+
+    const lenis = new Lenis({ autoRaf: true });
+
+    // Sync with GSAP if available
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (href && href.length > 1) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            lenis.scrollTo(target, { offset: -80 });
+          }
+        }
+      });
+    });
+  }
+
+  // --- 17c. THREE.JS 3D BROWNIE ---
+  function initHero3D() {
+    if (typeof THREE === 'undefined') return;
+    const canvas = document.getElementById('hero-3d-canvas');
+    if (!canvas) return;
+
+    try {
+      const parent = canvas.parentElement;
+      const w = parent.offsetWidth || 480;
+      const h = parent.offsetHeight || 420;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+      camera.position.set(0, 1.5, 5);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x000000, 0);
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0x8c531d, 0.6);
+      scene.add(ambientLight);
+
+      const pointLight = new THREE.PointLight(0xe8b66e, 1.8, 15);
+      pointLight.position.set(2, 3, 3);
+      scene.add(pointLight);
+
+      const pointLight2 = new THREE.PointLight(0xc9863c, 0.8, 10);
+      pointLight2.position.set(-2, 1, 2);
+      scene.add(pointLight2);
+
+      // Create 3 stacked brownie layers
+      const brownieMat = new THREE.MeshStandardMaterial({
+        color: 0x3a1c07,
+        roughness: 0.82,
+        metalness: 0.05,
+      });
+      const topMat = new THREE.MeshStandardMaterial({
+        color: 0x1a0d06,
+        roughness: 0.6,
+        metalness: 0.1,
+      });
+
+      const layerGeo = new THREE.BoxGeometry(2, 0.45, 2);
+      layerGeo.translate(0, 0, 0);
+
+      const group = new THREE.Group();
+
+      const layer1 = new THREE.Mesh(layerGeo, brownieMat);
+      layer1.position.y = 0;
+      group.add(layer1);
+
+      const layer2 = new THREE.Mesh(layerGeo, brownieMat);
+      layer2.position.y = 0.5;
+      layer2.scale.set(0.92, 1, 0.92);
+      group.add(layer2);
+
+      const layer3 = new THREE.Mesh(layerGeo, topMat);
+      layer3.position.y = 1.0;
+      layer3.scale.set(0.84, 0.8, 0.84);
+      group.add(layer3);
+
+      // Chocolate chips (small spheres)
+      const chipGeo = new THREE.SphereGeometry(0.08, 8, 8);
+      const chipMat = new THREE.MeshStandardMaterial({ color: 0x1a0d06, roughness: 0.4 });
+      const chipPositions = [
+        [0.4, 1.25, 0.3], [-0.3, 1.25, -0.2], [0.1, 1.25, 0.5],
+        [-0.5, 1.25, 0.4], [0.3, 1.25, -0.4], [-0.2, 1.22, 0.1],
+      ];
+      chipPositions.forEach(pos => {
+        const chip = new THREE.Mesh(chipGeo, chipMat);
+        chip.position.set(pos[0], pos[1], pos[2]);
+        group.add(chip);
+      });
+
+      group.position.y = -0.3;
+      scene.add(group);
+
+      // Mouse tracking for interactive tilt
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      });
+
+      // Mark 3D as active, hide fallback image
+      const heroVisual = canvas.closest('.hero-visual');
+      if (heroVisual) heroVisual.classList.add('hero-3d-active');
+
+      // Animation loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // Slow auto rotation + mouse tilt
+        group.rotation.y += 0.003;
+        group.rotation.x = mouseY * 0.12;
+        group.rotation.z = mouseX * 0.05;
+
+        // Gentle float
+        group.position.y = -0.3 + Math.sin(Date.now() * 0.001) * 0.08;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Handle resize
+      window.addEventListener('resize', () => {
+        const nw = parent.offsetWidth || 480;
+        const nh = parent.offsetHeight || 420;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh);
+      });
+
+    } catch (err) {
+      console.warn('3D brownie init failed, using fallback image:', err);
+    }
+  }
+
+  // --- 17d. MAGNETIC HOVER ---
+  function initMagneticHover() {
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+        setTimeout(() => { btn.style.transition = ''; }, 400);
+      });
+    });
+  }
+
+  // --- 17e. 3D TILT CARDS ---
+  function initTiltCards() {
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateY(0) rotateX(0) scale(1)';
+      });
+    });
+  }
+
+  // --- 17f. ANIMATED COUNTERS ---
+  function initAnimatedCounters() {
+    const counters = document.querySelectorAll('[data-counter]');
+    if (!counters.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseFloat(el.dataset.counter);
+          const suffix = el.dataset.suffix || '';
+          const prefix = el.dataset.prefix || '';
+          const duration = 2000;
+          const start = Date.now();
+
+          function update() {
+            const elapsed = Date.now() - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out quad
+            const eased = 1 - (1 - progress) * (1 - progress);
+            const current = target * eased;
+
+            if (target >= 100) {
+              el.textContent = prefix + Math.round(current).toLocaleString('en-IN') + suffix;
+            } else {
+              el.textContent = prefix + current.toFixed(1) + suffix;
+            }
+
+            if (progress < 1) {
+              requestAnimationFrame(update);
+            } else {
+              // Final value
+              if (target >= 100) {
+                el.textContent = prefix + Math.round(target).toLocaleString('en-IN') + suffix;
+              } else {
+                el.textContent = prefix + target + suffix;
+              }
+            }
+          }
+          update();
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    counters.forEach(el => observer.observe(el));
+  }
+
+  // --- 17g. NAVBAR SCROLL BEHAVIOR ---
+  function initNavbarScroll() {
+    const nav = document.querySelector('.nav-capsule');
+    if (!nav) return;
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+  }
+
+  // --- 18. DOM READY INITIALIZER (SAFE PATTERN) ---
+  function bootApp() {
+    // Core functionality
+    initUtmCapture();
+    // initHeroSmokeCanvas() — removed, replaced by Three.js HeroParticles
+    initParticles();
+    loadCart();
+    initCartDrawer();
+    initBestsellersCarousel();
+    initBoxBuilder();
+    initMenuActions();
+    initOrderModal();
+    initWhatsAppCheckout();
+    initWorkshopModal();
+    initContactForm();
+    initFaqAndNavScroll();
+
+    // Premium animation systems
+    initNavbarScroll();
+    initScrollReveals();
+    initLenisSmooth();
+    initHero3D();
+    initMagneticHover();
+    initTiltCards();
+    initAnimatedCounters();
+
+    console.log('🍫 The Brownie Hub Master Client Engine v10.0 Active — GSAP + Lenis + Three.js');
+  }
+
+  // Safe boot: works whether DOM is still loading or already loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootApp);
+  } else {
+    bootApp();
+  }
+
+  // Automatic Next.js Navigation Route Change Watcher
+  let lastNavPath = window.location.pathname;
+  setInterval(() => {
+    if (window.location.pathname !== lastNavPath) {
+      lastNavPath = window.location.pathname;
+      setTimeout(bootApp, 60);
+    }
+  }, 200);
+
+  window.addEventListener('popstate', () => {
+    setTimeout(bootApp, 60);
+  });
+})();
