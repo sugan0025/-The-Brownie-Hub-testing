@@ -1749,6 +1749,24 @@
       requestAnimationFrame(renderParallax);
     }
     requestAnimationFrame(renderParallax);
+
+    // Interactive Click Bounce with audio haptic
+    crustElements.forEach((el) => {
+      el.addEventListener('click', () => {
+        playPopAudio();
+        const img = el.querySelector('img');
+        if (img) {
+          img.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+          img.style.transform = 'translateY(-24px) scale(1.25) rotate(12deg)';
+          setTimeout(() => {
+            img.style.transform = '';
+            setTimeout(() => {
+              img.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease';
+            }, 400);
+          }, 350);
+        }
+      });
+    });
   }
 
   // --- 18. DOM READY INITIALIZER (SAFE PATTERN) ---
