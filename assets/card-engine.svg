@@ -38,5 +38,5 @@
 
   <!-- Metric badges -->
   <text x="22" y="184" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#8b949e">⚡ <tspan fill="#ffffff" font-weight="600">&lt;900ms</tspan> Compile  •  🥐 <tspan fill="#ffffff" font-weight="600">54</tspan> Product Assets  •  📂 <tspan fill="#ffffff" font-weight="600">15</tspan> Categories</text>
-  <text x="22" y="206" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#E28743">▶ the-rolling-oven.vercel.app</text>
+  <text x="22" y="206" font-family="'Segoe UI',Roboto,Arial,sans-serif" font-size="11" fill="#E28743">▶ the-brownie-hub.vercel.app</text>
 </svg>

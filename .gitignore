@@ -40,7 +40,4 @@ yarn-error.log*
 
 # agent & AI scratch files
 .agents/
-AGENTS.md
-CLAUDE.md
-PROJECT_MEMORY_DOSSIER.md
 *.tmp

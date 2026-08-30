@@ -39,7 +39,7 @@
   <rect width="900" height="200" fill="#0d1117"/>
 
   <!-- Top Signature Floating in the Dark Sky Above the Wave -->
-  <text x="450" y="30" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">🥐 The Rolling Oven  •  Next.js 16 • Supabase PostgreSQL • GA4 Telemetry</text>
+  <text x="450" y="30" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">🍫 The Brownie Hub  •  Next.js 16 • Three.js 3D Engine • GA4 Telemetry</text>
   <text x="450" y="50" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" font-weight="600" fill="#E28743" text-anchor="middle">Engineered by Suganesan S (Sugan) • MBA in Business Analytics &amp; Marketing (BIT Sathy)</text>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->

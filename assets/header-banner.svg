@@ -50,13 +50,13 @@
   <line x1="0" y1="135" x2="900" y2="135" stroke="#30363d" stroke-opacity="0.25" stroke-width="1"/>
 
   <!-- Main Title -->
-  <text x="450" y="72" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="42" font-weight="800" fill="url(#textGoldH)" text-anchor="middle" filter="url(#goldGlowH)">🥐 The Rolling Oven</text>
+  <text x="450" y="72" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="42" font-weight="800" fill="url(#textGoldH)" text-anchor="middle" filter="url(#goldGlowH)">🍫 The Brownie Hub</text>
 
   <!-- Subtitle -->
-  <text x="450" y="104" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="15" font-weight="600" fill="#E28743" text-anchor="middle" letter-spacing="1">HIGH-PERFORMANCE D2C STOREFRONT &amp; GROWTH ENGINE</text>
+  <text x="450" y="104" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="15" font-weight="600" fill="#E28743" text-anchor="middle" letter-spacing="1">ARTISANAL BELGIAN BROWNIES &amp; BAKING MASTERCLASSES</text>
 
   <!-- Tagline Text -->
-  <text x="450" y="130" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Next.js 16 SSG &lt;900ms  •  Supabase PostgreSQL Ledger  •  GA4 E-Commerce Telemetry</text>
+  <text x="450" y="130" font-family="'Segoe UI',Roboto,-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Next.js 16 SSG  •  Three.js 3D Particles  •  Custom Keepsake Box Builder  •  GA4 Telemetry</text>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <!-- OCEAN WAVE 1: BACK LAYER (9s)                                   -->
