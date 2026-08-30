@@ -116,40 +116,25 @@ export default function OrderModal() {
               </div>
             </div>
 
-            {/* ══════════ ORDER SUMMARY (Rolling Oven Embedded Cart) ══════════ */}
+            {/* ══════════ ORDER SUMMARY (Exact Rolling Oven Style) ══════════ */}
             <div className="rolling-summary-card">
-              <div className="rolling-summary-header">
-                <h4 className="rolling-summary-heading">Order Summary</h4>
-                <span className="rolling-item-count-badge" id="order-modal-item-count">
-                  0 items
-                </span>
-              </div>
+              <h4 className="rolling-summary-heading">Order Summary</h4>
 
               {/* Dynamic Items Container inside Modal */}
               <div className="rolling-modal-items" id="order-modal-items-list">
                 {/* Dynamically filled by renderModalOrderSummary() in main.js */}
               </div>
 
-              {/* Bill Details */}
-              <div className="rolling-bill-breakdown">
-                <div className="rolling-bill-row">
-                  <span>Item Subtotal:</span>
-                  <span className="mono-font" id="order-modal-subtotal">₹0</span>
-                </div>
-                <div className="rolling-bill-row">
-                  <span>Chennai Express Delivery:</span>
-                  <span className="rolling-delivery-free" id="order-modal-delivery-fee">FREE</span>
-                </div>
-                <div className="rolling-bill-row total-row">
-                  <span>Total to Pay:</span>
-                  <span className="mono-font rolling-grand-total" id="order-modal-total">₹0</span>
-                </div>
+              {/* Total Row */}
+              <div className="rolling-total-row">
+                <span>Total</span>
+                <span className="mono-font rolling-total-amount" id="order-modal-total">₹0</span>
               </div>
             </div>
 
             {/* Payment Method Selector */}
             <div className="rolling-payment-section">
-              <div className="rolling-payment-label">Select Payment Mode:</div>
+              <div className="rolling-payment-label">Payment Mode:</div>
               <div className="payment-tabs">
                 <div className="payment-tab active" data-payment="UPI / QR Code">
                   📱 UPI / GPay / PhonePe
@@ -194,10 +179,10 @@ export default function OrderModal() {
             <div className="rolling-action-stack">
               <button
                 type="submit"
-                className="btn-gold magnetic-btn rolling-submit-btn"
+                className="rolling-send-order-btn magnetic-btn"
                 id="order-submit-btn"
               >
-                <span>Confirm Order &amp; Complete &rarr;</span>
+                <span>Confirm &amp; Send Order &rarr;</span>
               </button>
 
               <button

@@ -349,6 +349,11 @@
     saveCart();
     showToast(`Added "${name}" to your box! 🍫`);
 
+    // Just like Rolling Oven: immediately open centered Complete Your Order modal
+    if (typeof window.openRollingOrderModal === 'function') {
+      window.openRollingOrderModal();
+    }
+
     trackGA4('add_to_cart', {
       currency: 'INR',
       value: price,
@@ -494,6 +499,11 @@
     const emptyBuilderBtn = document.getElementById('cart-empty-builder-btn');
 
     function openCart() {
+      // Just like Rolling Oven: opening cart opens centered Complete Your Order modal
+      if (typeof window.openRollingOrderModal === 'function') {
+        window.openRollingOrderModal();
+        return;
+      }
       if (drawer) drawer.classList.add('open');
       if (overlay) overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -820,52 +830,27 @@
 
     function renderModalOrderSummary() {
       const itemsList = document.getElementById('order-modal-items-list');
-      const subtotalSpan = document.getElementById('order-modal-subtotal');
       const totalSpan = document.getElementById('order-modal-total');
-      const countBadge = document.getElementById('order-modal-item-count');
-      const deliveryFeeElem = document.getElementById('order-modal-delivery-fee');
 
-      const totalCount = calculateTotalItemCount();
       const subtotal = calculateCartTotal();
-      const isFreeDelivery = subtotal >= 500;
-      const deliveryFee = isFreeDelivery ? 0 : 49;
-      const grandTotal = subtotal + deliveryFee;
-
-      if (countBadge) countBadge.textContent = `${totalCount} item${totalCount === 1 ? '' : 's'}`;
-      if (subtotalSpan) subtotalSpan.textContent = `₹${subtotal}`;
-      if (deliveryFeeElem) {
-        deliveryFeeElem.textContent = isFreeDelivery ? 'FREE' : '₹49';
-        deliveryFeeElem.style.color = isFreeDelivery ? '#51cf66' : 'var(--cream-muted)';
-      }
-      if (totalSpan) totalSpan.textContent = `₹${grandTotal}`;
+      if (totalSpan) totalSpan.textContent = `₹${subtotal}`;
 
       if (!itemsList) return;
 
       if (state.cart.length === 0) {
-        itemsList.innerHTML = '<div style="text-align:center;padding:16px;color:var(--cream-muted);font-size:0.88rem;">Your box is empty. Pick brownies from our menu!</div>';
+        itemsList.innerHTML = '<div style="text-align:center;padding:12px;color:var(--cream-muted);font-size:0.88rem;">Your box is empty. Pick brownies from our menu!</div>';
         return;
       }
 
       let html = '';
-      state.cart.forEach((item, idx) => {
+      state.cart.forEach((item) => {
         const hasBreakdown = item.breakdown && item.breakdown.length > 0;
-        const chipsHtml = hasBreakdown
-          ? `<div class="rolling-item-chips">${item.breakdown.map((b) => `<span class="rolling-chip">${b}</span>`).join('')}</div>`
-          : '';
+        const breakdownStr = hasBreakdown ? ` (${item.breakdown.join(', ')})` : '';
 
         html += `
-          <div class="rolling-item-row">
-            <img src="${item.image || '/images/brownies/classic-fudge.jpg'}" alt="${item.name}" class="rolling-item-thumb" />
-            <div class="rolling-item-info">
-              <div class="rolling-item-name">${item.name}</div>
-              ${chipsHtml}
-            </div>
-            <div class="rolling-item-stepper">
-              <button type="button" class="rolling-stepper-btn btn-modal-minus" data-index="${idx}">-</button>
-              <span class="rolling-stepper-val">${item.qty}</span>
-              <button type="button" class="rolling-stepper-btn btn-modal-plus" data-index="${idx}">+</button>
-            </div>
-            <div class="rolling-item-price">₹${item.price * item.qty}</div>
+          <div class="rolling-item-line">
+            <span class="rolling-item-name-qty">${item.name} &times; ${item.qty}${breakdownStr}</span>
+            <span class="rolling-item-price">₹${item.price * item.qty}</span>
           </div>
         `;
       });
@@ -874,7 +859,7 @@
 
     function openModal() {
       if (state.cart.length === 0) {
-        showToast('Your cart is empty! Pick your favorite brownies first 🍫');
+        showToast('Your box is empty! Pick your favorite brownies first 🍫');
         return;
       }
 
@@ -898,6 +883,8 @@
         items: state.cart.map((i) => ({ item_name: i.name, price: i.price, quantity: i.qty })),
       });
     }
+
+    window.openRollingOrderModal = openModal;
 
     function closeModal() {
       if (modal) modal.classList.remove('open');

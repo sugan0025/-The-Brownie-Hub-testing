@@ -3627,48 +3627,30 @@ select:focus-visible,
 }
 
 /* Rolling Order Summary Card */
+/* Exact Rolling Oven Style Order Summary Card */
 .rolling-summary-card {
-  background: rgba(18, 9, 4, 0.85);
-  border: 1px solid rgba(201, 134, 60, 0.25);
-  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   padding: 18px 20px;
-  margin-bottom: 20px;
-}
-
-.rolling-summary-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(201, 134, 60, 0.15);
+  margin-bottom: 22px;
 }
 
 .rolling-summary-heading {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-family: inherit;
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--cream);
-  margin: 0;
-}
-
-.rolling-item-count-badge {
-  font-size: 0.76rem;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
-  background: rgba(201, 134, 60, 0.18);
-  color: var(--caramel-bright);
+  color: #fff;
+  margin: 0 0 12px 0;
 }
 
 .rolling-modal-items {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-height: 220px;
+  gap: 10px;
+  max-height: 180px;
   overflow-y: auto;
-  padding-right: 4px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .rolling-modal-items::-webkit-scrollbar {
@@ -3679,134 +3661,29 @@ select:focus-visible,
   border-radius: 4px;
 }
 
-.rolling-item-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 10px;
-  background: rgba(253, 245, 232, 0.03);
-  border: 1px solid rgba(253, 245, 232, 0.06);
-  border-radius: 10px;
-}
-
-.rolling-item-thumb {
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.rolling-item-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.rolling-item-name {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--cream);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.rolling-item-chips {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-  margin-top: 2px;
-}
-
-.rolling-chip {
-  font-size: 0.65rem;
-  padding: 1px 6px;
-  border-radius: 4px;
-  background: rgba(201, 134, 60, 0.15);
-  color: var(--caramel-light);
-}
-
-.rolling-item-stepper {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(10, 4, 2, 0.7);
-  border: 1px solid rgba(201, 134, 60, 0.25);
-  border-radius: var(--radius-pill);
-  padding: 2px 6px;
-}
-
-.rolling-stepper-btn {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(253, 245, 232, 0.1);
-  color: var(--cream);
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-}
-
-.rolling-stepper-btn:hover {
-  background: var(--caramel);
-  color: #000;
-}
-
-.rolling-stepper-val {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--cream);
-  min-width: 14px;
-  text-align: center;
-}
-
-.rolling-item-price {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--caramel-bright);
-  min-width: 55px;
-  text-align: right;
-}
-
-.rolling-bill-breakdown {
-  border-top: 1px dashed rgba(201, 134, 60, 0.2);
-  padding-top: 10px;
-}
-
-.rolling-bill-row {
+.rolling-item-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.84rem;
-  color: var(--cream-muted);
-  padding: 3px 0;
+  font-size: 0.95rem;
+  color: #f1e3ce;
 }
 
-.rolling-delivery-free {
-  color: #51cf66;
-  font-weight: 700;
-}
-
-.rolling-bill-row.total-row {
+.rolling-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--cream);
-  border-top: 1px solid rgba(201, 134, 60, 0.25);
-  margin-top: 6px;
-  padding-top: 8px;
+  color: #fff;
 }
 
-.rolling-grand-total {
-  font-size: 1.3rem;
-  color: var(--caramel-bright);
-  font-weight: 800;
+.rolling-total-amount {
+  font-size: 1.15rem;
+  color: #e5ad62;
+  font-weight: 700;
 }
 
 .rolling-payment-section {
@@ -3823,16 +3700,32 @@ select:focus-visible,
 .rolling-action-stack {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 14px;
 }
 
-.rolling-submit-btn {
+.rolling-send-order-btn {
   width: 100%;
-  padding: 16px 24px;
+  height: 52px;
+  background: #cf9b58;
+  color: #170a04;
   font-size: 1.05rem;
   font-weight: 700;
-  border-radius: var(--radius-pill);
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 24px rgba(207, 155, 88, 0.35);
+}
+
+.rolling-send-order-btn:hover {
+  background: #dca864;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(207, 155, 88, 0.5);
 }
 
 .rolling-wa-checkout-btn {
