@@ -94,7 +94,15 @@ export default function ProductDetailClient({ product, isBox, relatedItems }: Pr
         {/* ─── LEFT: Product Visual Showcase ─── */}
         <div className="product-visual-column">
           <div className="product-hero-image-card glass-card">
-            <img src={product.image} alt={product.name} className="product-main-photo" />
+            <img src={product.image} alt={product.name} className="product-main-photo spotlight-still-img" />
+            <img
+              src={`/videos/brownies/${product.image.split('/').pop()?.replace('.jpg', '.webp')}`}
+              alt={`${product.name} live motion preview`}
+              className="spotlight-hover-clip"
+            />
+            <div className="card-clip-badge" style={{ top: '16px', right: '16px' }}>
+              <span className="clip-dot"></span> Live Motion Preview
+            </div>
             <div className="brownie-shimmer-overlay" aria-hidden="true"></div>
 
             {product.badge && <span className="product-badge-ribbon">{product.badge}</span>}

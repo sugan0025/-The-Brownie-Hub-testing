@@ -25,6 +25,60 @@
     utm: {},
   };
 
+  // --- 2b. SENSORY WEB AUDIO ENGINE (Zero Network / 0ms Latency) ---
+  function playPopAudio() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!window._tbhAudioCtx) {
+        window._tbhAudioCtx = new AudioCtx();
+      }
+      const ctx = window._tbhAudioCtx;
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      const now = ctx.currentTime;
+      osc.frequency.setValueAtTime(480, now);
+      osc.frequency.exponentialRampToValueAtTime(840, now + 0.07);
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.07);
+    } catch (e) {}
+  }
+
+  function playSuccessChime() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!window._tbhAudioCtx) {
+        window._tbhAudioCtx = new AudioCtx();
+      }
+      const ctx = window._tbhAudioCtx;
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+      [523.25, 659.25].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        const startTime = ctx.currentTime + idx * 0.12;
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0.14, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + 0.35);
+      });
+    } catch (e) {}
+  }
+
   // --- 3. UTM ATTRIBUTION CAPTURE ---
   function initUtmCapture() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -347,11 +401,15 @@
     }
 
     saveCart();
-    showToast(`Added "${name}" to your box! 🍫`);
+    playPopAudio();
+    showToast(`Added to Cart! ${name} — ₹${price} 🍫`);
 
-    // Just like Rolling Oven: immediately open centered Complete Your Order modal
-    if (typeof window.openRollingOrderModal === 'function') {
-      window.openRollingOrderModal();
+    // Bounce navbar cart badge
+    const badge = document.getElementById('cart-count-badge');
+    if (badge) {
+      badge.classList.remove('bounce-badge');
+      void badge.offsetWidth;
+      badge.classList.add('bounce-badge');
     }
 
     trackGA4('add_to_cart', {
@@ -499,11 +557,6 @@
     const emptyBuilderBtn = document.getElementById('cart-empty-builder-btn');
 
     function openCart() {
-      // Just like Rolling Oven: opening cart opens centered Complete Your Order modal
-      if (typeof window.openRollingOrderModal === 'function') {
-        window.openRollingOrderModal();
-        return;
-      }
       if (drawer) drawer.classList.add('open');
       if (overlay) overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -728,6 +781,7 @@
           image: image,
         });
 
+        playPopAudio();
         renderBuilderSlots();
         showToast(`Dropped ${name} into slot ${state.builder.slots.length}! 📦`);
       });
@@ -739,6 +793,7 @@
       if (removeBtn) {
         const idx = parseInt(removeBtn.dataset.index, 10);
         state.builder.slots.splice(idx, 1);
+        playPopAudio();
         renderBuilderSlots();
       }
     });
@@ -747,10 +802,49 @@
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {
         state.builder.slots = [];
+        playPopAudio();
         renderBuilderSlots();
         showToast('Cleared custom box selection.');
       });
     }
+
+    // 1-Click Quick Fill Presets
+    document.addEventListener('click', (e) => {
+      const presetBtn = e.target.closest('.btn-preset-pack');
+      if (presetBtn) {
+        const preset = presetBtn.dataset.preset;
+        let flavorList = [];
+        if (preset === 'bestseller') {
+          flavorList = [
+            { name: 'Classic Fudge', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Salted Caramel Swirl', dietary: 'veg', image: '/images/brownies/salted-caramel.jpg' },
+            { name: 'Nutella Lava Heart', dietary: 'nonveg', image: '/images/brownies/nutella-stuffed.jpg' },
+            { name: 'Walnut Crackle', dietary: 'veg', image: '/images/brownies/walnut-crackle.jpg' },
+          ];
+        } else if (preset === 'chocoholic') {
+          flavorList = [
+            { name: 'Double Chocolate Truffle', dietary: 'nonveg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Classic Fudge', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Belgian Choco-Chip Burst', dietary: 'nonveg', image: '/images/brownies/choco-chip.jpg' },
+            { name: 'Nutella Lava Heart', dietary: 'nonveg', image: '/images/brownies/nutella-stuffed.jpg' },
+          ];
+        } else if (preset === 'nutty') {
+          flavorList = [
+            { name: 'Walnut Crackle', dietary: 'veg', image: '/images/brownies/walnut-crackle.jpg' },
+            { name: 'Lotus Biscoff Crunch', dietary: 'veg', image: '/images/brownies/biscoff-crunch.jpg' },
+            { name: 'Salted Caramel Swirl', dietary: 'veg', image: '/images/brownies/salted-caramel.jpg' },
+          ];
+        }
+
+        state.builder.slots = [];
+        for (let i = 0; i < state.builder.size; i++) {
+          state.builder.slots.push({ ...flavorList[i % flavorList.length] });
+        }
+        playPopAudio();
+        renderBuilderSlots();
+        showToast(`Auto-packed your ${state.builder.name} with ${presetBtn.textContent.trim()}! 🎁`);
+      }
+    });
 
     // Add Custom Box to Cart
     if (addCartBtn) {
@@ -809,6 +903,15 @@
         const image = addBtn.dataset.image || '/images/brownies/classic-fudge.jpg';
 
         addToCart(name, price, null, isBox, image);
+
+        // Instant visual feedback on button matching Rolling Oven v2
+        const originalHtml = addBtn.innerHTML;
+        addBtn.innerHTML = '<span>Added! ✓</span>';
+        addBtn.style.background = 'linear-gradient(135deg, #2b8a3e, #40c057)';
+        setTimeout(() => {
+          addBtn.innerHTML = originalHtml;
+          addBtn.style.background = '';
+        }, 1200);
       }
     });
   }
@@ -1050,9 +1153,16 @@
             state.cart = [];
             saveCart();
 
+            playSuccessChime();
             if (formStep) formStep.style.display = 'none';
             if (successStep) successStep.style.display = 'block';
-            showToast('Order confirmed! Opening WhatsApp sync...');
+            showToast('Order confirmed! 🎉 Opening WhatsApp sync...');
+
+            // Automatically open WhatsApp after 1.2s delay matching Rolling Oven v2
+            const waTargetUrl = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waMessage)}`;
+            setTimeout(() => {
+              window.open(waTargetUrl, '_blank');
+            }, 1200);
           } else {
             showToast(`Error: ${data.error || 'Failed to place order.'}`);
           }

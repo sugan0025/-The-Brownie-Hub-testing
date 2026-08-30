@@ -57,6 +57,14 @@ export default function BoxBuilderSection() {
                 <button className="filter-tab magnetic-btn" data-filter="nonveg" suppressHydrationWarning>🥚 Contains Egg (5)</button>
               </div>
 
+              {/* Quick Fill Presets */}
+              <div className="builder-quick-presets" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', margin: '12px 0 16px' }}>
+                <span style={{ fontSize: '0.78rem', color: 'var(--caramel-bright)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>⚡ 1-Click Packs:</span>
+                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="bestseller" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>🏆 Bestseller Mix</button>
+                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="chocoholic" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>🍫 Chocoholic</button>
+                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="nutty" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>🥜 Nutty Crunch</button>
+              </div>
+
               {/* 2-Column Responsive Flavor Options Grid */}
               <div className="builder-flavor-grid" id="builder-flavor-list">
                 {INDIVIDUAL_BROWNIES.map((b) => (
@@ -69,8 +77,14 @@ export default function BoxBuilderSection() {
                     data-price={b.price}
                     data-image={b.image}
                   >
-                    <div className="flavor-pick-thumb">
-                      <img src={b.image} alt={b.name} loading="lazy" />
+                    <div className="flavor-pick-thumb spotlight-still-img-wrap" style={{ position: 'relative', overflow: 'hidden' }}>
+                      <img src={b.image} alt={b.name} loading="lazy" className="spotlight-still-img" />
+                      <img
+                        src={`/videos/brownies/${b.image.split('/').pop()?.replace('.jpg', '.webp')}`}
+                        alt={`${b.name} video`}
+                        loading="lazy"
+                        className="spotlight-hover-clip"
+                      />
                       <div className="brownie-shimmer-overlay" aria-hidden="true"></div>
                     </div>
                     <div className="flavor-pick-info">

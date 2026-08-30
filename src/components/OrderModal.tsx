@@ -15,6 +15,7 @@ export default function OrderModal() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="order-modal-title"
+        data-lenis-prevent="true"
       >
         <button
           className="modal-close-btn rolling-close-btn"
@@ -47,7 +48,7 @@ export default function OrderModal() {
               autoComplete="off"
             />
 
-            {/* Input Stack matching Rolling Oven exact field order */}
+            {/* Input Stack matching Rolling Oven exact field order with floating labels */}
             <div className="rolling-fields-stack">
               <div className="rolling-field-group">
                 <input
@@ -55,9 +56,10 @@ export default function OrderModal() {
                   id="order-customer-name"
                   name="customer_name"
                   required
-                  placeholder="Your Name"
+                  placeholder=" "
                   className="rolling-input"
                 />
+                <label htmlFor="order-customer-name" className="rolling-label">Your Name</label>
               </div>
 
               <div className="rolling-field-group">
@@ -66,9 +68,10 @@ export default function OrderModal() {
                   id="order-customer-email"
                   name="customer_email"
                   required
-                  placeholder="Email Address"
+                  placeholder=" "
                   className="rolling-input"
                 />
+                <label htmlFor="order-customer-email" className="rolling-label">Email Address</label>
               </div>
 
               <div className="rolling-field-group">
@@ -77,9 +80,10 @@ export default function OrderModal() {
                   id="order-customer-phone"
                   name="customer_phone"
                   required
-                  placeholder="Phone Number"
+                  placeholder=" "
                   className="rolling-input"
                 />
+                <label htmlFor="order-customer-phone" className="rolling-label">Phone Number</label>
               </div>
 
               <div className="rolling-field-group">
@@ -88,9 +92,10 @@ export default function OrderModal() {
                   id="order-delivery-address"
                   name="delivery_address"
                   required
-                  placeholder="Delivery Address (Door / Street / Area)"
+                  placeholder=" "
                   className="rolling-input"
                 />
+                <label htmlFor="order-delivery-address" className="rolling-label">Delivery Address (Door / Street / Area)</label>
               </div>
 
               <div className="rolling-field-group">
@@ -100,9 +105,10 @@ export default function OrderModal() {
                   name="pincode"
                   required
                   defaultValue="600001"
-                  placeholder="Pincode (e.g. 638401)"
+                  placeholder=" "
                   className="rolling-input"
                 />
+                <label htmlFor="order-pincode" className="rolling-label">Pincode (e.g. 600001)</label>
               </div>
 
               <div className="rolling-field-group">
@@ -110,9 +116,10 @@ export default function OrderModal() {
                   id="order-instructions"
                   name="special_instructions"
                   rows={2}
-                  placeholder="Special Instructions (Optional)"
+                  placeholder=" "
                   className="rolling-input rolling-textarea"
                 />
+                <label htmlFor="order-instructions" className="rolling-label">Special Instructions (Optional)</label>
               </div>
             </div>
 

@@ -12,6 +12,7 @@ export default function WorkshopModal() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="workshop-modal-title"
+        data-lenis-prevent="true"
       >
         <button className="modal-close-btn" id="workshop-modal-close-btn" aria-label="Close Modal">
           ✕

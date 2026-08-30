@@ -56,15 +56,20 @@ export const metadata: Metadata = {
   authors: [{ name: "The Brownie Hub" }],
   creator: "The Brownie Hub",
   publisher: "The Brownie Hub",
-  metadataBase: new URL("https://thebrowniehub.netlify.app"),
+  metadataBase: new URL("https://the-brownie-hub.vercel.app"),
   alternates: {
-    canonical: "https://thebrowniehub.netlify.app",
+    canonical: "https://the-brownie-hub.vercel.app",
+  },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
   },
   openGraph: {
-    title: "The Brownie Hub | Artisanal Brownies & Baking Masterclasses in Chennai",
+    title: "The Brownie Hub | Artisanal Belgian Brownies & Baking Workshops in Chennai",
     description:
-      "Fudge you can eat, and learn to make. Small-batch veg and egg brownies, customizable boxes, and live workshops.",
-    url: "https://thebrowniehub.netlify.app",
+      "Handcrafted small-batch Belgian chocolate brownies, customizable keepsake gift boxes, and offline baking masterclasses in Chennai.",
+    url: "https://the-brownie-hub.vercel.app",
     siteName: "The Brownie Hub",
     locale: "en_IN",
     type: "website",
@@ -78,6 +83,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -117,10 +129,12 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "Bakery",
                 "name": "The Brownie Hub",
-                "url": "https://thebrowniehub.netlify.app",
+                "url": "https://the-brownie-hub.vercel.app",
                 "telephone": "+917200015490",
+                "email": "hi@thebrowniehub.com",
                 "priceRange": "₹₹",
-                "servesCuisine": "Artisanal Brownies, Desserts, Bakery",
+                "servesCuisine": "Artisanal Belgian Brownies, Gourmet Desserts, Bakery",
+                "openingHours": "Mo-Su 10:00-22:00",
                 "address": {
                   "@type": "PostalAddress",
                   "addressLocality": "Chennai",
@@ -141,7 +155,7 @@ export default function RootLayout({
                 "provider": {
                   "@type": "Organization",
                   "name": "The Brownie Hub",
-                  "sameAs": "https://thebrowniehub.netlify.app",
+                  "sameAs": "https://the-brownie-hub.vercel.app",
                 },
               },
             ]),

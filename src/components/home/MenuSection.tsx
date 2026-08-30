@@ -68,7 +68,16 @@ export default function MenuSection() {
               >
                 {/* Image Container with Shimmer & Badges */}
                 <Link href={`/product/${b.id}`} className="menu-spotlight-img-wrap" style={{ textDecoration: 'none' }} aria-label={`View ${b.name} details`}>
-                  <img src={b.image} alt={b.name} loading="lazy" />
+                  <img src={b.image} alt={b.name} loading="lazy" className="spotlight-still-img" />
+                  <img
+                    src={`/videos/brownies/${b.image.split('/').pop()?.replace('.jpg', '.webp')}`}
+                    alt={`${b.name} video preview`}
+                    loading="lazy"
+                    className="spotlight-hover-clip"
+                  />
+                  <div className="card-clip-badge">
+                    <span className="clip-dot"></span> Preview
+                  </div>
                   <div className="brownie-shimmer-overlay" aria-hidden="true"></div>
 
                   {b.badge && <span className="menu-spotlight-badge">{b.badge}</span>}
@@ -135,7 +144,16 @@ export default function MenuSection() {
                 data-reveal-delay={i * 100}
               >
                 <Link href={`/product/${box.id}`} className="curated-box-img-wrap" style={{ textDecoration: 'none' }} aria-label={`View ${box.name} details`}>
-                  <img src={box.image} alt={box.name} loading="lazy" />
+                  <img src={box.image} alt={box.name} loading="lazy" className="spotlight-still-img" />
+                  <img
+                    src="/videos/brownies/luxury-box-mockup.webp"
+                    alt={`${box.name} video preview`}
+                    loading="lazy"
+                    className="spotlight-hover-clip"
+                  />
+                  <div className="card-clip-badge">
+                    <span className="clip-dot"></span> Preview
+                  </div>
                   <div className="brownie-shimmer-overlay" aria-hidden="true"></div>
                   {box.badge && <span className="curated-badge-gold">{box.badge}</span>}
                   <span className="curated-piece-count-pill">{box.pieceCount} Brownies</span>
