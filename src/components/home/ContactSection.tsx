@@ -82,12 +82,29 @@ export default function ContactSection() {
                 </div>
               </div>
               <div className="form-group">
-                <select id="contact-type" name="inquiry_type" className="form-input glass-card" required defaultValue="">
-                  <option value="" disabled>What can we help with?</option>
-                  <option value="Place an Order">Place an Order</option>
-                  <option value="Book a Workshop">Book a Workshop</option>
-                  <option value="Corporate Gifting">Corporate Gifting</option>
-                  <option value="General Inquiry">General Inquiry</option>
+                <select
+                  id="contact-type"
+                  name="inquiry_type"
+                  className="form-input glass-card contact-select"
+                  required
+                  defaultValue=""
+                  data-lenis-prevent="true"
+                >
+                  <option value="" disabled style={{ background: '#190d06', color: 'rgba(245,237,228,0.6)' }}>
+                    What can we help with?
+                  </option>
+                  <option value="Place an Order" style={{ background: '#190d06', color: '#f5ede4' }}>
+                    Custom Brownie Box / Immediate Order
+                  </option>
+                  <option value="Corporate Gifting" style={{ background: '#190d06', color: '#f5ede4' }}>
+                    Corporate Gifting &amp; Luxury Hampers
+                  </option>
+                  <option value="Party & Bulk Orders" style={{ background: '#190d06', color: '#f5ede4' }}>
+                    Party, Wedding &amp; Bulk Orders
+                  </option>
+                  <option value="General Inquiry" style={{ background: '#190d06', color: '#f5ede4' }}>
+                    General Inquiry &amp; Kitchen Feedback
+                  </option>
                 </select>
               </div>
               <div className="form-group">

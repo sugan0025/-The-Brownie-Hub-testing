@@ -20,7 +20,7 @@ export default function BoxBuilderSection() {
 
         <div className="builder-container" data-reveal>
           {/* ─── LEFT: Flavor Selection & Tier Controls ─── */}
-          <div className="builder-controls glass-card">
+          <div className="builder-controls glass-card" data-lenis-prevent="true">
             {/* Step 1: Select Box Size */}
             <div className="builder-step">
               <div className="builder-step-label">
@@ -66,7 +66,7 @@ export default function BoxBuilderSection() {
               </div>
 
               {/* 2-Column Responsive Flavor Options Grid */}
-              <div className="builder-flavor-grid" id="builder-flavor-list">
+              <div className="builder-flavor-grid" id="builder-flavor-list" data-lenis-prevent="true">
                 {INDIVIDUAL_BROWNIES.map((b) => (
                   <div
                     key={b.id}

@@ -1337,29 +1337,67 @@
       });
     }
 
-    // Scroll Spy for Navlinks
-    const sections = document.querySelectorAll('section[id], header[id]');
-    const navLinks = document.querySelectorAll('.capsule-nav-links .capsule-link');
+    // --- 16b. PRECISION SCROLL SPY WITH DYNAMIC URL HASH & UTM PRESERVATION ---
+    const trackedSections = [
+      { id: 'hero', hash: '' },
+      { id: 'bestsellers', hash: 'bestsellers' },
+      { id: 'builder', hash: 'builder' },
+      { id: 'menu', hash: 'menu' },
+      { id: 'faq', hash: 'faq' },
+      { id: 'contact', hash: 'contact' },
+    ];
 
-    window.addEventListener('scroll', () => {
-      let current = '';
-      const scrollPos = window.scrollY + 140;
+    let lastActiveHash = null;
+    let scrollSpyTimeout = null;
 
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-          current = section.getAttribute('id');
+    function updateActiveNavOnScroll() {
+      if (window.location.pathname !== '/' && window.location.pathname !== '') return;
+
+      const scrollPos = window.scrollY + 180;
+      let currentSectionId = 'hero';
+
+      trackedSections.forEach(({ id }) => {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const elTop = rect.top + window.scrollY;
+          if (scrollPos >= elTop) {
+            currentSectionId = id;
+          }
         }
       });
 
+      // Update active nav link classes
+      const navLinks = document.querySelectorAll('.capsule-nav-links .capsule-link, .mobile-drawer-links .mobile-link');
       navLinks.forEach((link) => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
+        const href = link.getAttribute('href') || '';
+        const cleanHref = href.replace(/^\/?#?/, '').replace(/^\//, '');
+        const targetId = currentSectionId === 'hero' ? '' : currentSectionId;
+
+        if (cleanHref === targetId) {
           link.classList.add('active');
+        } else {
+          link.classList.remove('active');
         }
       });
-    });
+
+      // Dynamically update URL Hash in browser address bar, preserving UTM search query
+      const targetHash = currentSectionId === 'hero' ? '' : `#${currentSectionId}`;
+      if (targetHash !== lastActiveHash) {
+        lastActiveHash = targetHash;
+        clearTimeout(scrollSpyTimeout);
+        scrollSpyTimeout = setTimeout(() => {
+          const searchParams = window.location.search || '';
+          const newUrl = `${window.location.pathname}${searchParams}${targetHash}`;
+          if (window.location.hash !== targetHash) {
+            window.history.replaceState(null, '', newUrl);
+          }
+        }, 100);
+      }
+    }
+
+    window.addEventListener('scroll', updateActiveNavOnScroll, { passive: true });
+    setTimeout(updateActiveNavOnScroll, 300);
   }
 
   // --- 17. PREMIUM ANIMATION SYSTEMS ---
@@ -1386,6 +1424,7 @@
     if (typeof Lenis === 'undefined') return;
 
     const lenis = new Lenis({ autoRaf: true });
+    window.lenis = lenis;
 
     // Sync with GSAP if available
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -1394,18 +1433,28 @@
       gsap.ticker.lagSmoothing(0);
     }
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // Smooth scroll for anchor links (both #section and /#section)
+    document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((anchor) => {
       anchor.addEventListener('click', (e) => {
-        const href = anchor.getAttribute('href');
-        if (href && href.length > 1) {
-          const target = document.querySelector(href);
+        const rawHref = anchor.getAttribute('href') || '';
+        const hash = rawHref.startsWith('/#') ? rawHref.substring(1) : rawHref;
+        if (hash && hash.length > 1 && (window.location.pathname === '/' || window.location.pathname === '')) {
+          const target = document.querySelector(hash);
           if (target) {
             e.preventDefault();
-            lenis.scrollTo(target, { offset: -80 });
+            lenis.scrollTo(target, { offset: -70 });
+            const searchParams = window.location.search || '';
+            window.history.replaceState(null, '', `${window.location.pathname}${searchParams}${hash}`);
           }
         }
       });
+    });
+
+    // Make sure inner scroll container wheel events are never blocked by Lenis
+    document.querySelectorAll('.builder-flavor-grid, [data-lenis-prevent="true"]').forEach((container) => {
+      container.addEventListener('wheel', (e) => {
+        e.stopPropagation();
+      }, { passive: false });
     });
   }
 
