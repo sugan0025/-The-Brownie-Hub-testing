@@ -1419,21 +1419,51 @@
     } catch (e) {}
   }
 
-  // --- 17b. LENIS SMOOTH SCROLL ---
+  // --- 17b. LENIS SMOOTH SCROLL (Per smooth-scrolling-ui skill) ---
   function initLenisSmooth() {
     if (typeof Lenis === 'undefined') return;
 
-    const lenis = new Lenis({ autoRaf: true });
-    window.lenis = lenis;
-
-    // Sync with GSAP if available
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => lenis.raf(time * 1000));
-      gsap.ticker.lagSmoothing(0);
+    // 1. Accessibility: Respect OS-level prefers-reduced-motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      console.log('ℹ️ Smooth scrolling disabled: prefers-reduced-motion is active.');
+      return;
     }
 
-    // Smooth scroll for anchor links (both #section and /#section)
+    // 2. Premium Lenis Instance with Butter-Smooth Easing
+    const lenis = new Lenis({
+      duration: 1.25,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential luxury ease-out
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.8,
+      infinite: false,
+      autoRaf: false, // Synchronized via GSAP ticker below to eliminate RAF double-stepping
+    });
+    window.lenis = lenis;
+
+    // 3. Flawless Synchronization with GSAP Ticker & ScrollTrigger
+    if (typeof gsap !== 'undefined') {
+      lenis.on('scroll', () => {
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.update();
+        }
+      });
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
+
+    // 4. Smooth Anchor Scrolling for both #section and /#section
     document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((anchor) => {
       anchor.addEventListener('click', (e) => {
         const rawHref = anchor.getAttribute('href') || '';
@@ -1442,7 +1472,11 @@
           const target = document.querySelector(hash);
           if (target) {
             e.preventDefault();
-            lenis.scrollTo(target, { offset: -70 });
+            lenis.scrollTo(target, {
+              offset: -75,
+              duration: 1.35,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            });
             const searchParams = window.location.search || '';
             window.history.replaceState(null, '', `${window.location.pathname}${searchParams}${hash}`);
           }
@@ -1450,11 +1484,15 @@
       });
     });
 
-    // Make sure inner scroll container wheel events are never blocked by Lenis
+    // 5. Protect inner scroll containers (Box Builder, Modals, Selects)
     document.querySelectorAll('.builder-flavor-grid, [data-lenis-prevent="true"]').forEach((container) => {
-      container.addEventListener('wheel', (e) => {
-        e.stopPropagation();
-      }, { passive: false });
+      container.addEventListener(
+        'wheel',
+        (e) => {
+          e.stopPropagation();
+        },
+        { passive: false }
+      );
     });
   }
 
