@@ -1710,6 +1710,47 @@
     });
   }
 
+  // --- 17h. INTERACTIVE 3D CRUST PARALLAX ---
+  function init3DCrustParallax() {
+    const heroVisual = document.querySelector('.hero-visual');
+    const crustElements = document.querySelectorAll('.floating-crust-3d');
+    if (!heroVisual || crustElements.length === 0) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      const rect = heroVisual.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      targetX = (e.clientX - centerX) / (window.innerWidth * 0.5);
+      targetY = (e.clientY - centerY) / (window.innerHeight * 0.5);
+    }, { passive: true });
+
+    function renderParallax() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+
+      crustElements.forEach((el) => {
+        const depth = parseFloat(el.dataset.depth || '25');
+        const moveX = currentX * depth * 0.45;
+        const moveY = currentY * depth * 0.45;
+        const rotX = -currentY * depth * 0.25;
+        const rotY = currentX * depth * 0.25;
+
+        const img = el.querySelector('img');
+        if (img) {
+          img.style.transform = `translate3d(${moveX}px, ${moveY}px, ${depth}px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+      });
+
+      requestAnimationFrame(renderParallax);
+    }
+    requestAnimationFrame(renderParallax);
+  }
+
   // --- 18. DOM READY INITIALIZER (SAFE PATTERN) ---
   function bootApp() {
     // Core functionality
@@ -1731,11 +1772,12 @@
     initScrollReveals();
     initLenisSmooth();
     initHero3D();
+    init3DCrustParallax();
     initMagneticHover();
     initTiltCards();
     initAnimatedCounters();
 
-    console.log('🍫 The Brownie Hub Master Client Engine v10.0 Active — GSAP + Lenis + Three.js');
+    console.log('🍫 The Brownie Hub Master Client Engine v10.0 Active — GSAP + Lenis + Three.js + 3D Crust');
   }
 
   // Safe boot: works whether DOM is still loading or already loaded

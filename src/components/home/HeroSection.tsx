@@ -88,16 +88,28 @@ export default function HeroSection() {
               loading="eager"
             />
 
-            {/* Floating 3D Chocolate Chunks */}
-            <div className="floating-choco-cube cube-top-left" aria-hidden="true"></div>
-            <div className="floating-choco-cube cube-mid-left" aria-hidden="true"></div>
-            <div className="floating-choco-cube cube-bot-left" aria-hidden="true"></div>
-            <div className="floating-choco-cube cube-top-right" aria-hidden="true"></div>
-            <div className="floating-choco-cube cube-mid-right" aria-hidden="true"></div>
-            <div className="floating-choco-cube cube-bot-right" aria-hidden="true"></div>
-            <div className="floating-crust-flake flake-1" aria-hidden="true"></div>
-            <div className="floating-crust-flake flake-2" aria-hidden="true"></div>
-            <div className="floating-crust-flake flake-3" aria-hidden="true"></div>
+            {/* Real Photographic 3D Floating Crust & Brownie Chunks */}
+            <div className="floating-crust-3d crust-3d-top-left" data-depth="35" aria-hidden="true">
+              <img src="/images/brownies/crust_chunk_1.png" alt="" />
+            </div>
+            <div className="floating-crust-3d crust-3d-small-top" data-depth="15" aria-hidden="true">
+              <img src="/images/brownies/crust_chunk_2.png" alt="" />
+            </div>
+            <div className="floating-crust-3d crust-3d-mid-left" data-depth="50" aria-hidden="true">
+              <img src="/images/brownies/crust_chunk_3.png" alt="" />
+            </div>
+            <div className="floating-crust-3d crust-3d-bot-left" data-depth="25" aria-hidden="true">
+              <img src="/images/brownies/crust_chunk_4.png" alt="" />
+            </div>
+            <div className="floating-crust-3d crust-3d-top-right" data-depth="20" aria-hidden="true">
+              <img src="/images/brownies/crust_chunk_5.png" alt="" />
+            </div>
+            <div className="floating-crust-3d crust-3d-mid-right" data-depth="45" aria-hidden="true">
+              <img src="/images/brownies/crust_chunk_6.png" alt="" />
+            </div>
+            <div className="floating-crust-3d crust-3d-far-right" data-depth="30" aria-hidden="true">
+              <img src="/images/brownies/crust_chunk_7.png" alt="" />
+            </div>
           </div>
 
           {/* Floating Glass Badge */}
