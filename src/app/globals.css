@@ -711,17 +711,17 @@ select:focus-visible,
 .hero-visual-glow {
   content: "";
   position: absolute;
-  top: 48%;
-  left: 52%;
+  top: 45%;
+  left: 55%;
   transform: translate(-50%, -50%);
-  width: 950px;
-  height: 780px;
+  width: 1000px;
+  height: 820px;
   border-radius: 60% 40% 65% 35% / 48% 62% 38% 52%;
   background:
-    radial-gradient(ellipse 65% 55% at 55% 45%, rgba(201, 134, 60, 0.16) 0%, rgba(130, 60, 20, 0.08) 38%, transparent 68%),
-    radial-gradient(ellipse 48% 42% at 68% 42%, rgba(247, 213, 139, 0.10) 0%, transparent 60%),
-    radial-gradient(circle at 35% 65%, rgba(110, 48, 18, 0.09) 0%, transparent 52%);
-  filter: blur(100px);
+    radial-gradient(ellipse 55% 50% at 62% 40%, rgba(247, 213, 139, 0.22) 0%, rgba(232, 182, 110, 0.15) 30%, rgba(201, 134, 60, 0.08) 55%, transparent 75%),
+    radial-gradient(ellipse 65% 55% at 45% 50%, rgba(130, 60, 20, 0.14) 0%, rgba(68, 30, 11, 0.08) 45%, transparent 70%),
+    radial-gradient(circle at 75% 30%, rgba(255, 235, 175, 0.16) 0%, transparent 48%);
+  filter: blur(85px);
   pointer-events: none;
   z-index: 0;
   animation: soft-ambient-pulse 10s ease-in-out infinite alternate;
