@@ -1408,16 +1408,20 @@
     });
 
     const mobileBtn = document.getElementById('mobile-menu-btn');
-    const mobileDrawer = document.getElementById('mobile-nav-drawer');
+    const mobileOverlay = document.getElementById('mobile-menu-overlay') || document.getElementById('mobile-nav-drawer');
 
-    if (mobileBtn && mobileDrawer) {
+    if (mobileBtn && mobileOverlay) {
       mobileBtn.addEventListener('click', () => {
-        mobileDrawer.classList.toggle('open');
+        mobileBtn.classList.toggle('active');
+        mobileOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : '';
       });
 
-      document.querySelectorAll('.mobile-link').forEach((link) => {
+      mobileOverlay.querySelectorAll('.mobile-nav-link, .mobile-link').forEach((link) => {
         link.addEventListener('click', () => {
-          mobileDrawer.classList.remove('open');
+          mobileBtn.classList.remove('active');
+          mobileOverlay.classList.remove('active');
+          document.body.style.overflow = '';
         });
       });
     }
