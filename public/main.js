@@ -8,7 +8,7 @@
   'use strict';
 
   // --- 1. BRAND CONFIG & PHONE ---
-  const BAKERY_PHONE = '917200015490';
+  const BAKERY_PHONE = '919500415490';
   const GA4_ID = 'G-GWTWBBBDQ2';
 
   // --- 2. STATE MANAGEMENT ---

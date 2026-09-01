@@ -116,7 +116,7 @@ export async function POST(request: Request) {
             user_id: process.env.EMAILJS_PUBLIC_KEY,
             accessToken: process.env.EMAILJS_PRIVATE_KEY,
             template_params: {
-              to_email: process.env.OWNER_EMAIL || 'thebrowniehubb@gmail.com',
+              to_email: process.env.OWNER_EMAIL || 'thebrowniehub3@gmail.com',
               ...emailParams,
             },
           }),

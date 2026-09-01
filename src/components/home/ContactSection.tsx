@@ -28,8 +28,8 @@ export default function ContactSection() {
                 <div className="contact-icon-circle whatsapp-glow">💬</div>
                 <div>
                   <strong>WhatsApp Quick Order</strong>
-                  <a href="https://wa.me/917200015490" target="_blank" rel="noopener noreferrer" className="contact-link">
-                    +91 72000 15490 (Instant Response)
+                  <a href="https://wa.me/919500415490" target="_blank" rel="noopener noreferrer" className="contact-link">
+                    +91 95004 15490 (Instant Response)
                   </a>
                 </div>
               </div>
@@ -38,8 +38,8 @@ export default function ContactSection() {
                 <div className="contact-icon-circle">✉️</div>
                 <div>
                   <strong>Email Us</strong>
-                  <a href="mailto:hi@thebrowniehub.com" className="contact-link">
-                    hi@thebrowniehub.com
+                  <a href="mailto:thebrowniehub3@gmail.com" className="contact-link">
+                    thebrowniehub3@gmail.com
                   </a>
                 </div>
               </div>

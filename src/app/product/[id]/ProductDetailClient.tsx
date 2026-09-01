@@ -85,7 +85,7 @@ export default function ProductDetailClient({ product, isBox, relatedItems }: Pr
       `------------------------------------\n` +
       `Please confirm my order & send payment details!`;
 
-    window.open(`https://wa.me/917200015490?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/919500415490?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   return (
