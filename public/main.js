@@ -438,9 +438,9 @@
     }
     if (navBtn) {
       if (total > 0) {
-        navBtn.style.display = 'inline-flex';
+        navBtn.classList.add('visible');
       } else {
-        navBtn.style.display = 'none';
+        navBtn.classList.remove('visible');
       }
     }
   }

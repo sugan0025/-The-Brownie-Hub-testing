@@ -315,16 +315,18 @@ select:focus-visible,
   width: 100%;
   margin: 0 auto;
   padding: 0 24px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
 }
 
 .nav-brand {
+  grid-column: 1;
   display: flex;
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  justify-self: start;
 }
 
 .nav-logo {
@@ -352,12 +354,15 @@ select:focus-visible,
 }
 
 .nav-links {
+  grid-column: 2;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 28px;
   list-style: none;
   margin: 0;
   padding: 0;
+  justify-self: center;
 }
 
 .nav-link {
@@ -394,6 +399,15 @@ select:focus-visible,
   width: 100%;
 }
 
+.nav-actions {
+  grid-column: 3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  justify-self: end;
+  gap: 12px;
+}
+
 .nav-cta {
   display: inline-flex;
   align-items: center;
@@ -405,14 +419,25 @@ select:focus-visible,
   font-size: 0.85rem;
   border-radius: 9999px;
   border: none;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
   position: relative;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(201, 134, 60, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.92);
 }
 
-.nav-cta:hover {
-  transform: translateY(-2px);
+.nav-cta.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.nav-cta.visible:hover {
+  transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 25px rgba(201, 134, 60, 0.45);
 }
 

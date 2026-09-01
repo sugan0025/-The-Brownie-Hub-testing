@@ -19,18 +19,20 @@ export default function Navbar() {
             <li><a href="/#about" className="nav-link" data-nav="about">About</a></li>
             <li><a href="/#contact" className="nav-link" data-nav="contact">Contact</a></li>
           </ul>
-          <button className="nav-cta" id="nav-order-btn" style={{ display: 'none' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <circle cx="9" cy="21" r="1" />
-              <circle cx="20" cy="21" r="1" />
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-            </svg>
-            <span>Order Now</span>
-            <span className="cart-badge" id="cart-badge" style={{ display: 'none' }}>0</span>
-          </button>
-          <button className="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-          </button>
+          <div className="nav-actions">
+            <button className="nav-cta" id="nav-order-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+              <span>Order Now</span>
+              <span className="cart-badge" id="cart-badge" style={{ display: 'none' }}>0</span>
+            </button>
+            <button className="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
         </div>
       </nav>
 
