@@ -371,6 +371,9 @@
       document.body.appendChild(container);
     }
 
+    // Clear previous toasts so only one appears
+    container.innerHTML = '';
+
     const toast = document.createElement('div');
 
     if (type === 'success' && title && title.includes('Cart')) {
@@ -408,23 +411,6 @@
   }
 
   // --- 7. CART MANAGEMENT (The Rolling Oven 1:1) ---
-  function updateCartBadge() {
-    const badge = document.getElementById('cart-badge');
-    const navBtn = document.getElementById('nav-order-btn');
-    const total = state.cart.reduce((sum, item) => sum + item.qty, 0);
-
-    if (total > 0) {
-      if (badge) {
-        badge.style.display = 'flex';
-        badge.textContent = String(total);
-      }
-      if (navBtn) navBtn.style.display = 'inline-flex';
-    } else {
-      if (badge) badge.style.display = 'none';
-      if (navBtn) navBtn.style.display = 'none';
-    }
-  }
-
   function loadCart() {
     try {
       const saved = localStorage.getItem('tbh_cart');
@@ -467,7 +453,13 @@
     renderCart();
   }
 
+  let lastAddToCartTime = 0;
   function addToCart(name, price, breakdown = null, isBox = false, image = null) {
+    const now = Date.now();
+    if (now - lastAddToCartTime < 180) {
+      return; // Debounce dual click events
+    }
+    lastAddToCartTime = now;
     const existingIndex = state.cart.findIndex(
       (item) => item.name === name && JSON.stringify(item.breakdown || []) === JSON.stringify(breakdown || [])
     );
