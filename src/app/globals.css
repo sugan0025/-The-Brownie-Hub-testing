@@ -314,25 +314,22 @@ select:focus-visible,
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 48px;
 }
 
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   text-decoration: none;
-  flex-shrink: 0;
-  margin-right: 48px;
 }
 
 .nav-logo {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 2px solid var(--caramel, #c9863c);
   box-shadow: 0 0 20px rgba(201, 134, 60, 0.2);
@@ -347,31 +344,31 @@ select:focus-visible,
 
 .nav-brand-text {
   font-family: var(--font-heading, serif);
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: var(--cream, #fff4ea);
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .nav-link {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: rgba(255, 244, 234, 0.75);
   transition: all 0.25s ease;
   position: relative;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.3px;
   text-decoration: none;
-  padding: 6px 10px;
+  padding: 4px 2px;
   white-space: nowrap;
 }
 
@@ -382,14 +379,14 @@ select:focus-visible,
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--caramel, #c9863c);
+  background: var(--caramel-bright, #e8b66e);
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 9999px;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: #ffffff;
+  color: var(--cream, #fff4ea);
 }
 
 .nav-link:hover::after,
@@ -402,16 +399,16 @@ select:focus-visible,
   align-items: center;
   gap: 8px;
   padding: 10px 24px;
-  background: linear-gradient(135deg, var(--caramel, #c9863c), var(--caramel-dark, #8c531d));
+  background: linear-gradient(135deg, var(--caramel-bright, #e8b66e), var(--caramel, #c9863c));
   color: #140a05;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 235, 175, 0.4);
-  transition: all 0.25s ease;
+  border: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(201, 134, 60, 0.3);
+  box-shadow: 0 4px 16px rgba(201, 134, 60, 0.3);
 }
 
 .nav-cta:hover {

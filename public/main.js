@@ -426,7 +426,6 @@
 
   function updateCartBadge() {
     const badge = document.getElementById('cart-badge');
-    const navBtn = document.getElementById('nav-order-btn');
     const total = state.cart.reduce((sum, item) => sum + item.qty, 0);
     if (badge) {
       if (total > 0) {
@@ -434,13 +433,6 @@
         badge.textContent = String(total);
       } else {
         badge.style.display = 'none';
-      }
-    }
-    if (navBtn) {
-      if (total > 0) {
-        navBtn.style.display = 'inline-flex';
-      } else {
-        navBtn.style.display = 'none';
       }
     }
   }
