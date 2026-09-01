@@ -19,7 +19,7 @@ export default function Navbar() {
             <li><a href="/#about" className="nav-link" data-nav="about">About</a></li>
             <li><a href="/#contact" className="nav-link" data-nav="contact">Contact</a></li>
           </ul>
-          <button className="nav-cta" id="nav-order-btn">
+          <button className="nav-cta" id="nav-order-btn" style={{ display: 'none' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <circle cx="9" cy="21" r="1" />
               <circle cx="20" cy="21" r="1" />
