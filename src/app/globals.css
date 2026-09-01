@@ -2525,41 +2525,90 @@ select:focus-visible,
 .contact-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 18px;
+  gap: 16px;
+  padding: 16px 20px;
+  background: rgba(20, 10, 5, 0.75);
+  border: 1px solid rgba(201, 134, 60, 0.25);
+  border-radius: 18px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.contact-item:hover {
+  background: rgba(30, 15, 8, 0.9);
+  border-color: rgba(201, 134, 60, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(201, 134, 60, 0.12);
 }
 
 .contact-icon-circle {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   background: rgba(201, 134, 60, 0.1);
+  border: 1px solid rgba(201, 134, 60, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover .contact-icon-circle {
+  transform: scale(1.08);
+}
+
+.location-glow {
+  background: rgba(201, 134, 60, 0.12);
+  border-color: rgba(201, 134, 60, 0.35);
+  box-shadow: 0 0 16px rgba(201, 134, 60, 0.2);
 }
 
 .whatsapp-glow {
-  box-shadow: 0 0 14px rgba(37, 211, 102, 0.25);
-  background: rgba(37, 211, 102, 0.15);
+  background: rgba(37, 211, 102, 0.12);
+  border-color: rgba(37, 211, 102, 0.35);
+  box-shadow: 0 0 16px rgba(37, 211, 102, 0.25);
+}
+
+.email-glow {
+  background: rgba(232, 182, 110, 0.12);
+  border-color: rgba(232, 182, 110, 0.35);
+  box-shadow: 0 0 16px rgba(232, 182, 110, 0.2);
+}
+
+.instagram-glow {
+  background: rgba(221, 42, 123, 0.12);
+  border-color: rgba(221, 42, 123, 0.35);
+  box-shadow: 0 0 16px rgba(221, 42, 123, 0.25);
 }
 
 .contact-item strong {
   display: block;
-  font-size: 0.92rem;
-  color: var(--cream);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cream, #fff4ea);
+  letter-spacing: 0.2px;
 }
 
 .contact-item span {
-  font-size: 0.8rem;
-  color: var(--cream-muted);
+  font-size: 0.82rem;
+  color: rgba(255, 244, 234, 0.6);
+  margin-top: 2px;
+  display: block;
 }
 
 .contact-link {
-  font-size: 0.82rem;
-  color: var(--caramel-light);
+  font-size: 0.84rem;
+  color: var(--caramel-bright, #e8b66e);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  margin-top: 2px;
+  display: inline-block;
+}
+
+.contact-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .contact-form-card {
@@ -5237,10 +5286,10 @@ body::before {
 }
 
 .slot-item {
-  min-height: 168px;
+  min-height: 210px;
   background: rgba(10, 5, 2, 0.75);
   border: 1.5px dashed rgba(201, 134, 60, 0.35);
-  border-radius: 16px;
+  border-radius: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -5253,80 +5302,86 @@ body::before {
 }
 
 .slot-item.filled {
+  min-height: unset;
   border-style: solid;
   border-color: rgba(201, 134, 60, 0.55);
   background: linear-gradient(135deg, rgba(38, 18, 9, 0.95), rgba(18, 9, 4, 0.98));
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(201, 134, 60, 0.12);
   animation: slotPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   justify-content: space-between;
-  padding: 10px;
+  padding: 12px;
+  gap: 10px;
 }
 
 @keyframes slotPop {
-  from { transform: scale(0.85); opacity: 0; }
+  from { transform: scale(0.88); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
 .slot-item-media-wrap {
   position: relative;
   width: 100%;
-  height: 110px;
-  border-radius: 12px;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
   overflow: hidden;
+  background: #160b06;
   border: 1px solid rgba(201, 134, 60, 0.35);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
 .slot-item-thumb {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  object-position: center top;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .slot-item.filled:hover .slot-item-thumb {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .slot-item-badge {
   position: absolute;
-  bottom: 4px;
-  left: 4px;
-  font-size: 0.62rem;
+  bottom: 6px;
+  left: 6px;
+  font-size: 0.65rem;
   font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 2px 7px;
+  border-radius: 5px;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
+  backdrop-filter: blur(10px);
 }
 
 .slot-item-badge.veg {
-  background: rgba(14, 7, 4, 0.88);
-  color: #51cf66;
-  border: 1px solid rgba(81, 207, 102, 0.45);
+  background: rgba(10, 5, 2, 0.88);
+  color: #25d366;
+  border: 1px solid rgba(37, 211, 102, 0.5);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .slot-item-badge.nonveg {
-  background: rgba(14, 7, 4, 0.88);
-  color: #ff922b;
-  border: 1px solid rgba(255, 146, 43, 0.45);
+  background: rgba(10, 5, 2, 0.88);
+  color: #ffa94d;
+  border: 1px solid rgba(255, 169, 77, 0.5);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .slot-item-info {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
   width: 100%;
   background: rgba(10, 5, 2, 0.85);
-  border: 1px solid rgba(201, 134, 60, 0.25);
+  border: 1px solid rgba(201, 134, 60, 0.3);
   border-radius: 9999px;
-  padding: 3px 10px;
-  margin-top: 2px;
+  padding: 5px 12px;
 }
 
 .slot-item-name {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--cream, #fff4ea);
   text-align: center;
@@ -5338,29 +5393,31 @@ body::before {
 
 .slot-item-remove {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 6px;
+  right: 6px;
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: rgba(10, 5, 2, 0.9);
-  border: 1px solid rgba(201, 134, 60, 0.45);
-  color: #ff5252;
-  font-size: 0.72rem;
+  background: rgba(14, 7, 4, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 2;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .slot-item-remove:hover {
-  background: #ff5252;
+  background: #ff4757;
+  border-color: #ff4757;
   color: #ffffff;
-  border-color: #ff5252;
   transform: scale(1.15);
-  box-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
+  box-shadow: 0 0 14px rgba(255, 71, 87, 0.7);
 }
 
 .slot-num {
