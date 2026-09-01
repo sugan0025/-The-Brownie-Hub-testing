@@ -19,7 +19,7 @@ export default function BoxBuilderSection() {
 
         <div className="builder-container" data-reveal>
           {/* ─── LEFT: Flavor Selection, Tier & Packaging Perks ─── */}
-          <div className="builder-controls glass-card" data-lenis-prevent="true">
+          <div className="builder-controls glass-card">
             {/* Step 1: Selected Box Format */}
             <div className="builder-step">
               <div className="builder-step-label">

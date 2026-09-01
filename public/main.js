@@ -793,12 +793,15 @@
           const isVeg = slot.dietary === 'veg';
           html += `
             <div class="slot-item filled">
-              <img src="${slot.image}" alt="${slot.name}" class="slot-item-thumb" />
-              <div style="display:flex;align-items:center;gap:4px;width:100%;justify-content:center;padding:0 4px;">
-                <span class="dietary-dot ${isVeg ? 'veg' : 'nonveg'}" style="width:7px;height:7px;flex-shrink:0;"></span>
+              <div class="slot-item-media-wrap">
+                <img src="${slot.image}" alt="${slot.name}" class="slot-item-thumb" />
+                <span class="slot-item-badge ${isVeg ? 'veg' : 'nonveg'}">${isVeg ? 'Veg' : 'Egg'}</span>
+              </div>
+              <div class="slot-item-info">
+                <span class="dietary-dot ${isVeg ? 'veg' : 'nonveg'}"></span>
                 <span class="slot-item-name">${slot.name}</span>
               </div>
-              <button class="slot-item-remove btn-slot-remove" data-index="${i}" title="Remove" aria-label="Remove brownie">✕</button>
+              <button class="slot-item-remove btn-slot-remove" data-index="${i}" title="Remove ${slot.name}" aria-label="Remove brownie">✕</button>
             </div>
           `;
         } else {
