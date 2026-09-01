@@ -9,55 +9,66 @@ export default function BoxBuilderSection() {
       <div className="builder-wrapper">
         <div className="sec-head center" data-reveal>
           <span className="section-eyebrow">
-            <span className="dash">&mdash;</span> ASSORTED GIFT BOX SIMULATOR <span className="dash">&mdash;</span>
+            <span className="dash">&mdash;</span> BESPOKE CONFECTIONERY ATELIER <span className="dash">&mdash;</span>
           </span>
-          <h2 className="section-title">Craft Your Custom Keepsake Box</h2>
+          <h2 className="section-title">Craft Your Signature Keepsake Box</h2>
           <p className="section-desc">
-            Pick your 4 favorite freshly baked brownie squares. We&apos;ll pack them in our matte-black magnetic box with a golden foil seal and dispatch fresh across Chennai.
+            Handpick 4 freshly baked artisanal brownie squares. Wrapped in our matte-black magnetic keepsake box with a gold foil emblem &amp; satin ribbon, delivered hyper-fresh across Chennai.
           </p>
         </div>
 
         <div className="builder-container" data-reveal>
           {/* ─── LEFT: Flavor Selection & Controls ─── */}
           <div className="builder-controls glass-card" data-lenis-prevent="true">
-            {/* Step 1: Select Box Size */}
+            {/* Step 1: Selected Box Format */}
             <div className="builder-step">
               <div className="builder-step-label">
                 <span className="builder-step-num">1</span>
-                <span>Box Size</span>
+                <div>
+                  <span className="builder-step-heading">Bespoke Box Tier</span>
+                  <span className="builder-step-sub">Pre-set to our signature 4-piece luxury gift format</span>
+                </div>
               </div>
-              <div className="tier-pills" id="builder-tier-selector">
-                <div
-                  className="tier-pill active"
-                  data-size="4"
-                  data-price="256"
-                  data-name="Pack of 4 Box"
-                >
-                  <div className="tier-pill-left">
-                    <span className="tier-pill-icon">🎁</span>
-                    <div>
-                      <div className="tier-pill-title">Pack of 4 Box</div>
-                      <div className="tier-pill-desc">Mix &amp; match any 4 brownie squares</div>
+
+              <div className="tier-card-luxury">
+                <div className="tier-card-glow"></div>
+                <div className="tier-card-content">
+                  <div className="tier-card-main">
+                    <div className="tier-card-icon-wrap">
+                      <span className="tier-card-emoji">🎁</span>
+                    </div>
+                    <div className="tier-card-text">
+                      <div className="tier-card-title-row">
+                        <h4 className="tier-card-title">4-Piece Magnetic Keepsake Box</h4>
+                        <span className="tier-card-badge-save">Save ₹20</span>
+                      </div>
+                      <p className="tier-card-desc">
+                        Includes premium matte-black rigid box, gold wax-seal branding &amp; golden satin ribbon.
+                      </p>
                     </div>
                   </div>
-                  <div className="tier-pill-right">
-                    <div className="tier-pill-price">From ₹256</div>
-                    <div className="tier-pill-save">Save ₹20 on Box Sets</div>
+                  <div className="tier-card-pricing">
+                    <span className="tier-pricing-label">Starting From</span>
+                    <span className="tier-pricing-value">₹256</span>
+                    <span className="tier-pricing-discount">₹20 Bundle Discount Applied</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Step 2: Dietary Filter & Flavors */}
+            {/* Step 2: Flavors & 1-Click Packs */}
             <div className="builder-step">
               <div className="builder-step-label">
                 <span className="builder-step-num">2</span>
-                <span>Select 4 Brownie Flavors</span>
+                <div>
+                  <span className="builder-step-heading">Select 4 Brownie Squares</span>
+                  <span className="builder-step-sub">Click &quot;+ Drop in Box&quot; or choose a fast 1-click curated combo</span>
+                </div>
               </div>
 
               {/* 1-Click Quick Fill Presets */}
               <div className="builder-quick-presets">
-                <span className="presets-label">⚡ 1-Click Packs:</span>
+                <span className="presets-label">⚡ Fast Combos:</span>
                 <button type="button" className="btn-preset-pack" data-preset="classic">
                   🍫 4x Classic (₹256)
                 </button>
@@ -83,6 +94,7 @@ export default function BoxBuilderSection() {
                   >
                     <div className="flavor-pick-thumb">
                       <img src={b.image} alt={b.name} loading="lazy" />
+                      <span className="flavor-thumb-tag">100% Eggless</span>
                     </div>
                     <div className="flavor-pick-info">
                       <div className="flavor-title-row">
@@ -99,7 +111,7 @@ export default function BoxBuilderSection() {
                           type="button"
                           suppressHydrationWarning
                         >
-                          + Add
+                          + Drop in Box
                         </button>
                       </div>
                     </div>
@@ -113,13 +125,13 @@ export default function BoxBuilderSection() {
           <div className="builder-summary-card" id="builder-box-card">
             {/* Box Header with Gold Ribbon Decor */}
             <div className="box-simulator-ribbon-header">
-              <span className="ribbon-gold-tag">🎀 LUXURY MAGNETIC KEEPSAKE BOX</span>
+              <span className="ribbon-gold-tag">✨ ARTISANAL GIFT TRAY SIMULATOR</span>
             </div>
 
             <div className="builder-summary-head">
               <div>
-                <h3 id="builder-box-title">Pack of 4 Box</h3>
-                <span className="builder-box-sub">Matte black packaging with gold foil seal &amp; satin ribbon</span>
+                <h3 id="builder-box-title">Pack of 4 Keepsake Box</h3>
+                <span className="builder-box-sub">Matte black velvet tray &amp; embossed gold ribbon</span>
               </div>
               <span className="builder-box-badge" id="builder-box-badge">
                 0 / 4 Selected
@@ -129,8 +141,8 @@ export default function BoxBuilderSection() {
             {/* Capacity Progress Bar */}
             <div className="builder-capacity-meter">
               <div className="builder-meter-labels">
-                <span>Box Filling Progress</span>
-                <span id="builder-slots-text">0 of 4 slots filled</span>
+                <span>Box Filling Status</span>
+                <span id="builder-slots-text">0 of 4 slots packed</span>
               </div>
               <div className="builder-progress-bar">
                 <div className="builder-progress-fill" id="builder-progress-fill" style={{ width: '0%' }}></div>
@@ -145,7 +157,7 @@ export default function BoxBuilderSection() {
             {/* Pricing & Checkout Actions */}
             <div className="builder-total-row">
               <div>
-                <span className="total-label">Total Box Price</span>
+                <span className="total-label">Total Custom Box Price</span>
                 <div className="builder-total-price" id="builder-price-display">
                   ₹0
                 </div>
@@ -156,7 +168,7 @@ export default function BoxBuilderSection() {
                 type="button"
                 suppressHydrationWarning
               >
-                Clear All
+                Clear Tray
               </button>
             </div>
 
@@ -168,7 +180,7 @@ export default function BoxBuilderSection() {
                 disabled
                 suppressHydrationWarning
               >
-                <span>Pick 4 Brownies to Pack Box</span>
+                <span>Select 4 Brownies to Complete Box</span>
               </button>
 
               <a
@@ -181,7 +193,7 @@ export default function BoxBuilderSection() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z" />
                 </svg>
-                <span>Order Box on WhatsApp</span>
+                <span>Direct Order on WhatsApp</span>
               </a>
             </div>
           </div>
