@@ -64,6 +64,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg-deep);
   color: var(--cream);
+  overflow-x: hidden;
 }
 
 /* === LENIS SMOOTH SCROLL SPECIFICATION (Per smooth-scrolling-ui skill) === */

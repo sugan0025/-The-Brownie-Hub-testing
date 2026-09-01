@@ -76,7 +76,7 @@ export default function Footer() {
               📍 <strong style={{ color: 'var(--cream)' }}>Kitchen:</strong> Chennai, Tamil Nadu, India<br />
               ⏰ <strong style={{ color: 'var(--cream)' }}>Order Delivery:</strong> 10:00 AM – 09:00 PM<br />
               🛵 <strong style={{ color: 'var(--cream)' }}>Delivery:</strong> Hyper-fresh 60–90 min across Chennai<br />
-              ✉️ <strong style={{ color: 'var(--cream)' }}>Inquiries:</strong> thebrowniehub3@gmail.com
+              ✉️ <strong style={{ color: 'var(--cream)' }}>Inquiries:</strong> <a href="mailto:thebrowniehub3@gmail.com" style={{ color: 'var(--cream-muted)', wordBreak: 'break-all', textDecoration: 'none' }}>thebrowniehub3@gmail.com</a>
             </p>
           </div>
         </div>
