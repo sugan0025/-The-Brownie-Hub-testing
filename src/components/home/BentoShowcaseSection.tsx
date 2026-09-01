@@ -236,7 +236,12 @@ export default function BentoShowcaseSection() {
             {stats.map((st, i) => (
               <div key={i} className="bento-stat-unit">
                 <div className="bento-stat-icon-wrap">{st.icon}</div>
-                <span className="bento-stat-num" data-counter={st.value} data-suffix={st.suffix}>
+                <span
+                  className="bento-stat-num"
+                  data-counter={st.value}
+                  data-suffix={st.suffix}
+                  data-decimals={st.value % 1 !== 0 ? 1 : 0}
+                >
                   0{st.suffix}
                 </span>
                 <span className="bento-stat-text">{st.label}</span>

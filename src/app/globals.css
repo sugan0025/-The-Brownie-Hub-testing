@@ -4995,41 +4995,37 @@ body::before {
   box-shadow: 0 6px 16px rgba(201, 134, 60, 0.35);
 }
 
-/* Flavor Cards Grid */
+/* Flavor Cards Grid (Spacious Horizontal Atelier Cards) */
 .builder-flavor-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-}
-
-@media (max-width: 640px) {
-  .builder-flavor-grid {
-    grid-template-columns: 1fr;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .flavor-pick-card {
   display: flex;
-  gap: 14px;
-  padding: 14px;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
   background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(201, 134, 60, 0.22);
-  border-radius: 16px;
+  border: 1px solid rgba(201, 134, 60, 0.25);
+  border-radius: 18px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .flavor-pick-card:hover {
   border-color: var(--caramel, #c9863c);
   background: rgba(201, 134, 60, 0.08);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(201, 134, 60, 0.15);
 }
 
 .flavor-pick-thumb {
-  width: 80px;
-  height: 80px;
+  width: 76px;
+  height: 76px;
   border-radius: 12px;
   overflow: hidden;
   flex-shrink: 0;
@@ -5148,7 +5144,7 @@ body::before {
 
 .ribbon-gold-tag {
   display: inline-block;
-  padding: 5px 16px;
+  padding: 6px 18px;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 1.2px;
@@ -5156,6 +5152,19 @@ body::before {
   background: linear-gradient(135deg, var(--caramel-bright, #e8b66e), var(--caramel, #c9863c));
   border-radius: 9999px;
   box-shadow: 0 4px 14px rgba(201, 134, 60, 0.35);
+  transition: all 0.35s ease;
+}
+
+.ribbon-gold-tag.ribbon-complete {
+  background: linear-gradient(135deg, #51cf66, #2b8a3e);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(81, 207, 102, 0.6);
+  animation: ribbonPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes ribbonPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(81, 207, 102, 0.4); }
+  50% { transform: scale(1.04); box-shadow: 0 0 25px rgba(81, 207, 102, 0.8); }
 }
 
 .builder-summary-head {

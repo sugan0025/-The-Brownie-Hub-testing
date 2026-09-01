@@ -749,6 +749,17 @@
       if (progressFill) progressFill.style.width = `${pct}%`;
       if (priceDisplay) priceDisplay.textContent = `₹${computedPrice}`;
 
+      const ribbonTag = document.querySelector('.ribbon-gold-tag');
+      if (ribbonTag) {
+        if (count === size) {
+          ribbonTag.classList.add('ribbon-complete');
+          ribbonTag.innerHTML = '✨ KEEPSAKE BOX COMPLETE &bull; READY TO PACK';
+        } else {
+          ribbonTag.classList.remove('ribbon-complete');
+          ribbonTag.innerHTML = '✨ ARTISANAL GIFT TRAY SIMULATOR';
+        }
+      }
+
       if (boxCard) {
         if (count === size) {
           boxCard.classList.add('border-beam-card');
@@ -761,7 +772,7 @@
         if (count === size) {
           addCartBtn.removeAttribute('disabled');
           addCartBtn.classList.add('pulse-gold');
-          addCartBtn.innerHTML = `<span>Pack &amp; Add Box to Cart &bull; ₹${computedPrice} &rarr;</span>`;
+          addCartBtn.innerHTML = `<span>🎁 Pack &amp; Add Box to Cart &bull; ₹${computedPrice} &rarr;</span>`;
           addCartBtn.style.opacity = '1';
           addCartBtn.style.cursor = 'pointer';
         } else {
@@ -1667,84 +1678,93 @@
     }
   }
 
-  // --- 17d. MAGNETIC HOVER ---
+  // --- 17d. MAGNETIC HOVER (Aceternity UI Micro-interactions) ---
   function initMagneticHover() {
-    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+    const magneticTargets = document.querySelectorAll(
+      '.magnetic-btn, .btn-gold, .btn-hero-primary, .btn-pack-box, .flavor-add-btn, .btn-preset-pack, .btn-primary, .btn-secondary'
+    );
+
+    magneticTargets.forEach((btn) => {
       btn.addEventListener('mousemove', (e) => {
         const rect = btn.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+        btn.style.transform = `translate(${x * 0.18}px, ${y * 0.18}px)`;
       });
       btn.addEventListener('mouseleave', () => {
         btn.style.transform = 'translate(0, 0)';
         btn.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-        setTimeout(() => { btn.style.transition = ''; }, 400);
+        setTimeout(() => {
+          btn.style.transition = '';
+        }, 400);
       });
     });
   }
 
   // --- 17e. 3D TILT CARDS ---
   function initTiltCards() {
-    document.querySelectorAll('.tilt-card').forEach(card => {
+    document.querySelectorAll('.tilt-card, .flavor-pick-card').forEach((card) => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
+        card.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-2px)`;
       });
       card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(800px) rotateY(0) rotateX(0) scale(1)';
+        card.style.transform = 'perspective(800px) rotateY(0) rotateX(0) translateY(0)';
       });
     });
   }
 
-  // --- 17f. ANIMATED COUNTERS ---
+  // --- 17f. ANIMATED COUNT-UP (Scroll Into View Micro-interaction) ---
   function initAnimatedCounters() {
     const counters = document.querySelectorAll('[data-counter]');
     if (!counters.length) return;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = parseFloat(el.dataset.counter);
-          const suffix = el.dataset.suffix || '';
-          const prefix = el.dataset.prefix || '';
-          const duration = 2000;
-          const start = Date.now();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseFloat(el.dataset.counter) || 0;
+            const suffix = el.dataset.suffix || '';
+            const prefix = el.dataset.prefix || '';
+            const decimals = parseInt(el.dataset.decimals || (target % 1 !== 0 ? '1' : '0'), 10);
+            const duration = 1800; // ms
+            const start = performance.now();
 
-          function update() {
-            const elapsed = Date.now() - start;
-            const progress = Math.min(elapsed / duration, 1);
-            // Ease out quad
-            const eased = 1 - (1 - progress) * (1 - progress);
-            const current = target * eased;
+            function update(now) {
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / duration, 1);
+              // Quintic ease out for butter-smooth count deceleration
+              const eased = 1 - Math.pow(1 - progress, 4);
+              const current = target * eased;
 
-            if (target >= 100) {
-              el.textContent = prefix + Math.round(current).toLocaleString('en-IN') + suffix;
-            } else {
-              el.textContent = prefix + current.toFixed(1) + suffix;
-            }
-
-            if (progress < 1) {
-              requestAnimationFrame(update);
-            } else {
-              // Final value
-              if (target >= 100) {
-                el.textContent = prefix + Math.round(target).toLocaleString('en-IN') + suffix;
+              if (decimals > 0) {
+                el.textContent = `${prefix}${current.toFixed(decimals)}${suffix}`;
               } else {
-                el.textContent = prefix + target + suffix;
+                el.textContent = `${prefix}${Math.round(current).toLocaleString('en-IN')}${suffix}`;
+              }
+
+              if (progress < 1) {
+                requestAnimationFrame(update);
+              } else {
+                if (decimals > 0) {
+                  el.textContent = `${prefix}${target.toFixed(decimals)}${suffix}`;
+                } else {
+                  el.textContent = `${prefix}${Math.round(target).toLocaleString('en-IN')}${suffix}`;
+                }
               }
             }
+            requestAnimationFrame(update);
+            observer.unobserve(el);
           }
-          update();
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.3 });
+        });
+      },
+      { threshold: 0.25 }
+    );
 
-    counters.forEach(el => observer.observe(el));
+    counters.forEach((el) => observer.observe(el));
   }
 
   // --- 17g. NAVBAR SCROLL BEHAVIOR ---
