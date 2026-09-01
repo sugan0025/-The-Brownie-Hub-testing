@@ -79,11 +79,11 @@ export default function HeroSection() {
           {/* Subtle Ambient Back-Glow */}
           <div className="hero-visual-glow" aria-hidden="true"></div>
 
-          {/* Brownie Foreground Container (Animated Molten Chocolate Drip Flow) */}
+          {/* Brownie Foreground Container */}
           <div className="hero-brownie-wrapper">
             <img
-              src="/images/brownies/hero-molten-flow.webp"
-              alt="The Brownie Hub Handcrafted Fudgy Brownie Stack with Molten Drip"
+              src="/images/brownies/hero.png"
+              alt="The Brownie Hub Handcrafted Fudgy Brownie Stack"
               className="hero-brownie-img"
               loading="eager"
             />
