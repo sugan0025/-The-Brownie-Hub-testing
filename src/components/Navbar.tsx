@@ -8,7 +8,7 @@ export default function Navbar() {
       <nav id="main-nav" className="navbar">
         <div className="nav-container">
           <a href="/" className="nav-brand" id="nav-home-link">
-            <img src="/images/logo.png" alt="The Brownie Hub" className="nav-logo" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+            <img src="/images/logo.jpeg" alt="The Brownie Hub" className="nav-logo" />
             <span className="nav-brand-text">The Brownie Hub</span>
           </a>
           <ul className="nav-links">

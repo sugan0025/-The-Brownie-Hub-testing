@@ -438,6 +438,27 @@
     renderCart();
   }
 
+  function updateCartBadge() {
+    const badge = document.getElementById('cart-badge');
+    const navBtn = document.getElementById('nav-order-btn');
+    const total = state.cart.reduce((sum, item) => sum + item.qty, 0);
+    if (badge) {
+      if (total > 0) {
+        badge.style.display = 'flex';
+        badge.textContent = String(total);
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+    if (navBtn) {
+      if (total > 0) {
+        navBtn.style.display = 'inline-flex';
+      } else {
+        navBtn.style.display = 'none';
+      }
+    }
+  }
+
   function saveCart() {
     try {
       localStorage.setItem('tbh_cart', JSON.stringify(state.cart));
@@ -945,78 +966,36 @@
     renderBuilderSlots();
   }
 
-  // --- 11. MENU SECTION ADD-TO-CART CONTROLLER ---
+  // --- 11. MENU & BESTSELLERS ADD-TO-CART CONTROLLER ---
   function initMenuActions() {
     document.addEventListener('click', (e) => {
-      const addBtn = e.target.closest('.add-cart-btn');
+      const addBtn = e.target.closest('.add-cart-btn, .bestseller-add-circle-btn, [data-action="add-to-cart"], .btn-cart-add');
       if (addBtn) {
+        e.preventDefault();
+        e.stopPropagation();
         const name = addBtn.dataset.name;
         const price = Number(addBtn.dataset.price) || 0;
         const isBox = addBtn.dataset.isBox === 'true';
         const image = addBtn.dataset.image || '/images/brownies/classic-fudge.jpg';
 
-        addToCart(name, price, null, isBox, image);
+        if (name) {
+          addToCart(name, price, null, isBox, image);
 
-        // Instant visual feedback on button matching Rolling Oven v2
-        const originalHtml = addBtn.innerHTML;
-        addBtn.innerHTML = '<span>Added! ✓</span>';
-        addBtn.style.background = 'linear-gradient(135deg, #2b8a3e, #40c057)';
-        setTimeout(() => {
-          addBtn.innerHTML = originalHtml;
-          addBtn.style.background = '';
-        }, 1200);
+          // Instant visual feedback on button matching Rolling Oven v2
+          const originalHtml = addBtn.innerHTML;
+          addBtn.innerHTML = '<span>✓</span>';
+          addBtn.style.background = 'linear-gradient(135deg, #2b8a3e, #40c057)';
+          addBtn.style.color = '#ffffff';
+          setTimeout(() => {
+            addBtn.innerHTML = originalHtml;
+            addBtn.style.background = '';
+            addBtn.style.color = '';
+          }, 1000);
+        }
       }
     });
   }
 
-  // --- 12. CHECKOUT & ORDER MODAL CONTROLLER ---
-  function initOrderModal() {
-    const modal = document.getElementById('order-modal');
-    const overlay = document.getElementById('order-modal-overlay');
-    const closeBtn = document.getElementById('order-modal-close-btn');
-    const openCheckoutBtn = document.getElementById('cart-checkout-btn');
-    const itemCountSpan = document.getElementById('order-modal-item-count');
-    const totalSpan = document.getElementById('order-modal-total');
-    const orderForm = document.getElementById('order-checkout-form');
-    const formStep = document.getElementById('order-form-step');
-    const successStep = document.getElementById('order-success-step');
-    const submitBtn = document.getElementById('order-submit-btn');
-    const paymentTabs = document.querySelectorAll('.payment-tab');
-    const paymentMethodInput = document.getElementById('order-payment-method');
-
-    function renderModalOrderSummary() {
-      const itemsList = document.getElementById('order-modal-items-list');
-      const totalSpan = document.getElementById('order-modal-total');
-
-      const subtotal = calculateCartTotal();
-      if (totalSpan) totalSpan.textContent = `₹${subtotal}`;
-
-      if (!itemsList) return;
-
-      if (state.cart.length === 0) {
-        itemsList.innerHTML = '<div style="text-align:center;padding:12px;color:var(--cream-muted);font-size:0.88rem;">Your box is empty. Pick brownies from our menu!</div>';
-        return;
-      }
-
-      let html = '';
-      state.cart.forEach((item) => {
-        const hasBreakdown = item.breakdown && item.breakdown.length > 0;
-        const breakdownStr = hasBreakdown ? ` (${item.breakdown.join(', ')})` : '';
-
-        html += `
-          <div class="rolling-item-line">
-            <span class="rolling-item-name-qty">${item.name} &times; ${item.qty}${breakdownStr}</span>
-            <span class="rolling-item-price">₹${item.price * item.qty}</span>
-          </div>
-        `;
-      });
-      itemsList.innerHTML = html;
-    }
-
-    function openModal() {
-      if (state.cart.length === 0) {
-        showToast('Your box is empty! Pick your favorite brownies first 🍫');
-        return;
   // --- 12. COMPLETE YOUR ORDER MODAL CONTROLLER (The Rolling Oven 1:1) ---
   function openOrderModal() {
     const overlay = document.getElementById('order-modal-overlay');
