@@ -182,11 +182,18 @@ export default function BentoShowcaseSection() {
                   <div className="bestseller-price-row">
                     <span className="bestseller-product-price">₹{item.price}</span>
                     <button
-                      className="bestseller-add-circle-btn add-cart-btn magnetic-btn"
+                      className="bestseller-add-circle-btn add-cart-btn"
                       data-name={item.name}
                       data-price={item.price}
                       data-dietary={item.dietary}
                       data-image={item.image}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (typeof window !== 'undefined' && (window as any).tbhAddToCart) {
+                          (window as any).tbhAddToCart(item.name, item.price, null, false, item.image);
+                        }
+                      }}
                       title={`Add ${item.name} to Cart`}
                       aria-label={`Add ${item.name}`}
                       suppressHydrationWarning

@@ -579,6 +579,7 @@
 
   // Expose global cart API
   window.tbhAddToCart = addToCart;
+  window.addToCart = addToCart;
   window.updateCartQty = updateCartQty;
 
   // --- 8. CART SIDEBAR CONTROLLER (The Rolling Oven 1:1) ---

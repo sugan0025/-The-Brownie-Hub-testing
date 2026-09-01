@@ -280,17 +280,19 @@ select:focus-visible,
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 18px 0;
+  padding: 14px 0;
+  background: rgba(18, 9, 4, 0.96);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-bottom: 1px solid rgba(201, 134, 60, 0.22);
   transition: all 0.3s ease;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
 }
 
 .navbar.scrolled {
-  background: rgba(24, 13, 7, 0.94);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(201, 134, 60, 0.22);
-  padding: 12px 0;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  background: rgba(14, 7, 3, 0.98);
+  padding: 10px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
 }
 
 .nav-container {

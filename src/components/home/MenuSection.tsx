@@ -117,6 +117,13 @@ export default function MenuSection() {
                       data-dietary={b.dietary}
                       data-image={b.image}
                       style={{ width: '100%' }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (typeof window !== 'undefined' && (window as any).tbhAddToCart) {
+                          (window as any).tbhAddToCart(b.name, b.price, null, false, b.image);
+                        }
+                      }}
                     >
                       <span>+ Add to Cart</span>
                     </button>
@@ -184,6 +191,13 @@ export default function MenuSection() {
                     data-image={box.image}
                     data-is-box="true"
                     style={{ width: '100%', marginTop: 'auto' }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (typeof window !== 'undefined' && (window as any).tbhAddToCart) {
+                        (window as any).tbhAddToCart(box.name, box.price, null, true, box.image);
+                      }
+                    }}
                   >
                     <span>Add Curated Box &bull; ₹{box.price}</span>
                   </button>
