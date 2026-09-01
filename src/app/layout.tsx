@@ -58,6 +58,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://the-brownie-hub.vercel.app",
   },
+  icons: {
+    icon: [
+      { url: "/images/logo.jpeg", type: "image/jpeg" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: "/images/logo.jpeg",
+    apple: "/images/logo.jpeg",
+  },
   formatDetection: {
     email: false,
     address: false,
