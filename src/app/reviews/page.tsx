@@ -4,12 +4,12 @@ import BentoShowcaseSection from '../../components/home/BentoShowcaseSection';
 import TrustBarSection from '../../components/home/TrustBarSection';
 
 export const metadata: Metadata = {
-  title: 'Customer Reviews & Stories | 4.9★ Rated | The Brownie Hub Chennai',
+  title: 'Customer Reviews & Real Ratings (4.9★)',
   description: 'Read reviews from over 10,000+ happy brownie lovers across Chennai. Verified reviews for our Belgian chocolate fudge brownies and gift boxes.',
   openGraph: {
     title: 'Customer Reviews — The Brownie Hub',
     description: 'Loved by 10,000+ brownie lovers in Chennai. Rated 4.9/5 stars.',
-    images: ['/images/brownies/hero.png'],
+    images: ['/images/brownies/pack-4-classic.jpg'],
   },
 };
 

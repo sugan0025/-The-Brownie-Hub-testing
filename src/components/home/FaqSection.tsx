@@ -17,8 +17,8 @@ export default function FaqSection() {
       a: 'We deliver all across Chennai including Adyar, OMR, Velachery, T. Nagar, Anna Nagar, Nungambakkam, Kilpauk, and surrounding suburbs. Orders placed before 4:00 PM are baked and dispatched the very same day.',
     },
     {
-      q: 'Do I need prior baking experience to attend your workshops?',
-      a: 'Not at all! "Brownie Basics" and "Kids & Family Baking" are designed from scratch for absolute beginners. We provide all ingredients, aprons, tools, and step-by-step guidance. You take home what you bake.',
+      q: 'Can I include a personalized gift card or greeting message with my box?',
+      a: 'Absolutely! Every custom keepsake box and 4-pack includes a complimentary gold-foil greeting card. You can write your custom message during checkout or share it directly with our baking team via WhatsApp.',
     },
     {
       q: 'Do you offer custom corporate gifting or bulk event orders?',
@@ -32,7 +32,7 @@ export default function FaqSection() {
         <div className="sec-head center" data-reveal>
           <span className="section-eyebrow">GOT QUESTIONS?</span>
           <h2 className="section-title">Frequently Asked Questions</h2>
-          <p className="section-desc">Everything you need to know about our fresh bake batches, delivery, and kitchen masterclasses.</p>
+          <p className="section-desc">Everything you need to know about our fresh bake batches, dietary standards, and Chennai delivery.</p>
         </div>
 
         <div className="faq-grid">

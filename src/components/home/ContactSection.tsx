@@ -12,7 +12,7 @@ export default function ContactSection() {
             <span className="section-eyebrow">DIRECT KITCHEN CONNECTION</span>
             <h2 className="section-title">Order, Inquire, or Say Hello</h2>
             <p className="contact-desc">
-              Whether you need 25 assorted gift boxes for a family wedding, want to book a private masterclass, or simply want a fresh box today — we&apos;re always baking.
+              Whether you need 25 assorted gift boxes for a family wedding, corporate celebration hampers, or simply want a fresh box today — we&apos;re always baking.
             </p>
 
             <div className="contact-items">

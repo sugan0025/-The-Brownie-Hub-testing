@@ -1,44 +1,63 @@
 import { MetadataRoute } from 'next';
+import { INDIVIDUAL_BROWNIES, CURATED_BOXES } from '../lib/products';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://the-brownie-hub.vercel.app';
+  const lastModified = new Date();
 
-  return [
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: 'daily',
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/#bestsellers`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
+      url: `${baseUrl}/menu`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/custom-box`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/builder`,
+      lastModified,
+      changeFrequency: 'daily',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/#builder`,
-      lastModified: new Date(),
+      url: `${baseUrl}/reviews`,
+      lastModified,
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.85,
     },
     {
-      url: `${baseUrl}/#menu`,
-      lastModified: new Date(),
+      url: `${baseUrl}/contact`,
+      lastModified,
       changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/#faq`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/#contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
+      priority: 0.8,
     },
   ];
+
+  // Dynamic Product Routes
+  const brownieRoutes: MetadataRoute.Sitemap = INDIVIDUAL_BROWNIES.map((b) => ({
+    url: `${baseUrl}/product/${b.id}`,
+    lastModified,
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
+
+  const boxRoutes: MetadataRoute.Sitemap = CURATED_BOXES.map((box) => ({
+    url: `${baseUrl}/product/${box.id}`,
+    lastModified,
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
+
+  return [...staticRoutes, ...brownieRoutes, ...boxRoutes];
 }

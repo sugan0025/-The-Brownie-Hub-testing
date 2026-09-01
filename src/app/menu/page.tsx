@@ -5,12 +5,12 @@ import MenuSection from '../../components/home/MenuSection';
 import TrustBarSection from '../../components/home/TrustBarSection';
 
 export const metadata: Metadata = {
-  title: 'Artisanal Brownie Menu | 100% Eggless & Farm Egg | The Brownie Hub Chennai',
-  description: 'Explore our handcrafted brownie menu in Chennai. Single-origin Belgian dark chocolate, salted caramel, walnut crackle, Nutella stuffed, and curated gift boxes.',
+  title: 'Artisanal Brownie Menu | 100% Eggless & Fresh Couverture',
+  description: 'Explore our handcrafted brownie menu in Chennai. Single-origin Belgian dark chocolate, double chocolate fudge, and curated keepsake boxes.',
   openGraph: {
     title: 'The Brownie Hub — Complete Artisanal Menu',
-    description: '10 Handcrafted brownie flavors strictly separated into 100% Eggless and Pasture-Raised Egg lines.',
-    images: ['/images/brownies/hero.png'],
+    description: 'Freshly baked handcrafted brownies in Chennai.',
+    images: ['/images/brownies/pack-4-classic.jpg'],
   },
 };
 

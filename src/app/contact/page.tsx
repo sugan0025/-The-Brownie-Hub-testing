@@ -5,12 +5,12 @@ import FaqSection from '../../components/home/FaqSection';
 import TrustBarSection from '../../components/home/TrustBarSection';
 
 export const metadata: Metadata = {
-  title: 'Contact Us & Studio Location | The Brownie Hub Chennai',
-  description: 'Get in touch with The Brownie Hub in Anna Nagar & T. Nagar, Chennai. WhatsApp orders, bulk corporate gifting inquiries, and masterclass bookings.',
+  title: 'Contact Kitchen & Direct WhatsApp Order',
+  description: 'Get in touch with The Brownie Hub in Chennai. WhatsApp orders, bulk celebration gifting inquiries, and fresh delivery across Chennai.',
   openGraph: {
     title: 'Contact The Brownie Hub — Chennai',
-    description: 'Reach our baking studio via WhatsApp, phone, or visit us in Chennai.',
-    images: ['/images/brownies/hero.png'],
+    description: 'Reach our bakery kitchen via WhatsApp or phone in Chennai.',
+    images: ['/images/brownies/pack-4-classic.jpg'],
   },
 };
 

@@ -242,7 +242,7 @@ export default function BentoShowcaseSection() {
                   data-suffix={st.suffix}
                   data-decimals={st.value % 1 !== 0 ? 1 : 0}
                 >
-                  0{st.suffix}
+                  {st.value.toLocaleString('en-IN')}{st.suffix}
                 </span>
                 <span className="bento-stat-text">{st.label}</span>
               </div>

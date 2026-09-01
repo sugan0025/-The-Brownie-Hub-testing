@@ -954,6 +954,27 @@
       });
     }
 
+    if (whatsappBtn) {
+      whatsappBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const count = state.builder.slots.length;
+        const computedPrice = calculateBoxPrice();
+        let msg = '';
+        if (count === 0) {
+          msg = `Hi The Brownie Hub! I would like to order a Custom Keepsake Box (Pack of 4) in Chennai. Please share today's freshly baked batch flavors!`;
+        } else {
+          const counts = {};
+          state.builder.slots.forEach((s) => {
+            const label = `${s.name} (${s.dietary === 'veg' ? 'Veg' : 'Egg'})`;
+            counts[label] = (counts[label] || 0) + 1;
+          });
+          const breakdownStr = Object.entries(counts).map(([f, c]) => `${c}x ${f}`).join(', ');
+          msg = `Hi The Brownie Hub! I would like to order a Custom Keepsake Box (₹${computedPrice}) with: ${breakdownStr}. Please confirm delivery in Chennai!`;
+        }
+        window.open(`https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+      });
+    }
+
     renderBuilderSlots();
   }
 

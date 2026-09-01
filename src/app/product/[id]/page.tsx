@@ -22,11 +22,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = brownie || box;
 
   if (!item) {
-    return { title: 'Product Not Found | The Brownie Hub' };
+    return { title: 'Product Not Found' };
   }
 
   return {
-    title: `${item.name} — Handcrafted Artisanal Brownie | The Brownie Hub Chennai`,
+    title: `${item.name} — Handcrafted Artisanal Brownie`,
     description: item.description,
     openGraph: {
       title: `${item.name} | The Brownie Hub`,

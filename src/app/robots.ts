@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://thebrowniehub.netlify.app/sitemap.xml',
+    sitemap: 'https://the-brownie-hub.vercel.app/sitemap.xml',
   };
 }
