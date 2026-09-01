@@ -15,10 +15,10 @@
   const state = {
     cart: [],
     builder: {
-      size: 6,
-      name: 'Box of 6',
-      price: 489,
-      savings: 45,
+      size: 4,
+      name: 'Pack of 4 Box',
+      price: 0,
+      savings: 20,
       slots: [], // array of objects: { name, dietary, image }
       activeFilter: 'all',
     },
@@ -698,10 +698,8 @@
     setTimeout(updateArrowStates, 300);
   }
 
-  // --- 10. CUSTOM BOX BUILDER CONTROLLER (SIMULATOR) ---
+  // --- 10. CUSTOM BOX BUILDER CONTROLLER (4-PACK SIMULATOR) ---
   function initBoxBuilder() {
-    const tierPills = document.querySelectorAll('#builder-tier-selector .tier-pill');
-    const filterTabs = document.querySelectorAll('#builder-dietary-filter .filter-tab');
     const flavorCards = document.querySelectorAll('#builder-flavor-list .flavor-pick-card');
     const slotsGrid = document.getElementById('builder-slots-grid');
     const boxCard = document.getElementById('builder-box-card');
@@ -714,7 +712,26 @@
     const whatsappBtn = document.getElementById('builder-whatsapp-btn');
     const clearBtn = document.getElementById('builder-clear-btn');
 
-    const tierPrices = { 4: 329, 6: 489, 12: 929 };
+    function calculateBoxPrice() {
+      const count = state.builder.slots.length;
+      if (count === 0) return 0;
+
+      const flavorPrices = {
+        'Signature Classic Brownie': 69,
+        'Double Chocolate Brownie': 99,
+      };
+
+      let sum = 0;
+      state.builder.slots.forEach((s) => {
+        sum += flavorPrices[s.name] || 69;
+      });
+
+      // Apply ₹20 pack discount when box is full (4 items)
+      if (count === state.builder.size) {
+        sum = Math.max(0, sum - 20);
+      }
+      return sum;
+    }
 
     function renderBuilderSlots() {
       if (!slotsGrid) return;
@@ -723,12 +740,14 @@
       const count = state.builder.slots.length;
       const remaining = size - count;
       const pct = Math.round((count / size) * 100);
+      const computedPrice = calculateBoxPrice();
+      state.builder.price = computedPrice;
 
       if (boxTitle) boxTitle.textContent = state.builder.name;
       if (boxBadge) boxBadge.textContent = `${count} / ${size} Selected`;
       if (slotsText) slotsText.textContent = `${count} of ${size} slots filled`;
       if (progressFill) progressFill.style.width = `${pct}%`;
-      if (priceDisplay) priceDisplay.textContent = `₹${state.builder.price}`;
+      if (priceDisplay) priceDisplay.textContent = `₹${computedPrice}`;
 
       if (boxCard) {
         if (count === size) {
@@ -742,13 +761,15 @@
         if (count === size) {
           addCartBtn.removeAttribute('disabled');
           addCartBtn.classList.add('pulse-gold');
-          addCartBtn.innerHTML = `<span>Pack &amp; Add Box to Cart &bull; ₹${state.builder.price} &rarr;</span>`;
+          addCartBtn.innerHTML = `<span>Pack &amp; Add Box to Cart &bull; ₹${computedPrice} &rarr;</span>`;
           addCartBtn.style.opacity = '1';
+          addCartBtn.style.cursor = 'pointer';
         } else {
           addCartBtn.setAttribute('disabled', 'true');
           addCartBtn.classList.remove('pulse-gold');
           addCartBtn.innerHTML = `<span>Pick ${remaining} more brownie${remaining > 1 ? 's' : ''} to pack box</span>`;
           addCartBtn.style.opacity = '0.65';
+          addCartBtn.style.cursor = 'not-allowed';
         }
       }
 
@@ -760,11 +781,11 @@
           counts[label] = (counts[label] || 0) + 1;
         });
         const breakdownStr = Object.entries(counts).map(([f, c]) => `${c}x ${f}`).join(', ') || 'Custom Assorted';
-        const msg = `Hi The Brownie Hub! I would like to order a ${state.builder.name} (₹${state.builder.price}) with: ${breakdownStr}. Please confirm delivery in Chennai!`;
+        const msg = `Hi The Brownie Hub! I would like to order a ${state.builder.name} (₹${computedPrice}) with: ${breakdownStr}. Please confirm delivery in Chennai!`;
         whatsappBtn.href = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(msg)}`;
       }
 
-      // Generate visual slots with image thumbnails
+      // Generate visual slots with image thumbnails for 4 slots (2x2 grid)
       let html = '';
       for (let i = 0; i < size; i++) {
         if (i < count) {
@@ -773,7 +794,7 @@
           html += `
             <div class="slot-item filled">
               <img src="${slot.image}" alt="${slot.name}" class="slot-item-thumb" />
-              <div style="display:flex;align-items:center;gap:4px;width:100%;justify-content:center;">
+              <div style="display:flex;align-items:center;gap:4px;width:100%;justify-content:center;padding:0 4px;">
                 <span class="dietary-dot ${isVeg ? 'veg' : 'nonveg'}" style="width:7px;height:7px;flex-shrink:0;"></span>
                 <span class="slot-item-name">${slot.name}</span>
               </div>
@@ -783,8 +804,8 @@
         } else {
           html += `
             <div class="slot-item">
-              <span style="font-size:0.75rem;font-weight:700;color:var(--caramel-bright);background:rgba(201,134,60,0.18);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;">${i + 1}</span>
-              <span style="font-size:0.68rem;opacity:0.65;color:var(--cream-muted);">+ Drop Flavor</span>
+              <span class="slot-num">${i + 1}</span>
+              <span class="slot-placeholder">+ Drop Flavor</span>
             </div>
           `;
         }
@@ -792,48 +813,11 @@
       slotsGrid.innerHTML = html;
     }
 
-    // Step 1: Tier Selector
-    tierPills.forEach((pill) => {
-      pill.addEventListener('click', () => {
-        tierPills.forEach((p) => p.classList.remove('active'));
-        pill.classList.add('active');
-
-        const size = parseInt(pill.dataset.size, 10);
-        state.builder.size = size;
-        state.builder.name = pill.dataset.name || `Box of ${size}`;
-        state.builder.price = tierPrices[size] || 489;
-        state.builder.slots = [];
-
-        renderBuilderSlots();
-        trackGA4('select_box_tier', { box_size: size, price: state.builder.price });
-      });
-    });
-
-    // Step 2: Dietary Filter Tabs
-    filterTabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        filterTabs.forEach((t) => t.classList.remove('active'));
-        tab.classList.add('active');
-
-        const filter = tab.dataset.filter;
-        state.builder.activeFilter = filter;
-
-        flavorCards.forEach((card) => {
-          const dietary = card.dataset.dietary;
-          if (filter === 'all' || dietary === filter) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Step 3: Flavor Picker Cards
+    // Step 2: Flavor Picker Cards
     flavorCards.forEach((card) => {
       card.addEventListener('click', () => {
         if (state.builder.slots.length >= state.builder.size) {
-          showToast(`Your ${state.builder.name} is full (${state.builder.size}/${state.builder.size})! Click "Add to Cart" or remove a slot.`);
+          showToast('info', 'Box is Full', `Your ${state.builder.name} is full (${state.builder.size}/${state.builder.size})! Click "Pack & Add Box" or remove a slot.`);
           return;
         }
 
@@ -849,7 +833,7 @@
 
         playPopAudio();
         renderBuilderSlots();
-        showToast(`Dropped ${name} into slot ${state.builder.slots.length}! 📦`);
+        showToast('success', 'Flavor Added', `Dropped ${name} into slot ${state.builder.slots.length}! 📦`);
       });
     });
 
@@ -870,7 +854,7 @@
         state.builder.slots = [];
         playPopAudio();
         renderBuilderSlots();
-        showToast('Cleared custom box selection.');
+        showToast('info', 'Cleared', 'Cleared custom box selection.');
       });
     }
 
@@ -909,7 +893,7 @@
         }
         playPopAudio();
         renderBuilderSlots();
-        showToast(`Auto-packed your ${state.builder.name} with ${presetBtn.textContent.trim()}! 🎁`);
+        showToast('success', 'Preset Selected', `Auto-packed your box with ${presetBtn.textContent.trim()}! 🎁`);
       }
     });
 
@@ -917,7 +901,7 @@
     if (addCartBtn) {
       addCartBtn.addEventListener('click', () => {
         if (state.builder.slots.length < state.builder.size) {
-          showToast(`Please fill all ${state.builder.size} slots before adding to cart.`);
+          showToast('info', 'Fill All Slots', `Please fill all ${state.builder.size} slots before adding to cart.`);
           return;
         }
 
