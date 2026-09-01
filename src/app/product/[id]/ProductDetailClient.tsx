@@ -77,11 +77,11 @@ export default function ProductDetailClient({ product, isBox, relatedItems }: Pr
     const msg =
       `🍫 *DIRECT ORDER: ${product.name.toUpperCase()}*\n` +
       `------------------------------------\n` +
-      `• *Item:* ${product.name}\n` +
-      `• *Quantity:* ${qty}\n` +
-      `• *Price:* ₹${totalPrice}\n` +
-      `• *Delivery:* Chennai, Tamil Nadu\n` +
-      `• *Ref:* UTM_Source=${utmSource}\n` +
+      `- *Item:* ${product.name}\n` +
+      `- *Quantity:* ${qty}\n` +
+      `- *Price:* ₹${totalPrice}\n` +
+      `- *Delivery:* Chennai, Tamil Nadu\n` +
+      `- *Ref:* UTM_Source=${utmSource}\n` +
       `------------------------------------\n` +
       `Please confirm my order & send payment details!`;
 
