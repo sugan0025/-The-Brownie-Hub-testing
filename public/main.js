@@ -412,6 +412,11 @@
       badge.classList.add('bounce-badge');
     }
 
+    // Automatically slide open the Cart Drawer (just like The Rolling Oven)
+    if (typeof window.openCartDrawer === 'function') {
+      window.openCartDrawer();
+    }
+
     trackGA4('add_to_cart', {
       currency: 'INR',
       value: price,
@@ -445,6 +450,7 @@
 
   function renderCart() {
     const badge = document.getElementById('cart-count-badge');
+    const cartToggleBtn = document.getElementById('cart-toggle-btn');
     const headerCount = document.getElementById('cart-header-count');
     const totalDisplay = document.getElementById('cart-total-display');
     const subtotalDisplay = document.getElementById('cart-subtotal-display');
@@ -471,6 +477,15 @@
       deliveryFeeDisplay.style.color = isFreeDelivery ? '#51cf66' : 'var(--cream-muted)';
     }
     if (totalDisplay) totalDisplay.textContent = `₹${grandTotal}`;
+
+    // Navbar capsule cart button: Hidden when 0 items, visible when cart has items (Rolling Oven style)
+    if (cartToggleBtn) {
+      if (totalCount > 0) {
+        cartToggleBtn.classList.add('visible');
+      } else {
+        cartToggleBtn.classList.remove('visible');
+      }
+    }
 
     // Update Chennai Free Delivery Progress Meter
     if (deliveryFill && deliveryMsg) {
@@ -565,6 +580,8 @@
         value: calculateCartTotal(),
       });
     }
+
+    window.openCartDrawer = openCart;
 
     function closeCart() {
       if (drawer) drawer.classList.remove('open');
@@ -1024,38 +1041,48 @@
           showToast('Please add items to your cart first!');
           return;
         }
-        const name = document.getElementById('order-customer-name')?.value || 'Foodie';
+        const name = document.getElementById('order-customer-name')?.value || 'Customer';
         const address = document.getElementById('order-delivery-address')?.value || 'Chennai';
         const phone = document.getElementById('order-customer-phone')?.value || '';
+        const pincode = document.getElementById('order-pincode')?.value || '600001';
         const instructions = document.getElementById('order-instructions')?.value || '';
+
+        const subtotal = calculateCartTotal();
+        const isFreeDelivery = subtotal >= 500;
+        const deliveryFee = isFreeDelivery ? 0 : 49;
+        const grandTotal = subtotal + deliveryFee;
 
         const itemsText = state.cart
           .map((i) => {
-            const bd = i.breakdown && i.breakdown.length > 0 ? ` (${i.breakdown.join(', ')})` : '';
-            return `${i.qty}x ${i.name}${bd}`;
+            const bd = i.breakdown && i.breakdown.length > 0 ? `\n    ↳ [${i.breakdown.join(', ')}]` : '';
+            return `• *${i.name}* × ${i.qty} — ₹${i.price * i.qty} 🟢${bd}`;
           })
-          .join(', ');
+          .join('\n');
 
-        const grandTotal = calculateCartTotal() >= 500 ? calculateCartTotal() : calculateCartTotal() + 49;
-        const msg = `Hi The Brownie Hub! I'd like to place an order:%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A*Address:* ${encodeURIComponent(address)}%0A*Items:* ${encodeURIComponent(itemsText)}%0A*Total:* ₹${grandTotal}${instructions ? `%0A*Note:* ${encodeURIComponent(instructions)}` : ''}%0A%0APlease confirm delivery in Chennai!`;
+        const waMessage =
+          `🍫 *NEW ORDER — THE BROWNIE HUB* 🍫\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `👤 *CUSTOMER DETAILS:*\n` +
+          `• *Name:* ${name}\n` +
+          `• *Phone:* ${phone || 'WhatsApp Active'}\n` +
+          `• *Delivery Address:* ${address}\n` +
+          `• *Pincode:* ${pincode} (Chennai)\n\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `📦 *ORDER ITEMS:*\n${itemsText}\n\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `💰 *Subtotal:* ₹${subtotal}\n` +
+          `🚚 *Chennai Delivery:* ${isFreeDelivery ? 'FREE (Orders ₹500+)' : '₹49'}\n` +
+          `💳 *Payment Mode:* 💵 *Cash on Delivery (COD)*\n` +
+          `🏷️ *TOTAL PAYABLE:* *₹${grandTotal}*\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `📝 *Special Instructions:* ${instructions || 'None'}\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `✨ *Freshly baked with 100% Belgian Couverture.*\n` +
+          `❤️ *Please confirm my order & delivery timing!* 🛵`;
 
-        window.open(`https://wa.me/${BAKERY_PHONE}?text=${msg}`, '_blank');
+        window.open(`https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waMessage)}`, '_blank');
       });
     }
-
-    paymentTabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        paymentTabs.forEach((t) => t.classList.remove('active'));
-        tab.classList.add('active');
-        const mode = tab.dataset.payment;
-        if (paymentMethodInput) paymentMethodInput.value = mode;
-
-        const upiBox = document.getElementById('upi-payment-box');
-        if (upiBox) {
-          upiBox.style.display = mode.includes('UPI') ? 'block' : 'none';
-        }
-      });
-    });
 
     if (orderForm) {
       orderForm.addEventListener('submit', async (e) => {
@@ -1073,25 +1100,30 @@
         const deliveryAddress = formData.get('delivery_address');
         const pincode = formData.get('pincode');
         const specialInstructions = formData.get('special_instructions');
-        const paymentMethod = formData.get('payment_method') || 'UPI / QR Code';
+        const paymentMethod = 'Cash on Delivery (COD)';
         const honeypot = formData.get('b_website');
+
+        const subtotal = calculateCartTotal();
+        const isFreeDelivery = subtotal >= 500;
+        const deliveryFee = isFreeDelivery ? 0 : 49;
+        const grandTotal = subtotal + deliveryFee;
 
         const payload = {
           customer_name: customerName,
           customer_phone: customerPhone,
-          customer_email: customerEmail,
+          customer_email: customerEmail || 'customer@thebrowniehub.com',
           delivery_address: deliveryAddress,
           pincode: pincode,
           special_instructions: specialInstructions || '',
           payment_method: paymentMethod,
-          order_type: 'The Brownie Hub Direct Web Order',
+          order_type: 'The Brownie Hub Web COD Order',
           items: state.cart.map((item) => ({
             name: item.name,
             qty: item.qty,
             price: item.price,
             breakdown: item.breakdown || [],
           })),
-          total_amount: calculateCartTotal(),
+          total_amount: grandTotal,
           utm_source: state.utm.utm_source || '',
           utm_medium: state.utm.utm_medium || '',
           utm_campaign: state.utm.utm_campaign || '',
@@ -1109,7 +1141,7 @@
 
           if (res.ok && data.success) {
             const orderId = data.order_id || `TBH-${Date.now().toString().slice(-6)}`;
-            const finalTotal = data.verified_total || payload.total_amount;
+            const finalTotal = data.verified_total || grandTotal;
 
             const orderIdElem = document.getElementById('success-order-id');
             const orderAmountElem = document.getElementById('success-order-amount');
@@ -1120,24 +1152,31 @@
 
             const itemsText = state.cart
               .map((i) => {
-                const bd = i.breakdown && i.breakdown.length > 0 ? `\n    (${i.breakdown.join(', ')})` : '';
-                return `• ${i.name} (x${i.qty}) - ₹${i.price * i.qty}${bd}`;
+                const bd = i.breakdown && i.breakdown.length > 0 ? `\n    ↳ [${i.breakdown.join(', ')}]` : '';
+                return `• *${i.name}* × ${i.qty} — ₹${i.price * i.qty} 🟢${bd}`;
               })
               .join('\n');
 
             const waMessage =
-              `🍫 *NEW ORDER CONFIRMATION — THE BROWNIE HUB*\n` +
-              `------------------------------------\n` +
-              `*Order ID:* ${orderId}\n` +
-              `*Customer:* ${customerName}\n` +
-              `*Phone:* ${customerPhone}\n` +
-              `*Delivery Address:* ${deliveryAddress} (PIN: ${pincode})\n` +
-              `*Payment Mode:* ${paymentMethod}\n\n` +
-              `*Items Ordered:*\n${itemsText}\n\n` +
-              `*Total Amount:* ₹${finalTotal}\n` +
-              `*Notes:* ${specialInstructions || 'None'}\n` +
-              `------------------------------------\n` +
-              `Please confirm my order & dispatch status!`;
+              `🍫 *ORDER CONFIRMED — THE BROWNIE HUB* 🍫\n` +
+              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+              `🆔 *Order ID:* ${orderId}\n` +
+              `👤 *Customer:* ${customerName}\n` +
+              `📞 *Phone:* ${customerPhone}\n` +
+              `📍 *Delivery Address:* ${deliveryAddress}\n` +
+              `📮 *Pincode:* ${pincode} (Chennai)\n\n` +
+              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+              `📦 *ORDER ITEMS:*\n${itemsText}\n\n` +
+              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+              `💰 *Subtotal:* ₹${subtotal}\n` +
+              `🚚 *Chennai Delivery:* ${isFreeDelivery ? 'FREE' : '₹49'}\n` +
+              `💳 *Payment Mode:* 💵 *Cash on Delivery (COD)*\n` +
+              `🏷️ *FINAL AMOUNT TO PAY:* *₹${finalTotal}*\n` +
+              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+              `📝 *Special Note:* ${specialInstructions || 'None'}\n` +
+              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+              `✨ *Thank you for supporting 4 MBA Students' Dream!*\n` +
+              `🛵 *Please confirm dispatch timing!* ❤️`;
 
             if (whatsappLink) {
               whatsappLink.href = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waMessage)}`;
@@ -1191,17 +1230,21 @@
         return;
       }
 
-      const total = calculateCartTotal();
+      const subtotal = calculateCartTotal();
+      const isFreeDelivery = subtotal >= 500;
+      const deliveryFee = isFreeDelivery ? 0 : 49;
+      const grandTotal = subtotal + deliveryFee;
+
       const itemsList = state.cart
         .map((i) => {
           const bd = i.breakdown && i.breakdown.length > 0 ? `\n    ↳ [${i.breakdown.join(', ')}]` : '';
-          return `• ${i.name} (x${i.qty}) - ₹${i.price * i.qty}${bd}`;
+          return `• *${i.name}* × ${i.qty} (₹${i.price * i.qty}) 🟢${bd}`;
         })
         .join('\n');
 
       const giftNoteElem = document.getElementById('cart-gift-note');
       const giftNote = giftNoteElem && giftNoteElem.value.trim() ? giftNoteElem.value.trim() : '';
-      const giftNoteStr = giftNote ? `\n*Gift / Delivery Note:* ${giftNote}` : '';
+      const giftNoteStr = giftNote ? `\n📝 *Special Note:* ${giftNote}` : '';
 
       const utmParts = [];
       if (state.utm.utm_source) utmParts.push(`Source=${state.utm.utm_source}`);
@@ -1210,17 +1253,23 @@
       const utmInfo = utmParts.length > 0 ? `\n*Ref:* ${utmParts.join(' | ')}` : '';
 
       const waText =
-        `🍫 *1-CLICK WHATSAPP ORDER — THE BROWNIE HUB*\n` +
-        `------------------------------------\n` +
-        `Hello! I'd like to place an order from your online store:\n\n` +
-        `*Items Ordered:*\n${itemsList}\n\n` +
-        `*Total Amount:* ₹${total}\n` +
-        `*Delivery Location:* Chennai, Tamil Nadu${giftNoteStr}${utmInfo}\n` +
-        `------------------------------------\n` +
-        `Please confirm my order & send your UPI payment QR!`;
+        `🍫 *NEW ORDER — THE BROWNIE HUB* 🍫\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `👋 *Hello The Brownie Hub!* I would like to place an order from your online store:\n\n` +
+        `📦 *ORDER ITEMS:*\n${itemsList}\n\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `💰 *Item Subtotal:* ₹${subtotal}\n` +
+        `🚚 *Chennai Delivery:* ${isFreeDelivery ? 'FREE (Orders ₹500+)' : '₹49'}\n` +
+        `💳 *Payment Mode:* 💵 *Cash on Delivery (COD)*\n` +
+        `🏷️ *TOTAL PAYABLE:* *₹${grandTotal}*\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `📍 *Delivery City:* Chennai, Tamil Nadu${giftNoteStr}${utmInfo}\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `✨ *Freshly baked with 100% Belgian Couverture & Pure Butter.*\n` +
+        `❤️ *Please confirm availability and delivery time!* 🛵`;
 
       trackGA4('whatsapp_order_click', {
-        value: total,
+        value: grandTotal,
         items_count: calculateTotalItemCount(),
         currency: 'INR',
       });
@@ -1236,10 +1285,10 @@
             delivery_address: 'Direct WhatsApp Delivery',
             pincode: '600001',
             order_type: 'WhatsApp Direct 1-Click Checkout',
-            payment_method: 'WhatsApp Pay / UPI',
+            payment_method: 'Cash on Delivery (COD)',
             special_instructions: giftNote,
             items: state.cart.map((i) => ({ name: i.name, qty: i.qty, price: i.price, breakdown: i.breakdown || [] })),
-            total_amount: total,
+            total_amount: grandTotal,
             utm_source: state.utm.utm_source || 'whatsapp_1click',
             utm_medium: state.utm.utm_medium || '',
             utm_campaign: state.utm.utm_campaign || '',
