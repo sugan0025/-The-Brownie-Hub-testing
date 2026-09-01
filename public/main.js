@@ -1419,68 +1419,54 @@
       });
     }
 
-    // --- 16b. PRECISION SCROLL SPY WITH DYNAMIC URL HASH & UTM PRESERVATION ---
-    const trackedSections = [
-      { id: 'hero', hash: '' },
-      { id: 'bestsellers', hash: 'bestsellers' },
-      { id: 'builder', hash: 'builder' },
-      { id: 'menu', hash: 'menu' },
-      { id: 'about', hash: 'about' },
-      { id: 'faq', hash: 'faq' },
-      { id: 'contact', hash: 'contact' },
-    ];
-
-    let lastActiveHash = null;
-    let scrollSpyTimeout = null;
+    // --- 16b. JANK-FREE SCROLL SPY WITH REQUESTANIMATIONFRAME THROTTLING ---
+    const trackedSections = ['hero', 'bestsellers', 'builder', 'menu', 'about', 'faq', 'contact'];
+    const navLinks = document.querySelectorAll('.nav-links .nav-link, .mobile-nav-links .mobile-nav-link');
+    let isScrollTicking = false;
 
     function updateActiveNavOnScroll() {
       if (window.location.pathname !== '/' && window.location.pathname !== '') return;
 
-      const scrollPos = window.scrollY + 180;
+      const scrollPos = window.scrollY + 200;
       let currentSectionId = 'hero';
 
-      trackedSections.forEach(({ id }) => {
+      for (let i = 0; i < trackedSections.length; i++) {
+        const id = trackedSections[i];
         const el = document.getElementById(id);
         if (el) {
-          const rect = el.getBoundingClientRect();
-          const elTop = rect.top + window.scrollY;
+          const elTop = el.offsetTop;
           if (scrollPos >= elTop) {
             currentSectionId = id;
           }
         }
-      });
+      }
 
-      // Update active nav link classes
-      const navLinks = document.querySelectorAll('.capsule-nav-links .capsule-link, .mobile-drawer-links .mobile-link');
       navLinks.forEach((link) => {
-        const href = link.getAttribute('href') || '';
-        const cleanHref = href.replace(/^\/?#?/, '').replace(/^\//, '');
-        const targetId = currentSectionId === 'hero' ? '' : currentSectionId;
-
-        if (cleanHref === targetId) {
+        const navData = link.getAttribute('data-nav') || '';
+        const href = (link.getAttribute('href') || '').replace(/^\/?#?/, '');
+        if (
+          navData === currentSectionId ||
+          href === currentSectionId ||
+          (currentSectionId === 'hero' && (navData === 'home' || href === 'hero'))
+        ) {
           link.classList.add('active');
         } else {
           link.classList.remove('active');
         }
       });
 
-      // Dynamically update URL Hash in browser address bar, preserving UTM search query
-      const targetHash = currentSectionId === 'hero' ? '' : `#${currentSectionId}`;
-      if (targetHash !== lastActiveHash) {
-        lastActiveHash = targetHash;
-        clearTimeout(scrollSpyTimeout);
-        scrollSpyTimeout = setTimeout(() => {
-          const searchParams = window.location.search || '';
-          const newUrl = `${window.location.pathname}${searchParams}${targetHash}`;
-          if (window.location.hash !== targetHash) {
-            window.history.replaceState(null, '', newUrl);
-          }
-        }, 100);
+      isScrollTicking = false;
+    }
+
+    function onScrollThrottled() {
+      if (!isScrollTicking) {
+        requestAnimationFrame(updateActiveNavOnScroll);
+        isScrollTicking = true;
       }
     }
 
-    window.addEventListener('scroll', updateActiveNavOnScroll, { passive: true });
-    setTimeout(updateActiveNavOnScroll, 300);
+    window.addEventListener('scroll', onScrollThrottled, { passive: true });
+    setTimeout(updateActiveNavOnScroll, 200);
   }
 
   // --- 17. PREMIUM ANIMATION SYSTEMS ---
@@ -1788,18 +1774,31 @@
     counters.forEach((el) => observer.observe(el));
   }
 
-  // --- 17g. NAVBAR SCROLL BEHAVIOR ---
+  // --- 17g. NAVBAR SCROLL BEHAVIOR (JANK-FREE) ---
   function initNavbarScroll() {
-    const nav = document.querySelector('.nav-capsule');
+    const nav = document.getElementById('main-nav') || document.querySelector('.navbar');
     if (!nav) return;
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 80) {
+    let ticking = false;
+    function checkNavbar() {
+      if (window.scrollY > 40) {
         nav.classList.add('scrolled');
       } else {
         nav.classList.remove('scrolled');
       }
-    });
+      ticking = false;
+    }
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(checkNavbar);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
   }
 
   // --- 18. DOM READY INITIALIZER (SAFE PATTERN) ---

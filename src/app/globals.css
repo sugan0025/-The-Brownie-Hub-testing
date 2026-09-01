@@ -140,9 +140,21 @@ a:hover {
   box-shadow: var(--shadow-card), var(--shadow-gold);
 }
 
-/* === 3D TILT EFFECT === */
-.tilt-card {
+/* === 3D TILT EFFECT & ANTI-FLICKER GPU ACCELERATION === */
+.tilt-card,
+.flavor-pick-card,
+.slot-item,
+.navbar,
+.bento-card-luxury,
+.hero-canvas-wrap {
   transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.tilt-card {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -150,7 +162,8 @@ a:hover {
 [data-reveal] {
   opacity: 1;
   transform: none;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* When enhanced animations are active, un-revealed elements gently enter */
@@ -280,19 +293,21 @@ select:focus-visible,
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 14px 0;
-  background: rgba(18, 9, 4, 0.96);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  background: rgba(18, 9, 4, 0.94);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border-bottom: 1px solid rgba(201, 134, 60, 0.22);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
 }
 
 .navbar.scrolled {
   background: rgba(14, 7, 3, 0.98);
-  padding: 10px 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
+  border-bottom-color: rgba(201, 134, 60, 0.35);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
 }
 
 .nav-container {
