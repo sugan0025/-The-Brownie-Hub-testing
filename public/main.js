@@ -814,25 +814,26 @@
       if (presetBtn) {
         const preset = presetBtn.dataset.preset;
         let flavorList = [];
-        if (preset === 'bestseller') {
+        if (preset === 'classic') {
           flavorList = [
-            { name: 'Classic Fudge', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
-            { name: 'Salted Caramel Swirl', dietary: 'veg', image: '/images/brownies/salted-caramel.jpg' },
-            { name: 'Nutella Lava Heart', dietary: 'nonveg', image: '/images/brownies/nutella-stuffed.jpg' },
-            { name: 'Walnut Crackle', dietary: 'veg', image: '/images/brownies/walnut-crackle.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
           ];
-        } else if (preset === 'chocoholic') {
+        } else if (preset === 'double') {
           flavorList = [
-            { name: 'Double Chocolate Truffle', dietary: 'nonveg', image: '/images/brownies/double-chocolate.jpg' },
-            { name: 'Classic Fudge', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
-            { name: 'Belgian Choco-Chip Burst', dietary: 'nonveg', image: '/images/brownies/choco-chip.jpg' },
-            { name: 'Nutella Lava Heart', dietary: 'nonveg', image: '/images/brownies/nutella-stuffed.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
           ];
-        } else if (preset === 'nutty') {
+        } else if (preset === 'combo') {
           flavorList = [
-            { name: 'Walnut Crackle', dietary: 'veg', image: '/images/brownies/walnut-crackle.jpg' },
-            { name: 'Lotus Biscoff Crunch', dietary: 'veg', image: '/images/brownies/biscoff-crunch.jpg' },
-            { name: 'Salted Caramel Swirl', dietary: 'veg', image: '/images/brownies/salted-caramel.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
           ];
         }
 
@@ -1343,6 +1344,7 @@
       { id: 'bestsellers', hash: 'bestsellers' },
       { id: 'builder', hash: 'builder' },
       { id: 'menu', hash: 'menu' },
+      { id: 'about', hash: 'about' },
       { id: 'faq', hash: 'faq' },
       { id: 'contact', hash: 'contact' },
     ];

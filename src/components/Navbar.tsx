@@ -22,6 +22,7 @@ export default function Navbar() {
     { label: 'Bestsellers', href: '/#bestsellers' },
     { label: 'Custom Box', href: '/#builder' },
     { label: 'Menu', href: '/#menu' },
+    { label: 'About', href: '/#about' },
     { label: 'FAQ', href: '/#faq' },
     { label: 'Contact', href: '/#contact' },
   ];

@@ -6,14 +6,42 @@ import Link from 'next/link';
 export default function BentoShowcaseSection() {
   const bestsellers = [
     {
-      id: 'classic-fudge-veg',
-      name: 'Classic Fudge Brownie',
-      desc: 'Rich, fudgy & made with premium cocoa',
+      id: 'signature-classic-brownie',
+      name: 'Signature Classic Brownie',
+      desc: 'Dense, rich & gooey dark chocolate with crinkle crust',
       price: 69,
       badge: 'Bestseller',
       image: '/images/brownies/classic-fudge.jpg',
       dietary: 'veg',
     },
+    {
+      id: 'double-chocolate-brownie',
+      name: 'Double Chocolate Brownie',
+      desc: 'Extra dark fudge loaded with hand-cut couverture chunks',
+      price: 99,
+      badge: 'Chocoholic Favorite',
+      image: '/images/brownies/double-chocolate.jpg',
+      dietary: 'veg',
+    },
+    {
+      id: 'pack-4-classic-brownies',
+      name: 'Pack of 4 Classic Brownies',
+      desc: '4 freshly baked Signature Classics in a luxury keepsake box',
+      price: 256,
+      badge: 'Value Pack',
+      image: '/images/brownies/luxury-box-mockup.jpg',
+      dietary: 'veg',
+    },
+    {
+      id: 'pack-4-double-chocolate-brownies',
+      name: 'Pack of 4 Double Chocolate Brownies',
+      desc: '4 decadent Double Chocolate Brownies packed with chunks',
+      price: 376,
+      badge: 'Chocoholic Box',
+      image: '/images/brownies/double-chocolate.jpg',
+      dietary: 'veg',
+    },
+    /* [UPCOMING / ARCHIVED ITEMS KEPT SAFE IN CODE]
     {
       id: 'walnut-crackle-veg',
       name: 'Walnut Crackle Brownie',
@@ -50,15 +78,7 @@ export default function BentoShowcaseSection() {
       image: '/images/brownies/biscoff-crunch.jpg',
       dietary: 'nonveg',
     },
-    {
-      id: 'red-velvet-cream-cheese-nonveg',
-      name: 'Red Velvet Cheesecake',
-      desc: 'Crimson cocoa fudge swirled with tangy cream cheese',
-      price: 119,
-      badge: "Chef's Special",
-      image: '/images/brownies/red-velvet.jpg',
-      dietary: 'nonveg',
-    },
+    */
   ];
 
   const stats = [
@@ -75,7 +95,7 @@ export default function BentoShowcaseSection() {
     {
       value: 100,
       suffix: '%',
-      label: 'Pure Belgian Couverture Butter',
+      label: 'Pure Belgian Couverture & Butter',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8b66e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -83,9 +103,9 @@ export default function BentoShowcaseSection() {
       ),
     },
     {
-      value: 50,
-      suffix: '+',
-      label: 'Baking Workshops Hosted in Chennai',
+      value: 4,
+      suffix: ' Founders',
+      label: 'MBA Dream Turned Online Brownie Shop',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8b66e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
@@ -96,7 +116,7 @@ export default function BentoShowcaseSection() {
     {
       value: 4.9,
       suffix: '★',
-      label: 'Average Customer Rating (180+ Reviews)',
+      label: 'Average Customer Rating Across Chennai',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e8b66e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />

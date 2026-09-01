@@ -33,25 +33,19 @@ export default function MenuSection() {
               className={`filter-pill-btn magnetic-btn ${activeTab === 'all' ? 'active' : ''}`}
               onClick={() => setActiveTab('all')}
             >
-              ✨ All Varieties (10)
+              ✨ All Items (4)
             </button>
             <button
               className={`filter-pill-btn magnetic-btn ${activeTab === 'veg' ? 'active' : ''}`}
               onClick={() => setActiveTab('veg')}
             >
-              <span className="dietary-dot veg"></span> 100% Eggless Line (5)
-            </button>
-            <button
-              className={`filter-pill-btn magnetic-btn ${activeTab === 'nonveg' ? 'active' : ''}`}
-              onClick={() => setActiveTab('nonveg')}
-            >
-              <span className="dietary-dot nonveg"></span> Contains Farm Eggs (5)
+              <span className="dietary-dot veg"></span> 100% Eggless Brownies (2)
             </button>
             <button
               className={`filter-pill-btn magnetic-btn ${activeTab === 'boxes' ? 'active' : ''}`}
               onClick={() => setActiveTab('boxes')}
             >
-              🎁 Curated Gift Boxes (3)
+              🎁 Packs of 4 (2)
             </button>
           </div>
         </div>

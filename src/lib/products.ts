@@ -40,22 +40,38 @@ export interface BoxTier {
   description: string;
 }
 
-// 🍫 Individual Brownies
+// 🍫 Active Individual Brownies
 export const INDIVIDUAL_BROWNIES: BrownieItem[] = [
-  // --- Veg / Eggless ---
   {
-    id: 'classic-fudge-veg',
-    name: 'Classic Fudge',
-    tagline: 'The timeless dark chocolate original.',
-    description: 'Dense, gooey, dark-chocolate base with a glossy crinkle surface — 100% eggless magic that started it all.',
+    id: 'signature-classic-brownie',
+    name: 'Signature Classic Brownie',
+    tagline: 'The timeless rich dark chocolate original.',
+    description: 'Dense, gooey, dark-chocolate base with a glossy crinkle surface — freshly baked, rich, and indulgent for every chocolate lover.',
     price: 69,
     dietary: 'veg',
     badge: 'Bestseller',
     isPopular: true,
     image: '/images/brownies/classic-fudge.jpg',
-    ingredients: '70% Belgian Couverture, French Butter, Pure Cocoa, Cultured Curd',
-    flavorNotes: 'Intense Dark Cocoa · Paper-Thin Crinkle Top',
+    ingredients: '70% Belgian Couverture, French Butter, Pure Dutch Cocoa, Cultured Curd',
+    flavorNotes: 'Intense Dark Cocoa · Paper-Thin Crinkle Top · Melt-in-Mouth Fudge',
   },
+  {
+    id: 'double-chocolate-brownie',
+    name: 'Double Chocolate Brownie',
+    tagline: 'Extra dark fudge loaded with hand-cut couverture chunks.',
+    description: 'Extra rich and intensely fudgy, loaded with double chocolate couverture chunks for an explosion of pure chocolate in every bite.',
+    price: 99,
+    dietary: 'veg',
+    badge: 'Chocoholic Favorite',
+    isPopular: true,
+    image: '/images/brownies/double-chocolate.jpg',
+    ingredients: '70% Belgian Dark Chunks, Dark Cocoa Liquor, Pure Butter, Vanilla Extract',
+    flavorNotes: 'Ultra Dark · Hand-Cut Chunks · Double Chocolate Core',
+  },
+
+  /* =========================================================================
+   * [ARCHIVED / UPCOMING FLAVORS — KEPT SAFE FOR FUTURE EXPANSION]
+   * =========================================================================
   {
     id: 'walnut-crackle-veg',
     name: 'Walnut Crackle',
@@ -107,8 +123,6 @@ export const INDIVIDUAL_BROWNIES: BrownieItem[] = [
     ingredients: 'Pure Roasted Hazelnut Spread, Nutella Heart, Belgian Dark Fudge',
     flavorNotes: 'Molten Lava Center · Rich Hazelnut Praline',
   },
-
-  // --- Contains Egg ---
   {
     id: 'traditional-fudge-egg',
     name: 'Traditional Fudge Brownie',
@@ -136,19 +150,6 @@ export const INDIVIDUAL_BROWNIES: BrownieItem[] = [
     flavorNotes: 'Velvety Tang · Subtle Cocoa · Cheesecake Cream',
   },
   {
-    id: 'double-chocolate-egg',
-    name: 'Double Chocolate Brownie',
-    tagline: '70% dark Belgian cocoa and couverture chunks.',
-    description: 'Extra dark, intensely fudgy, loaded with hand-cut couverture chocolate chunks for real chocolate lovers.',
-    price: 119,
-    dietary: 'nonveg',
-    badge: 'Intense Dark',
-    isPopular: true,
-    image: '/images/brownies/double-chocolate.jpg',
-    ingredients: '70% Belgian Dark Chunks, Dark Cocoa Liquor, Vanilla Pods',
-    flavorNotes: 'Ultra Dark · Hand-Cut Chunks · Intense Cocoa',
-  },
-  {
     id: 'coffee-mocha-egg',
     name: 'Coffee Mocha Brownie',
     tagline: 'Fresh espresso roast folded into dark cocoa.',
@@ -173,10 +174,41 @@ export const INDIVIDUAL_BROWNIES: BrownieItem[] = [
     ingredients: 'Lotus Biscoff Speculoos, Crushed Belgian Spiced Cookies, Dark Cocoa',
     flavorNotes: 'Caramelized Cinnamon Cookie · Crunchy Crumble',
   },
+  ========================================================================= */
 ];
 
-// 🎁 Pre-Set Curated Assorted Boxes
+// 🎁 Active Curated Boxes & Packs
 export const CURATED_BOXES: CuratedBox[] = [
+  {
+    id: 'pack-4-classic-brownies',
+    name: 'Pack of 4 Classic Brownies',
+    tagline: '4 freshly baked Signature Classic Brownies in a gift box.',
+    description: 'Our most loved Signature Classic Brownies packed in an artisanal luxury box — dense, gooey, and rich in every bite.',
+    pieceCount: 4,
+    price: 256,
+    originalPrice: 276,
+    badge: 'Value Pack',
+    dietary: 'veg',
+    image: '/images/brownies/luxury-box-mockup.jpg',
+    includes: ['4x Signature Classic Brownie (Eggless)'],
+  },
+  {
+    id: 'pack-4-double-chocolate-brownies',
+    name: 'Pack of 4 Double Chocolate Brownies',
+    tagline: '4 extra dark, chunk-loaded Double Chocolate Brownies.',
+    description: 'For real chocolate lovers: 4 decadent Double Chocolate Brownies packed with molten couverture chunks.',
+    pieceCount: 4,
+    price: 376,
+    originalPrice: 396,
+    badge: 'Chocoholic Box',
+    dietary: 'veg',
+    image: '/images/brownies/double-chocolate.jpg',
+    includes: ['4x Double Chocolate Brownie (Eggless)'],
+  },
+
+  /* =========================================================================
+   * [ARCHIVED / UPCOMING BOXES — KEPT SAFE FOR FUTURE EXPANSION]
+   * =========================================================================
   {
     id: 'box-signature-4',
     name: 'Signature 4-Piece Taster Box',
@@ -231,18 +263,20 @@ export const CURATED_BOXES: CuratedBox[] = [
       '1x Biscoff Crunch (Egg)'
     ],
   },
+  ========================================================================= */
 ];
 
 // 🎛️ Custom Box Builder Pricing Tiers
 export const BOX_BUILDER_TIERS: BoxTier[] = [
   {
     size: 4,
-    name: 'Box of 4',
-    price: 329,
-    regularValue: 356,
-    savings: 27,
-    description: 'Select any 4 custom brownies of your choice.',
+    name: 'Pack of 4 Box',
+    price: 256,
+    regularValue: 276,
+    savings: 20,
+    description: 'Mix & match 4 freshly baked Signature Classic and Double Chocolate brownies.',
   },
+  /* =========================================================================
   {
     size: 6,
     name: 'Box of 6',
@@ -259,6 +293,7 @@ export const BOX_BUILDER_TIERS: BoxTier[] = [
     savings: 119,
     description: 'Select any 12 custom brownies of your choice.',
   },
+  ========================================================================= */
 ];
 
 // Helper functions
@@ -286,9 +321,9 @@ export function getCatalogItemPrice(name: string): number | null {
   );
   if (box) return box.price;
 
-  if (name.includes('Box of 4') || name.includes('Custom Box of 4')) return 329;
-  if (name.includes('Box of 6') || name.includes('Custom Box of 6')) return 489;
-  if (name.includes('Box of 12') || name.includes('Custom Box of 12')) return 929;
+  if (name.includes('Pack of 4 Classic') || name.includes('4 Classic')) return 256;
+  if (name.includes('Pack of 4 Double Chocolate') || name.includes('4 Double')) return 376;
+  if (name.includes('Pack of 4') || name.includes('Box of 4')) return 256;
 
   return null;
 }

@@ -52,17 +52,16 @@ export default function BoxBuilderSection() {
               </div>
 
               <div className="filter-tabs" id="builder-dietary-filter">
-                <button className="filter-tab active magnetic-btn" data-filter="all" suppressHydrationWarning>All Flavors (10)</button>
-                <button className="filter-tab magnetic-btn" data-filter="veg" suppressHydrationWarning>🌱 100% Eggless (5)</button>
-                <button className="filter-tab magnetic-btn" data-filter="nonveg" suppressHydrationWarning>🥚 Contains Egg (5)</button>
+                <button className="filter-tab active magnetic-btn" data-filter="all" suppressHydrationWarning>Signature Flavors (2)</button>
+                <button className="filter-tab magnetic-btn" data-filter="veg" suppressHydrationWarning>🌱 100% Eggless (2)</button>
               </div>
 
               {/* Quick Fill Presets */}
               <div className="builder-quick-presets" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', margin: '12px 0 16px' }}>
                 <span style={{ fontSize: '0.78rem', color: 'var(--caramel-bright)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>⚡ 1-Click Packs:</span>
-                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="bestseller" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>🏆 Bestseller Mix</button>
-                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="chocoholic" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>🍫 Chocoholic</button>
-                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="nutty" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>🥜 Nutty Crunch</button>
+                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="classic" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>🍫 4x Classic (₹256)</button>
+                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="double" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>✨ 4x Double Choco (₹376)</button>
+                <button type="button" className="btn-preset-pack magnetic-btn" data-preset="combo" style={{ padding: '5px 12px', fontSize: '0.78rem', borderRadius: '9999px', border: '1px solid rgba(201, 134, 60, 0.35)', background: 'rgba(201, 134, 60, 0.09)', color: 'var(--cream)', cursor: 'pointer' }}>🏆 2+2 Combo</button>
               </div>
 
               {/* 2-Column Responsive Flavor Options Grid */}
