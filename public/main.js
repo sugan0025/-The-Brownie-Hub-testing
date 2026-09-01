@@ -361,7 +361,70 @@
 
   }
 
-  // --- 7. CART MANAGEMENT ---
+  // --- TOAST NOTIFICATION CONTROLLER (The Rolling Oven 1:1) ---
+  function showToast(type, title, message = '') {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+
+    if (type === 'success' && title && title.includes('Cart')) {
+      toast.className = `toast premium-toast ${type}`;
+      toast.innerHTML = `
+        <div class="premium-cart-anim">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cart-svg">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <div class="cart-item-drop">✨</div>
+        </div>
+        <div class="toast-text">
+          <strong>${title}</strong>
+          <span>${message}</span>
+        </div>
+      `;
+    } else {
+      const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <span class="toast-icon">${icons[type] || '🍫'}</span>
+        <div class="toast-text">
+          <strong>${title}</strong>
+          <span>${message}</span>
+        </div>
+      `;
+    }
+
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.remove();
+    }, 3200);
+  }
+
+  // --- 7. CART MANAGEMENT (The Rolling Oven 1:1) ---
+  function updateCartBadge() {
+    const badge = document.getElementById('cart-badge');
+    const navBtn = document.getElementById('nav-order-btn');
+    const total = state.cart.reduce((sum, item) => sum + item.qty, 0);
+
+    if (total > 0) {
+      if (badge) {
+        badge.style.display = 'flex';
+        badge.textContent = String(total);
+      }
+      if (navBtn) navBtn.style.display = 'inline-flex';
+    } else {
+      if (badge) badge.style.display = 'none';
+      if (navBtn) navBtn.style.display = 'none';
+    }
+  }
+
   function loadCart() {
     try {
       const saved = localStorage.getItem('tbh_cart');
@@ -371,6 +434,7 @@
     } catch (e) {
       state.cart = [];
     }
+    updateCartBadge();
     renderCart();
   }
 
@@ -378,6 +442,7 @@
     try {
       localStorage.setItem('tbh_cart', JSON.stringify(state.cart));
     } catch (e) {}
+    updateCartBadge();
     renderCart();
   }
 
@@ -402,20 +467,10 @@
 
     saveCart();
     playPopAudio();
-    showToast(`Added to Cart! ${name} — ₹${price} 🍫`);
+    updateCartBadge();
 
-    // Bounce navbar cart badge
-    const badge = document.getElementById('cart-count-badge');
-    if (badge) {
-      badge.classList.remove('bounce-badge');
-      void badge.offsetWidth;
-      badge.classList.add('bounce-badge');
-    }
-
-    // Automatically slide open the Cart Drawer (just like The Rolling Oven)
-    if (typeof window.openCartDrawer === 'function') {
-      window.openCartDrawer();
-    }
+    // Show Rolling Oven Premium Animated Toast
+    showToast('success', 'Added to Cart!', `${name} — ₹${price}`);
 
     trackGA4('add_to_cart', {
       currency: 'INR',
@@ -430,7 +485,7 @@
     state.cart[index].qty += delta;
     if (state.cart[index].qty <= 0) {
       const removed = state.cart.splice(index, 1)[0];
-      showToast(`Removed "${removed.name}" from box.`);
+      showToast('info', 'Removed', `Removed "${removed.name}" from your box.`);
       trackGA4('remove_from_cart', {
         currency: 'INR',
         value: removed.price,
@@ -438,6 +493,7 @@
       });
     }
     saveCart();
+    updateCartBadge();
   }
 
   function calculateCartTotal() {
@@ -450,7 +506,6 @@
 
   function renderCart() {
     const badge = document.getElementById('cart-count-badge');
-    const cartToggleBtn = document.getElementById('cart-toggle-btn');
     const headerCount = document.getElementById('cart-header-count');
     const totalDisplay = document.getElementById('cart-total-display');
     const subtotalDisplay = document.getElementById('cart-subtotal-display');
@@ -982,107 +1037,120 @@
       if (state.cart.length === 0) {
         showToast('Your box is empty! Pick your favorite brownies first 🍫');
         return;
+  // --- 12. COMPLETE YOUR ORDER MODAL CONTROLLER (The Rolling Oven 1:1) ---
+  function openOrderModal() {
+    const overlay = document.getElementById('order-modal-overlay');
+    if (overlay) {
+      overlay.classList.add('active');
+      overlay.classList.add('open');
+    }
+    document.body.style.overflow = 'hidden';
+
+    // Render order summary inside modal
+    const summaryBox = document.getElementById('order-summary-box');
+    if (summaryBox) {
+      summaryBox.style.display = 'block';
+
+      if (state.cart.length === 0) {
+        summaryBox.innerHTML = `<div style="text-align:center; padding: 20px; color: #a1a1aa;">Your cart is empty. Pick your favorite brownies first! 🍫</div>`;
+        const btn = document.getElementById('submit-order-btn');
+        if (btn) btn.style.display = 'none';
+        return;
       }
 
-      const drawer = document.getElementById('cart-drawer');
-      const cartOverlay = document.getElementById('cart-overlay');
-      if (drawer) drawer.classList.remove('open');
-      if (cartOverlay) cartOverlay.classList.remove('open');
+      const btn = document.getElementById('submit-order-btn');
+      if (btn) btn.style.display = 'inline-flex';
 
-      renderModalOrderSummary();
+      const subtotal = calculateCartTotal();
+      const isFreeDelivery = subtotal >= 500;
+      const deliveryFee = isFreeDelivery ? 0 : 49;
+      const grandTotal = subtotal + deliveryFee;
 
-      if (formStep) formStep.style.display = 'block';
-      if (successStep) successStep.style.display = 'none';
+      summaryBox.innerHTML = `
+        <strong style="display:block;margin-bottom:8px;color:var(--cream,#fff4ea);font-weight:700;">Order Summary</strong>
+        ${state.cart
+          .map(
+            (item, i) => `
+          <div class="order-line" style="display:flex; justify-content:space-between; align-items:flex-start; padding: 6px 0;">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <button type="button" onclick="removeModalItem(${i})" title="Remove Item" style="background:transparent; border:none; color:#a1a1aa; padding:0; display:flex; align-items:center; cursor:pointer; margin-top:2px; transition: color 0.2s;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+              </button>
+              <span>${item.name} <span style="color:rgba(255,244,234,0.65); font-size: 0.88em;">× ${item.qty}</span></span>
+            </span>
+            <span style="font-weight:600; color:var(--cream,#fff4ea);">₹${item.price * item.qty}</span>
+          </div>
+        `
+          )
+          .join('')}
+        <div class="order-line" style="display:flex; justify-content:space-between; font-size:0.85rem; color:rgba(255,244,234,0.7); margin-top:4px;">
+          <span>Chennai Delivery</span>
+          <span>${isFreeDelivery ? '<strong style="color:#51cf66;">FREE</strong>' : '₹49'}</span>
+        </div>
+        <div class="order-line total" style="display:flex; justify-content:space-between; border-top:1px solid rgba(201,134,60,0.25); margin-top:8px; padding-top:10px; font-weight:700; color:var(--caramel-bright,#e8b66e); font-size:1.15rem;">
+          <span>Total</span>
+          <span>₹${grandTotal}</span>
+        </div>
+      `;
+    }
 
-      if (modal) modal.classList.add('open');
-      if (overlay) overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
+    trackGA4('begin_checkout', {
+      currency: 'INR',
+      value: calculateCartTotal(),
+      items: state.cart.map((i) => ({ item_name: i.name, price: i.price, quantity: i.qty })),
+    });
+  }
 
-      trackGA4('begin_checkout', {
-        currency: 'INR',
-        value: calculateCartTotal(),
-        items: state.cart.map((i) => ({ item_name: i.name, price: i.price, quantity: i.qty })),
+  window.openRollingOrderModal = openOrderModal;
+  window.openOrderModal = openOrderModal;
+
+  // Global helper to remove item from modal and redraw
+  window.removeModalItem = function (index) {
+    if (!state.cart[index]) return;
+    const removed = state.cart.splice(index, 1)[0];
+    saveCart();
+    updateCartBadge();
+    showToast('info', 'Removed', `${removed.name} removed from order.`);
+
+    openOrderModal();
+
+    if (state.cart.length === 0) {
+      setTimeout(() => {
+        closeOrderModal();
+      }, 900);
+    }
+  };
+
+  function closeOrderModal() {
+    const overlay = document.getElementById('order-modal-overlay');
+    if (overlay) {
+      overlay.classList.remove('active');
+      overlay.classList.remove('open');
+    }
+    document.body.style.overflow = '';
+  }
+
+  function initOrderModal() {
+    const navOrderBtn = document.getElementById('nav-order-btn');
+    const closeBtn = document.getElementById('order-modal-close');
+    const overlay = document.getElementById('order-modal-overlay');
+    const orderForm = document.getElementById('order-form');
+    const submitBtn = document.getElementById('submit-order-btn');
+
+    if (navOrderBtn) {
+      navOrderBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openOrderModal();
       });
     }
 
-    window.openRollingOrderModal = openModal;
-
-    function closeModal() {
-      if (modal) modal.classList.remove('open');
-      if (overlay) overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    if (openCheckoutBtn) openCheckoutBtn.addEventListener('click', openModal);
-    const placeOrderBtn = document.getElementById('place-order-btn');
-    if (placeOrderBtn) placeOrderBtn.addEventListener('click', openModal);
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (overlay) overlay.addEventListener('click', closeModal);
-
-    // Stepper buttons inside Rolling Modal
-    document.addEventListener('click', (e) => {
-      const modalMinus = e.target.closest('.btn-modal-minus');
-      const modalPlus = e.target.closest('.btn-modal-plus');
-
-      if (modalMinus) {
-        const idx = parseInt(modalMinus.dataset.index, 10);
-        updateCartQty(idx, -1);
-        renderModalOrderSummary();
-      } else if (modalPlus) {
-        const idx = parseInt(modalPlus.dataset.index, 10);
-        updateCartQty(idx, 1);
-        renderModalOrderSummary();
-      }
-    });
-
-    // WhatsApp Direct Order inside Rolling Modal
-    const modalWaBtn = document.getElementById('order-modal-wa-btn');
-    if (modalWaBtn) {
-      modalWaBtn.addEventListener('click', () => {
-        if (state.cart.length === 0) {
-          showToast('Please add items to your cart first!');
-          return;
-        }
-        const name = document.getElementById('order-customer-name')?.value || 'Customer';
-        const address = document.getElementById('order-delivery-address')?.value || 'Chennai';
-        const phone = document.getElementById('order-customer-phone')?.value || '';
-        const pincode = document.getElementById('order-pincode')?.value || '600001';
-        const instructions = document.getElementById('order-instructions')?.value || '';
-
-        const subtotal = calculateCartTotal();
-        const isFreeDelivery = subtotal >= 500;
-        const deliveryFee = isFreeDelivery ? 0 : 49;
-        const grandTotal = subtotal + deliveryFee;
-
-        const itemsText = state.cart
-          .map((i) => {
-            const bd = i.breakdown && i.breakdown.length > 0 ? `\n    ↳ [${i.breakdown.join(', ')}]` : '';
-            return `• *${i.name}* × ${i.qty} — ₹${i.price * i.qty} 🟢${bd}`;
-          })
-          .join('\n');
-
-        const waMessage =
-          `🍫 *NEW ORDER — THE BROWNIE HUB* 🍫\n` +
-          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-          `👤 *CUSTOMER DETAILS:*\n` +
-          `• *Name:* ${name}\n` +
-          `• *Phone:* ${phone || 'WhatsApp Active'}\n` +
-          `• *Delivery Address:* ${address}\n` +
-          `• *Pincode:* ${pincode} (Chennai)\n\n` +
-          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-          `📦 *ORDER ITEMS:*\n${itemsText}\n\n` +
-          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-          `💰 *Subtotal:* ₹${subtotal}\n` +
-          `🚚 *Chennai Delivery:* ${isFreeDelivery ? 'FREE (Orders ₹500+)' : '₹49'}\n` +
-          `💳 *Payment Mode:* 💵 *Cash on Delivery (COD)*\n` +
-          `🏷️ *TOTAL PAYABLE:* *₹${grandTotal}*\n` +
-          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-          `📝 *Special Instructions:* ${instructions || 'None'}\n` +
-          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-          `✨ *Freshly baked with 100% Belgian Couverture.*\n` +
-          `❤️ *Please confirm my order & delivery timing!* 🛵`;
-
-        window.open(`https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waMessage)}`, '_blank');
+    if (closeBtn) closeBtn.addEventListener('click', closeOrderModal);
+    if (overlay) {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeOrderModal();
       });
     }
 
@@ -1090,20 +1158,24 @@
       orderForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Processing Order... ⏳';
+        if (state.cart.length === 0) {
+          showToast('error', 'Cart Empty', 'Please select at least 1 brownie first!');
+          return;
         }
 
-        const formData = new FormData(orderForm);
-        const customerName = formData.get('customer_name');
-        const customerPhone = formData.get('customer_phone');
-        const customerEmail = formData.get('customer_email');
-        const deliveryAddress = formData.get('delivery_address');
-        const pincode = formData.get('pincode');
-        const specialInstructions = formData.get('special_instructions');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Preparing Order... ⏳';
+        }
+
+        const customerName = document.getElementById('order-name')?.value || 'Customer';
+        const customerEmail = document.getElementById('order-email')?.value || 'customer@thebrowniehub.com';
+        const customerPhone = document.getElementById('order-phone')?.value || '';
+        const deliveryAddress = document.getElementById('order-address')?.value || 'Chennai';
+        const pincode = document.getElementById('order-pincode')?.value || '600001';
+        const specialInstructions = document.getElementById('order-notes')?.value || '';
+        const honeypot = document.getElementById('order-hp')?.value || '';
         const paymentMethod = 'Cash on Delivery (COD)';
-        const honeypot = formData.get('b_website');
 
         const subtotal = calculateCartTotal();
         const isFreeDelivery = subtotal >= 500;
@@ -1113,10 +1185,10 @@
         const payload = {
           customer_name: customerName,
           customer_phone: customerPhone,
-          customer_email: customerEmail || 'customer@thebrowniehub.com',
+          customer_email: customerEmail,
           delivery_address: deliveryAddress,
           pincode: pincode,
-          special_instructions: specialInstructions || '',
+          special_instructions: specialInstructions,
           payment_method: paymentMethod,
           order_type: 'The Brownie Hub Web COD Order',
           items: state.cart.map((item) => ({
@@ -1129,7 +1201,7 @@
           utm_source: state.utm.utm_source || '',
           utm_medium: state.utm.utm_medium || '',
           utm_campaign: state.utm.utm_campaign || '',
-          b_website: honeypot || '',
+          b_website: honeypot,
         };
 
         try {
@@ -1140,81 +1212,66 @@
           });
 
           const data = await res.json();
+          const orderId = (data && data.order_id) || `TBH-${Date.now().toString().slice(-6)}`;
+          const finalTotal = (data && data.verified_total) || grandTotal;
 
-          if (res.ok && data.success) {
-            const orderId = data.order_id || `TBH-${Date.now().toString().slice(-6)}`;
-            const finalTotal = data.verified_total || grandTotal;
+          const itemsText = state.cart
+            .map((i) => {
+              const bd = i.breakdown && i.breakdown.length > 0 ? `\n    ↳ [${i.breakdown.join(', ')}]` : '';
+              return `• *${i.name}* × ${i.qty} — ₹${i.price * i.qty} 🟢${bd}`;
+            })
+            .join('\n');
 
-            const orderIdElem = document.getElementById('success-order-id');
-            const orderAmountElem = document.getElementById('success-order-amount');
-            const whatsappLink = document.getElementById('success-whatsapp-link');
+          const waMessage =
+            `🍫 *NEW ORDER — THE BROWNIE HUB* 🍫\n` +
+            `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+            `🆔 *Order ID:* ${orderId}\n` +
+            `👤 *Customer Name:* ${customerName}\n` +
+            `📞 *Phone Number:* ${customerPhone}\n` +
+            `📍 *Delivery Address:* ${deliveryAddress}\n` +
+            `📮 *Pincode:* ${pincode} (Chennai)\n\n` +
+            `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+            `📦 *ORDER ITEMS:*\n${itemsText}\n\n` +
+            `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+            `💰 *Subtotal:* ₹${subtotal}\n` +
+            `🚚 *Chennai Delivery:* ${isFreeDelivery ? 'FREE (Orders ₹500+)' : '₹49'}\n` +
+            `💳 *Payment Mode:* 💵 *Cash on Delivery (COD)*\n` +
+            `🏷️ *FINAL AMOUNT TO PAY:* *₹${finalTotal}*\n` +
+            `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+            `📝 *Special Note:* ${specialInstructions || 'None'}\n` +
+            `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+            `✨ *Freshly baked with 100% Belgian Couverture.*\n` +
+            `❤️ *Please confirm delivery timing!* 🛵`;
 
-            if (orderIdElem) orderIdElem.textContent = orderId;
-            if (orderAmountElem) orderAmountElem.textContent = `₹${finalTotal}`;
+          trackGA4('purchase', {
+            transaction_id: orderId,
+            value: finalTotal,
+            currency: 'INR',
+            payment_type: paymentMethod,
+            items: state.cart.map((i) => ({ item_name: i.name, price: i.price, quantity: i.qty })),
+          });
 
-            const itemsText = state.cart
-              .map((i) => {
-                const bd = i.breakdown && i.breakdown.length > 0 ? `\n    ↳ [${i.breakdown.join(', ')}]` : '';
-                return `• *${i.name}* × ${i.qty} — ₹${i.price * i.qty} 🟢${bd}`;
-              })
-              .join('\n');
+          // Reset cart & update badge
+          state.cart = [];
+          saveCart();
+          updateCartBadge();
+          closeOrderModal();
 
-            const waMessage =
-              `🍫 *ORDER CONFIRMED — THE BROWNIE HUB* 🍫\n` +
-              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-              `🆔 *Order ID:* ${orderId}\n` +
-              `👤 *Customer:* ${customerName}\n` +
-              `📞 *Phone:* ${customerPhone}\n` +
-              `📍 *Delivery Address:* ${deliveryAddress}\n` +
-              `📮 *Pincode:* ${pincode} (Chennai)\n\n` +
-              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-              `📦 *ORDER ITEMS:*\n${itemsText}\n\n` +
-              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-              `💰 *Subtotal:* ₹${subtotal}\n` +
-              `🚚 *Chennai Delivery:* ${isFreeDelivery ? 'FREE' : '₹49'}\n` +
-              `💳 *Payment Mode:* 💵 *Cash on Delivery (COD)*\n` +
-              `🏷️ *FINAL AMOUNT TO PAY:* *₹${finalTotal}*\n` +
-              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-              `📝 *Special Note:* ${specialInstructions || 'None'}\n` +
-              `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-              `✨ *Thank you for supporting 4 MBA Students' Dream!*\n` +
-              `🛵 *Please confirm dispatch timing!* ❤️`;
+          showToast('success', 'Order Confirmed! 💬', 'Opening WhatsApp to complete delivery...');
 
-            if (whatsappLink) {
-              whatsappLink.href = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waMessage)}`;
-            }
-
-            trackGA4('purchase', {
-              transaction_id: orderId,
-              value: finalTotal,
-              currency: 'INR',
-              payment_type: paymentMethod,
-              items: state.cart.map((i) => ({ item_name: i.name, price: i.price, quantity: i.qty })),
-            });
-
-            state.cart = [];
-            saveCart();
-
-            playSuccessChime();
-            if (formStep) formStep.style.display = 'none';
-            if (successStep) successStep.style.display = 'block';
-            showToast('Order confirmed! 🎉 Opening WhatsApp sync...');
-
-            // Automatically open WhatsApp after 1.2s delay matching Rolling Oven v2
-            const waTargetUrl = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waMessage)}`;
-            setTimeout(() => {
-              window.open(waTargetUrl, '_blank');
-            }, 1200);
-          } else {
-            showToast(`Error: ${data.error || 'Failed to place order.'}`);
-          }
+          const waTargetUrl = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waMessage)}`;
+          setTimeout(() => {
+            window.open(waTargetUrl, '_blank');
+          }, 800);
         } catch (err) {
           console.error('Order submission error:', err);
-          showToast('Network error while placing order. Please try WhatsApp checkout.');
+          showToast('error', 'Network Error', 'Opening WhatsApp directly...');
+          const fallbackWa = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent('Hi The Brownie Hub! I would like to place an order via Cash on Delivery.')}`;
+          window.open(fallbackWa, '_blank');
         } finally {
           if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Confirm Order & Complete';
+            submitBtn.innerHTML = `<span>Confirm & Send Order</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
           }
         }
       });

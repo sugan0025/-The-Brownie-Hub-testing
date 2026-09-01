@@ -4083,6 +4083,355 @@ body::before {
   100% { transform: scale(1); }
 }
 
+/* ==========================================================================
+   THE ROLLING OVEN 1:1 EXACT CART, NAVBAR, TOAST & MODAL STYLES
+   ========================================================================== */
+
+/* Navbar Order Now Button & Red Badge */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, var(--caramel, #c9863c), var(--caramel-dark, #8c531d));
+  color: #140a05;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 235, 175, 0.4);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(201, 134, 60, 0.3);
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(201, 134, 60, 0.45);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  background: #ff3b30;
+  color: white;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  animation: badgePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgePop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+/* Premium Toast Notification (Rolling Oven Screenshot 1) */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: rgba(20, 10, 5, 0.95);
+  border: 1px solid rgba(201, 134, 60, 0.35);
+  border-radius: 14px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(201, 134, 60, 0.15);
+  animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), toastOut 0.3s ease 2.8s forwards;
+  max-width: 380px;
+  pointer-events: auto;
+}
+
+.premium-toast {
+  background: linear-gradient(135deg, rgba(28, 16, 9, 0.98), rgba(14, 8, 4, 0.98)) !important;
+  border: 1px solid rgba(201, 134, 60, 0.6) !important;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.65), 0 0 24px rgba(201, 134, 60, 0.25) !important;
+}
+
+.premium-cart-anim {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.premium-cart-anim .cart-svg {
+  width: 26px;
+  height: 26px;
+  color: var(--caramel-bright, #e8b66e);
+  animation: cartDrive 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.premium-cart-anim .cart-item-drop {
+  position: absolute;
+  top: -16px;
+  right: 0;
+  font-size: 14px;
+  opacity: 0;
+  animation: itemDrop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
+}
+
+@keyframes cartDrive {
+  0% { transform: translateX(-20px) rotate(-10deg); opacity: 0; }
+  50% { transform: translateX(5px) rotate(5deg); opacity: 1; }
+  100% { transform: translateX(0) rotate(0); opacity: 1; }
+}
+
+@keyframes itemDrop {
+  0% { transform: translateY(-20px) scale(0.2) rotate(-30deg); opacity: 0; }
+  50% { opacity: 1; transform: translateY(-5px) scale(1.2) rotate(10deg); }
+  100% { transform: translateY(6px) scale(1) rotate(0); opacity: 1; }
+}
+
+.toast-text {
+  font-size: 0.92rem;
+  color: #fff4ea;
+}
+
+.toast-text strong {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 2px;
+  color: #ffffff;
+}
+
+.toast-text span {
+  color: rgba(255, 244, 234, 0.72);
+  font-size: 0.84rem;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(60px) scale(0.9); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes toastOut {
+  to { opacity: 0; transform: translateX(60px) scale(0.9); }
+}
+
+/* Modal Overlay & Dialog (Rolling Oven Screenshots 2 & 3) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.active,
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: rgba(20, 14, 11, 0.96) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(201, 134, 60, 0.12);
+}
+
+.modal-overlay.active .modal,
+.modal-overlay.open .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 244, 234, 0.6);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: #ffffff;
+  transform: rotate(90deg);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Floating Form Groups */
+.form-group {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 16px 16px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(201, 134, 60, 0.25);
+  border-radius: 12px;
+  color: #fff4ea;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-input:focus {
+  border-color: var(--caramel, #c9863c);
+  background: rgba(201, 134, 60, 0.08);
+  box-shadow: 0 0 16px rgba(201, 134, 60, 0.2);
+}
+
+.form-label {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  color: rgba(255, 244, 234, 0.55);
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+  top: 5px;
+  left: 16px;
+  font-size: 0.72rem;
+  color: var(--caramel-bright, #e8b66e);
+  font-weight: 600;
+}
+
+/* Payment Method Cards */
+.payment-method-group {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.payment-method-title {
+  color: var(--caramel-bright, #e8b66e);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-option {
+  cursor: pointer;
+  position: relative;
+  display: block;
+}
+
+.payment-option input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.payment-option-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(201, 134, 60, 0.25);
+  border-radius: 14px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #fff4ea;
+  user-select: none;
+}
+
+.payment-option:hover .payment-option-content {
+  background: rgba(201, 134, 60, 0.08);
+  border-color: rgba(201, 134, 60, 0.5);
+  transform: translateY(-1px);
+}
+
+.payment-option input:checked ~ .payment-option-content {
+  background: rgba(201, 134, 60, 0.16);
+  border-color: var(--caramel, #c9863c);
+  box-shadow: 0 0 20px rgba(201, 134, 60, 0.2), inset 0 0 0 1px var(--caramel, #c9863c);
+}
+
+/* Order Summary Box inside Modal */
+.order-summary-box {
+  background: rgba(201, 134, 60, 0.06);
+  border: 1px solid rgba(201, 134, 60, 0.25);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  color: rgba(255, 244, 234, 0.85);
+}
+
+.order-summary-box .order-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.order-summary-box .order-line.total {
+  border-top: 1px solid rgba(201, 134, 60, 0.25);
+  margin-top: 8px;
+  padding-top: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--caramel-bright, #e8b66e);
+}
+
+
 .bounce-badge {
   animation: badgeBounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
