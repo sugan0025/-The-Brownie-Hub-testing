@@ -29,7 +29,7 @@ export default function BentoShowcaseSection() {
       desc: '4 freshly baked Signature Classics in a luxury keepsake box',
       price: 256,
       badge: 'Value Pack',
-      image: '/images/brownies/luxury-box-mockup.jpg',
+      image: '/images/brownies/pack-4-classic.jpg',
       dietary: 'veg',
     },
     {
@@ -38,7 +38,7 @@ export default function BentoShowcaseSection() {
       desc: '4 decadent Double Chocolate Brownies packed with chunks',
       price: 376,
       badge: 'Chocoholic Box',
-      image: '/images/brownies/double-chocolate.jpg',
+      image: '/images/brownies/pack-4-double-chocolate.jpg',
       dietary: 'veg',
     },
     /* [UPCOMING / ARCHIVED ITEMS KEPT SAFE IN CODE]

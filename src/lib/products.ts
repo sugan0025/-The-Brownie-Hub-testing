@@ -189,7 +189,7 @@ export const CURATED_BOXES: CuratedBox[] = [
     originalPrice: 276,
     badge: 'Value Pack',
     dietary: 'veg',
-    image: '/images/brownies/luxury-box-mockup.jpg',
+    image: '/images/brownies/pack-4-classic.jpg',
     includes: ['4x Signature Classic Brownie (Eggless)'],
   },
   {
@@ -202,7 +202,7 @@ export const CURATED_BOXES: CuratedBox[] = [
     originalPrice: 396,
     badge: 'Chocoholic Box',
     dietary: 'veg',
-    image: '/images/brownies/double-chocolate.jpg',
+    image: '/images/brownies/pack-4-double-chocolate.jpg',
     includes: ['4x Double Chocolate Brownie (Eggless)'],
   },
 
