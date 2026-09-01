@@ -20,46 +20,10 @@ export default function BoxBuilderSection() {
         <div className="builder-container" data-reveal>
           {/* ─── LEFT: Flavor Selection, Tier & Packaging Perks ─── */}
           <div className="builder-controls glass-card">
-            {/* Step 1: Selected Box Format */}
+            {/* Step 1: Flavors & 1-Click Packs */}
             <div className="builder-step">
               <div className="builder-step-label">
                 <span className="builder-step-num">1</span>
-                <div>
-                  <span className="builder-step-heading">Bespoke Box Tier</span>
-                  <span className="builder-step-sub">Pre-set to our signature 4-piece luxury gift format</span>
-                </div>
-              </div>
-
-              <div className="tier-card-luxury">
-                <div className="tier-card-glow"></div>
-                <div className="tier-card-content">
-                  <div className="tier-card-main">
-                    <div className="tier-card-icon-wrap">
-                      <span className="tier-card-emoji">🎁</span>
-                    </div>
-                    <div className="tier-card-text">
-                      <div className="tier-card-title-row">
-                        <h4 className="tier-card-title">4-Piece Magnetic Keepsake Box</h4>
-                        <span className="tier-card-badge-save">Save ₹20</span>
-                      </div>
-                      <p className="tier-card-desc">
-                        Includes premium matte-black rigid box, gold wax-seal branding &amp; golden satin ribbon.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="tier-card-pricing">
-                    <span className="tier-pricing-label">Starting From</span>
-                    <span className="tier-pricing-value">₹256</span>
-                    <span className="tier-pricing-discount">₹20 Bundle Discount</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 2: Flavors & 1-Click Packs */}
-            <div className="builder-step">
-              <div className="builder-step-label">
-                <span className="builder-step-num">2</span>
                 <div>
                   <span className="builder-step-heading">Select 4 Brownie Squares</span>
                   <span className="builder-step-sub">Click &quot;+ Drop in Box&quot; or choose a fast 1-click combo</span>
@@ -120,10 +84,10 @@ export default function BoxBuilderSection() {
               </div>
             </div>
 
-            {/* Step 3: Artisanal Packaging Highlights (Fills the space below beautifully!) */}
+            {/* Step 2: Artisanal Packaging Highlights */}
             <div className="builder-step builder-perks-step">
               <div className="builder-step-label">
-                <span className="builder-step-num">✨</span>
+                <span className="builder-step-num">2</span>
                 <div>
                   <span className="builder-step-heading">Included With Every Keepsake Box</span>
                   <span className="builder-step-sub">Artisanal gifting standards for an unforgettable unboxing</span>
