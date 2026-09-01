@@ -26,7 +26,7 @@ export default function Navbar() {
                 <circle cx="20" cy="21" r="1" />
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
               </svg>
-              <span>Order Now</span>
+              <span className="nav-cta-text">Order Now</span>
               <span className="cart-badge" id="cart-badge" style={{ display: 'none' }}>0</span>
             </button>
             <button className="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
