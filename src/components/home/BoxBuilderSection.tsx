@@ -18,7 +18,7 @@ export default function BoxBuilderSection() {
         </div>
 
         <div className="builder-container" data-reveal>
-          {/* ─── LEFT: Flavor Selection & Controls ─── */}
+          {/* ─── LEFT: Flavor Selection, Tier & Packaging Perks ─── */}
           <div className="builder-controls glass-card" data-lenis-prevent="true">
             {/* Step 1: Selected Box Format */}
             <div className="builder-step">
@@ -50,7 +50,7 @@ export default function BoxBuilderSection() {
                   <div className="tier-card-pricing">
                     <span className="tier-pricing-label">Starting From</span>
                     <span className="tier-pricing-value">₹256</span>
-                    <span className="tier-pricing-discount">₹20 Bundle Discount Applied</span>
+                    <span className="tier-pricing-discount">₹20 Bundle Discount</span>
                   </div>
                 </div>
               </div>
@@ -62,7 +62,7 @@ export default function BoxBuilderSection() {
                 <span className="builder-step-num">2</span>
                 <div>
                   <span className="builder-step-heading">Select 4 Brownie Squares</span>
-                  <span className="builder-step-sub">Click &quot;+ Drop in Box&quot; or choose a fast 1-click curated combo</span>
+                  <span className="builder-step-sub">Click &quot;+ Drop in Box&quot; or choose a fast 1-click combo</span>
                 </div>
               </div>
 
@@ -119,6 +119,48 @@ export default function BoxBuilderSection() {
                 ))}
               </div>
             </div>
+
+            {/* Step 3: Artisanal Packaging Highlights (Fills the space below beautifully!) */}
+            <div className="builder-step builder-perks-step">
+              <div className="builder-step-label">
+                <span className="builder-step-num">✨</span>
+                <div>
+                  <span className="builder-step-heading">Included With Every Keepsake Box</span>
+                  <span className="builder-step-sub">Artisanal gifting standards for an unforgettable unboxing</span>
+                </div>
+              </div>
+
+              <div className="builder-perks-grid">
+                <div className="builder-perk-item">
+                  <span className="perk-icon">🎀</span>
+                  <div>
+                    <strong>Satin Gold Ribbon</strong>
+                    <p>Hand-tied luxury ribbon with gold foil emblem seal</p>
+                  </div>
+                </div>
+                <div className="builder-perk-item">
+                  <span className="perk-icon">🧊</span>
+                  <div>
+                    <strong>Parchment Compartments</strong>
+                    <p>Individually sealed slots keeping each square ultra-fresh</p>
+                  </div>
+                </div>
+                <div className="builder-perk-item">
+                  <span className="perk-icon">⚡</span>
+                  <div>
+                    <strong>Same-Day Dispatch</strong>
+                    <p>Baked fresh to order and dispatched across Chennai</p>
+                  </div>
+                </div>
+                <div className="builder-perk-item">
+                  <span className="perk-icon">💌</span>
+                  <div>
+                    <strong>Gift Message Note</strong>
+                    <p>Complimentary personalized golden card upon checkout</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* ─── RIGHT: Live Magnetic Box Simulator ─── */}
@@ -129,8 +171,8 @@ export default function BoxBuilderSection() {
             </div>
 
             <div className="builder-summary-head">
-              <div>
-                <h3 id="builder-box-title">Pack of 4 Keepsake Box</h3>
+              <div className="builder-head-text">
+                <h3 id="builder-box-title">Pack of 4 Box</h3>
                 <span className="builder-box-sub">Matte black velvet tray &amp; embossed gold ribbon</span>
               </div>
               <span className="builder-box-badge" id="builder-box-badge">
@@ -142,7 +184,7 @@ export default function BoxBuilderSection() {
             <div className="builder-capacity-meter">
               <div className="builder-meter-labels">
                 <span>Box Filling Status</span>
-                <span id="builder-slots-text">0 of 4 slots packed</span>
+                <span id="builder-slots-text">0 of 4 slots filled</span>
               </div>
               <div className="builder-progress-bar">
                 <div className="builder-progress-fill" id="builder-progress-fill" style={{ width: '0%' }}></div>
@@ -180,7 +222,7 @@ export default function BoxBuilderSection() {
                 disabled
                 suppressHydrationWarning
               >
-                <span>Select 4 Brownies to Complete Box</span>
+                <span>Pick 4 Brownies to Pack Box</span>
               </button>
 
               <a

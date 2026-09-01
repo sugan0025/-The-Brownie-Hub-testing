@@ -4988,16 +4988,16 @@ body::before {
 
 .builder-container {
   display: grid;
-  grid-template-columns: 1.18fr 0.82fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 36px;
-  align-items: flex-start;
+  align-items: start;
   margin-top: 48px;
 }
 
 @media (max-width: 1024px) {
   .builder-container {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 32px;
   }
 }
 
@@ -5009,21 +5009,77 @@ body::before {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(201, 134, 60, 0.08);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .builder-step {
-  margin-bottom: 32px;
+  margin-bottom: 0;
 }
 
-.builder-step:last-child {
-  margin-bottom: 0;
+/* Packaging Highlights / Perks Grid */
+.builder-perks-step {
+  padding-top: 24px;
+  border-top: 1px solid rgba(201, 134, 60, 0.22);
+}
+
+.builder-perks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+@media (max-width: 640px) {
+  .builder-perks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.builder-perk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(201, 134, 60, 0.2);
+  border-radius: 14px;
+  transition: all 0.25s ease;
+}
+
+.builder-perk-item:hover {
+  background: rgba(201, 134, 60, 0.06);
+  border-color: rgba(201, 134, 60, 0.4);
+  transform: translateY(-2px);
+}
+
+.perk-icon {
+  font-size: 1.35rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.builder-perk-item strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cream, #fff4ea);
+  line-height: 1.2;
+}
+
+.builder-perk-item p {
+  font-size: 0.74rem;
+  color: rgba(255, 244, 234, 0.58);
+  margin: 3px 0 0 0;
+  line-height: 1.3;
 }
 
 .builder-step-label {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .builder-step-num {
