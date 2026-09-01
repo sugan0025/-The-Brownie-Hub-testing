@@ -1014,6 +1014,8 @@
     }
 
     if (openCheckoutBtn) openCheckoutBtn.addEventListener('click', openModal);
+    const placeOrderBtn = document.getElementById('place-order-btn');
+    if (placeOrderBtn) placeOrderBtn.addEventListener('click', openModal);
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (overlay) overlay.addEventListener('click', closeModal);
 
@@ -1221,10 +1223,11 @@
 
   // --- 13. 1-CLICK WHATSAPP CART CHECKOUT ---
   function initWhatsAppCheckout() {
-    const waCheckoutBtn = document.getElementById('cart-whatsapp-checkout-btn');
-    if (!waCheckoutBtn) return;
+    const waCheckoutBtns = document.querySelectorAll('#whatsapp-order-btn, #cart-whatsapp-checkout-btn');
+    if (!waCheckoutBtns || waCheckoutBtns.length === 0) return;
 
-    waCheckoutBtn.addEventListener('click', async () => {
+    waCheckoutBtns.forEach((waBtn) => {
+      waBtn.addEventListener('click', async () => {
       if (state.cart.length === 0) {
         showToast('Your cart is empty!');
         return;
@@ -1298,7 +1301,8 @@
 
       window.open(`https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waText)}`, '_blank');
     });
-  }
+  });
+}
 
   // --- 14. WORKSHOPS (RETIRED) ---
   function initWorkshopModal() {

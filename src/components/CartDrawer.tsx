@@ -8,25 +8,24 @@ export default function CartDrawer() {
       {/* Background Dimming Backdrop Overlay */}
       <div className="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
 
-      {/* Luxury Cart Drawer (Rolling Oven Style) */}
-      <aside className="cart-drawer" id="cart-drawer" aria-label="Shopping Cart">
+      {/* Luxury Cart Drawer (The Rolling Oven Style) */}
+      <aside className="cart-sidebar cart-drawer" id="cart-sidebar" data-lenis-prevent="true" aria-label="Shopping Cart">
         {/* Drawer Header */}
         <div className="cart-header">
-          <div className="cart-header-title-box">
-            <div className="cart-header-icon-wrap">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <path d="M16 10a4 4 0 0 1-8 0" />
-              </svg>
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '1.4rem' }}>🍫</span>
             <div>
-              <h3>Your Brownie Box</h3>
-              <span className="cart-header-count-label" id="cart-header-count">0 items selected</span>
+              <h3 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--cream)', fontWeight: 700 }}>Your Brownie Box</h3>
+              <span className="cart-header-count-label" id="cart-header-count" style={{ fontSize: '0.78rem', color: 'var(--cream-muted)' }}>
+                0 items selected
+              </span>
             </div>
           </div>
-          <button className="cart-close-circle-btn" id="cart-close-btn" aria-label="Close Cart">
-            ✕
+          <button className="cart-close-btn cart-close-circle-btn" id="cart-close-btn" aria-label="Close cart">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
         </div>
 
@@ -40,68 +39,49 @@ export default function CartDrawer() {
           </div>
         </div>
 
-        {/* Drawer Scrollable Body */}
-        <div className="cart-body" id="cart-body">
+        {/* Scrollable Items Body */}
+        <div className="cart-items cart-body" id="cart-items">
           {/* Empty State */}
-          <div className="cart-empty-state" id="cart-empty-state">
-            <div className="cart-empty-icon-wrap">🍫</div>
-            <h4>Your Box is Empty</h4>
-            <p>Fill your cravings with our handcrafted Belgian couverture brownies or build a custom assorted box.</p>
-            <a href="#builder" className="btn-gold btn-sm magnetic-btn" id="cart-empty-builder-btn">
-              Craft a Custom Box &rarr;
-            </a>
+          <div className="cart-empty" id="cart-empty-state">
+            <span className="cart-empty-icon">🍫</span>
+            <p>Your cart is empty</p>
+            <span className="cart-empty-sub">Add some freshly baked brownies!</span>
           </div>
 
           {/* Dynamic Items Container */}
           <div className="cart-items-container" id="cart-items-container"></div>
-
-          {/* Gifting & Delivery Instructions Note Field */}
-          <div className="cart-order-note-box" id="cart-note-section" style={{ display: 'none' }}>
-            <label htmlFor="cart-gift-note" className="cart-note-label">
-              <span>🎁 Gift Message / Delivery Instructions:</span>
-            </label>
-            <textarea
-              id="cart-gift-note"
-              className="cart-note-textarea"
-              placeholder="E.g., 'Happy Birthday Rahul! Please leave at the security gate.'"
-              rows={2}
-            ></textarea>
-          </div>
         </div>
 
-        {/* Drawer Footer with Bill Breakdown & Dual Checkout */}
+        {/* Drawer Footer with Totals & 2-Button Checkout */}
         <div className="cart-footer" id="cart-footer" style={{ display: 'none' }}>
-          <div className="cart-bill-breakdown">
-            <div className="cart-bill-row">
-              <span>Item Subtotal:</span>
-              <span className="mono-font" id="cart-subtotal-display">₹0</span>
-            </div>
-            <div className="cart-bill-row">
-              <span>Chennai Express Delivery:</span>
-              <span className="cart-delivery-cost-label" id="cart-delivery-fee-display">FREE</span>
-            </div>
-            <div className="cart-bill-row total-row">
-              <span>Total to Pay:</span>
-              <span className="cart-grand-total mono-font" id="cart-total-display">₹0</span>
-            </div>
+          <div className="cart-total" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <span style={{ fontSize: '1rem', color: 'var(--cream-muted)' }}>Total Amount</span>
+            <span className="cart-total-price mono-font" id="cart-total-price" style={{ fontSize: '1.45rem', fontWeight: 700, color: 'var(--caramel-bright)' }}>
+              ₹0
+            </span>
           </div>
 
-          <div className="cart-cta-column">
-            <button className="btn-gold cart-main-checkout-btn magnetic-btn" id="cart-checkout-btn">
-              <span>Proceed to Delivery Checkout</span>
-              <span className="arrow-icon">&rarr;</span>
-            </button>
-
-            <button className="btn-whatsapp-cart magnetic-btn" id="cart-whatsapp-checkout-btn">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {/* 1. Primary WhatsApp Direct Order Button (Rolling Oven Style) */}
+            <button className="btn btn-whatsapp btn-full magnetic-btn" id="whatsapp-order-btn" type="button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '14px', borderRadius: '12px', background: '#25D366', color: '#ffffff', border: 'none', fontWeight: 700, fontSize: '0.98rem', cursor: 'pointer' }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z" />
               </svg>
-              <span>Instant 1-Click WhatsApp Order</span>
+              <span>Order via WhatsApp</span>
+            </button>
+
+            {/* 2. Secondary Cash on Delivery Online Form Checkout (Rolling Oven Style) */}
+            <button className="btn btn-primary btn-full magnetic-btn" id="place-order-btn" type="button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '13px', borderRadius: '12px', background: 'linear-gradient(135deg, var(--caramel), var(--caramel-dark))', color: '#140a05', border: '1px solid rgba(255, 235, 175, 0.4)', fontWeight: 700, fontSize: '0.94rem', cursor: 'pointer' }}>
+              <span>Checkout Online (COD)</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
             </button>
           </div>
 
-          <p className="cart-footer-guarantee">
-            🛵 Freshly baked in Chennai · Delivered warm in 60&ndash;90 mins · Safe &amp; Contactless
+          <p style={{ textAlign: 'center', margin: '14px 0 0', fontSize: '0.76rem', color: 'var(--cream-muted)' }}>
+            🛵 Cash on Delivery (COD) Available &bull; 100% Belgian Chocolate
           </p>
         </div>
       </aside>
