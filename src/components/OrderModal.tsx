@@ -45,7 +45,7 @@ export default function OrderModal() {
             <label htmlFor="order-address" className="form-label">Delivery Address (Door / Street / Area)</label>
           </div>
           <div className="form-group">
-            <input type="text" id="order-pincode" className="form-input" defaultValue="600001" placeholder=" " required />
+            <input type="text" id="order-pincode" className="form-input" placeholder=" " required />
             <label htmlFor="order-pincode" className="form-label">Pincode (e.g. 600001)</label>
           </div>
 

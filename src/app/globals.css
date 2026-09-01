@@ -4741,3 +4741,234 @@ body::before {
   animation: badgeBounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
 
+/* ============================================
+   COMPLETE YOUR ORDER MODAL (The Rolling Oven 1:1 Centered)
+   ============================================ */
+.modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  z-index: 3000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.modal-overlay.active,
+.modal-overlay.open {
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+.modal {
+  width: 100% !important;
+  max-width: 520px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  position: relative !important;
+  margin: auto !important;
+  transform: translateY(20px) scale(0.95) !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  background: rgba(20, 11, 6, 0.98) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(201, 134, 60, 0.35) !important;
+  border-radius: 20px !important;
+  padding: 32px 28px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(201, 134, 60, 0.15) !important;
+}
+
+.modal-overlay.active .modal,
+.modal-overlay.open .modal {
+  transform: translateY(0) scale(1) !important;
+}
+
+.modal-close {
+  position: absolute !important;
+  top: 20px !important;
+  right: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  color: rgba(255, 244, 234, 0.6) !important;
+  cursor: pointer !important;
+  padding: 6px !important;
+  border-radius: 50% !important;
+  transition: all 0.25s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.modal-close:hover {
+  color: #ffffff !important;
+  transform: rotate(90deg) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.form-title {
+  font-family: var(--font-heading, serif) !important;
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
+  color: var(--cream, #fff4ea) !important;
+  margin: 0 0 6px 0 !important;
+}
+
+.modal-subtitle {
+  color: rgba(255, 244, 234, 0.65) !important;
+  font-size: 0.88rem !important;
+  margin: 0 0 24px 0 !important;
+}
+
+.form-group {
+  position: relative !important;
+  margin-bottom: 20px !important;
+}
+
+.form-input {
+  width: 100% !important;
+  padding: 14px 16px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(201, 134, 60, 0.25) !important;
+  border-radius: 10px !important;
+  color: #fff4ea !important;
+  font-size: 0.95rem !important;
+  font-family: inherit !important;
+  transition: all 0.25s ease !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+}
+
+.form-input:focus {
+  border-color: var(--caramel, #c9863c) !important;
+  background: rgba(201, 134, 60, 0.08) !important;
+  box-shadow: 0 0 15px rgba(201, 134, 60, 0.2) !important;
+}
+
+.form-label {
+  position: absolute !important;
+  top: 14px !important;
+  left: 16px !important;
+  font-size: 0.9rem !important;
+  color: rgba(255, 244, 234, 0.55) !important;
+  transition: all 0.2s ease !important;
+  pointer-events: none !important;
+  line-height: 1 !important;
+}
+
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+  top: -8px !important;
+  left: 12px !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  color: var(--caramel-bright, #e8b66e) !important;
+  background: #140b06 !important;
+  padding: 0 6px !important;
+  border-radius: 4px !important;
+}
+
+.form-textarea {
+  resize: vertical !important;
+  min-height: 70px !important;
+}
+
+.payment-method-group {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.payment-method-title {
+  color: var(--cream, #fff4ea) !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  margin: 0 0 10px 0 !important;
+}
+
+.payment-options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.payment-option {
+  cursor: pointer !important;
+  position: relative !important;
+  display: block !important;
+}
+
+.payment-option input {
+  position: absolute !important;
+  opacity: 0 !important;
+  cursor: pointer !important;
+}
+
+.payment-option-content {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px 16px !important;
+  background: rgba(201, 134, 60, 0.08) !important;
+  border: 1px solid var(--caramel, #c9863c) !important;
+  border-radius: 10px !important;
+  color: #fff4ea !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 0 15px rgba(201, 134, 60, 0.15) !important;
+}
+
+.payment-icon {
+  font-size: 1.3rem !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.payment-text {
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  color: var(--cream, #fff4ea) !important;
+}
+
+.order-summary-box {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(201, 134, 60, 0.25) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  margin-bottom: 20px !important;
+  font-size: 0.88rem !important;
+  color: rgba(255, 244, 234, 0.8) !important;
+}
+
+.btn-full {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 14px 24px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  border: none !important;
+  background: linear-gradient(135deg, var(--caramel, #c9863c), var(--caramel-dark, #8c531d)) !important;
+  color: #140a05 !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 4px 20px rgba(201, 134, 60, 0.35) !important;
+}
+
+.btn-full:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 30px rgba(201, 134, 60, 0.5) !important;
+}
+
