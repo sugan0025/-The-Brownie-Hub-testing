@@ -505,130 +505,76 @@
   }
 
   function renderCart() {
-    const badge = document.getElementById('cart-count-badge');
-    const headerCount = document.getElementById('cart-header-count');
-    const totalDisplay = document.getElementById('cart-total-display');
-    const subtotalDisplay = document.getElementById('cart-subtotal-display');
-    const deliveryFeeDisplay = document.getElementById('cart-delivery-fee-display');
-    const itemsContainer = document.getElementById('cart-items-container');
-    const emptyState = document.getElementById('cart-empty-state');
-    const footer = document.getElementById('cart-footer');
-    const deliveryFill = document.getElementById('cart-delivery-fill');
-    const deliveryMsg = document.getElementById('cart-delivery-msg');
-    const noteSection = document.getElementById('cart-note-section');
+    const container = document.getElementById('cart-items');
+    const footerEl = document.getElementById('cart-footer');
+    const totalEl = document.getElementById('cart-total-price');
 
-    const totalCount = calculateTotalItemCount();
-    const subtotal = calculateCartTotal();
-    const freeDeliveryThreshold = 500;
-    const isFreeDelivery = subtotal >= freeDeliveryThreshold;
-    const deliveryFee = isFreeDelivery ? 0 : 49;
-    const grandTotal = subtotal + deliveryFee;
-
-    if (badge) badge.textContent = String(totalCount);
-    if (headerCount) headerCount.textContent = `${totalCount} item${totalCount === 1 ? '' : 's'} selected`;
-    if (subtotalDisplay) subtotalDisplay.textContent = `₹${subtotal}`;
-    if (deliveryFeeDisplay) {
-      deliveryFeeDisplay.textContent = isFreeDelivery ? 'FREE' : '₹49';
-      deliveryFeeDisplay.style.color = isFreeDelivery ? '#51cf66' : 'var(--cream-muted)';
-    }
-    if (totalDisplay) totalDisplay.textContent = `₹${grandTotal}`;
-
-    // Navbar capsule cart button: Hidden when 0 items, visible when cart has items (Rolling Oven style)
-    if (cartToggleBtn) {
-      if (totalCount > 0) {
-        cartToggleBtn.classList.add('visible');
-      } else {
-        cartToggleBtn.classList.remove('visible');
-      }
-    }
-
-    // Update Chennai Free Delivery Progress Meter
-    if (deliveryFill && deliveryMsg) {
-      if (subtotal === 0) {
-        deliveryFill.style.width = '0%';
-        deliveryMsg.innerHTML = '<span>🛵 Add ₹500 more for <strong>FREE Delivery</strong> across Chennai!</span>';
-      } else if (isFreeDelivery) {
-        deliveryFill.style.width = '100%';
-        deliveryMsg.innerHTML = '<span>🎉 You unlocked <strong>FREE Delivery</strong> across Chennai!</span>';
-      } else {
-        const remaining = freeDeliveryThreshold - subtotal;
-        const pct = Math.min(99, Math.round((subtotal / freeDeliveryThreshold) * 100));
-        deliveryFill.style.width = `${pct}%`;
-        deliveryMsg.innerHTML = `<span>🛵 Add <strong>₹${remaining}</strong> more for <strong>FREE Delivery</strong> across Chennai!</span>`;
-      }
-    }
-
-    if (!itemsContainer) return;
+    if (!container) return;
 
     if (state.cart.length === 0) {
-      if (emptyState) emptyState.style.display = 'block';
-      if (footer) footer.style.display = 'none';
-      if (noteSection) noteSection.style.display = 'none';
-      itemsContainer.innerHTML = '';
+      container.innerHTML = `
+        <div class="cart-empty" id="cart-empty">
+          <span class="cart-empty-icon">🍫</span>
+          <p>Your cart is empty</p>
+          <span class="cart-empty-sub">Add some freshly baked brownies!</span>
+        </div>
+      `;
+      if (footerEl) footerEl.style.display = 'none';
       return;
     }
 
-    if (emptyState) emptyState.style.display = 'none';
-    if (footer) footer.style.display = 'block';
-    if (noteSection) noteSection.style.display = 'block';
+    if (footerEl) footerEl.style.display = 'block';
+    if (totalEl) totalEl.textContent = `₹${calculateCartTotal()}`;
 
-    itemsContainer.innerHTML = state.cart
-      .map((item, idx) => {
-        const imageSrc = item.image || '/images/brownies/classic-fudge.jpg';
-        const breakdownHtml =
-          item.breakdown && item.breakdown.length > 0
-            ? `<div class="cart-item-tags">
-                ${item.breakdown.map((b) => `<span class="cart-tag-chip">${b}</span>`).join('')}
-               </div>`
-            : '';
-
-        return `
-          <div class="cart-item-card">
-            <img src="${imageSrc}" alt="${item.name}" class="cart-item-thumb" loading="lazy" />
-            <div class="cart-item-info">
-              <div class="cart-item-title-row">
-                <h4 class="cart-item-title">${item.name}</h4>
-                <button class="cart-item-delete-btn btn-cart-delete" data-index="${idx}" title="Remove item" aria-label="Remove item">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                  </svg>
-                </button>
-              </div>
-
-              ${breakdownHtml}
-
-              <div class="cart-item-bottom-row">
-                <div class="cart-pill-stepper">
-                  <button class="stepper-btn btn-cart-minus" data-index="${idx}" aria-label="Decrease quantity">−</button>
-                  <span class="stepper-val mono-font">${item.qty}</span>
-                  <button class="stepper-btn btn-cart-plus" data-index="${idx}" aria-label="Increase quantity">+</button>
-                </div>
-                <span class="cart-item-price mono-font">₹${item.price * item.qty}</span>
-              </div>
-            </div>
+    container.innerHTML = state.cart
+      .map(
+        (item, i) => `
+      <div class="cart-item">
+        <img src="${item.image || '/images/brownies/classic-fudge.jpg'}" alt="${item.name}" class="cart-item-img" />
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-category">${item.isBox ? 'Artisanal Box' : 'Artisanal Brownie'}</div>
+          <div class="cart-item-price">₹${item.price * item.qty}</div>
+        </div>
+        <div class="cart-item-actions">
+          <div class="cart-qty-controls">
+            <button class="cart-qty-btn" onclick="updateCartQty(${i}, -1)" title="Decrease quantity" aria-label="Decrease quantity">−</button>
+            <span class="cart-qty-num">${item.qty}</span>
+            <button class="cart-qty-btn" onclick="updateCartQty(${i}, 1)" title="Increase quantity" aria-label="Increase quantity">+</button>
           </div>
-        `;
-      })
+          <button class="cart-remove-btn" onclick="updateCartQty(${i}, -999)" title="Remove ${item.name}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+            <span>Remove</span>
+          </button>
+        </div>
+      </div>
+    `
+      )
       .join('');
   }
 
   // Expose global cart API
   window.tbhAddToCart = addToCart;
+  window.updateCartQty = updateCartQty;
 
-  // --- 8. CART DRAWER TOGGLE ---
+  // --- 8. CART SIDEBAR CONTROLLER (The Rolling Oven 1:1) ---
   function initCartDrawer() {
-    const toggleBtn = document.getElementById('cart-toggle-btn');
-    const drawer = document.getElementById('cart-drawer');
-    const overlay = document.getElementById('cart-overlay');
     const closeBtn = document.getElementById('cart-close-btn');
-    const emptyBuilderBtn = document.getElementById('cart-empty-builder-btn');
+    const overlay = document.getElementById('cart-overlay');
+    const sidebar = document.getElementById('cart-sidebar');
 
     function openCart() {
-      if (drawer) drawer.classList.add('open');
-      if (overlay) overlay.classList.add('open');
+      if (sidebar) {
+        sidebar.classList.add('active');
+        sidebar.classList.add('open');
+      }
+      if (overlay) {
+        overlay.classList.add('active');
+        overlay.classList.add('open');
+      }
       document.body.style.overflow = 'hidden';
       trackGA4('view_cart', {
         currency: 'INR',
@@ -636,39 +582,73 @@
       });
     }
 
-    window.openCartDrawer = openCart;
-
     function closeCart() {
-      if (drawer) drawer.classList.remove('open');
-      if (overlay) overlay.classList.remove('open');
+      if (sidebar) {
+        sidebar.classList.remove('active');
+        sidebar.classList.remove('open');
+      }
+      if (overlay) {
+        overlay.classList.remove('active');
+        overlay.classList.remove('open');
+      }
       document.body.style.overflow = '';
     }
 
-    if (toggleBtn) toggleBtn.addEventListener('click', openCart);
+    window.openCart = openCart;
+    window.openCartDrawer = openCart;
+
     if (closeBtn) closeBtn.addEventListener('click', closeCart);
     if (overlay) overlay.addEventListener('click', closeCart);
-    if (emptyBuilderBtn) {
-      emptyBuilderBtn.addEventListener('click', () => {
+
+    // 1-Click WhatsApp Order Button in Cart Sidebar
+    const waBtn = document.getElementById('whatsapp-order-btn');
+    if (waBtn) {
+      waBtn.addEventListener('click', () => {
+        if (state.cart.length === 0) return;
+        const subtotal = calculateCartTotal();
+        const isFreeDelivery = subtotal >= 500;
+        const deliveryFee = isFreeDelivery ? 0 : 49;
+        const grandTotal = subtotal + deliveryFee;
+
+        const itemsList = state.cart
+          .map((i) => `• *${i.name}* × ${i.qty} (₹${i.price * i.qty}) 🟢`)
+          .join('\n');
+
+        const waText =
+          `🍫 *NEW ORDER — THE BROWNIE HUB* 🍫\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `👋 *Hello The Brownie Hub!* I would like to place an order from your online store:\n\n` +
+          `📦 *ORDER ITEMS:*\n${itemsList}\n\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `💰 *Item Subtotal:* ₹${subtotal}\n` +
+          `🚚 *Chennai Delivery:* ${isFreeDelivery ? 'FREE (Orders ₹500+)' : '₹49'}\n` +
+          `💳 *Payment Mode:* 💵 *Cash on Delivery (COD)*\n` +
+          `🏷️ *TOTAL PAYABLE:* *₹${grandTotal}*\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `📍 *Delivery City:* Chennai, Tamil Nadu\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `✨ *Freshly baked with 100% Belgian Couverture & Pure Butter.*\n` +
+          `❤️ *Please confirm availability and delivery time!* 🛵`;
+
+        state.cart = [];
+        saveCart();
+        updateCartBadge();
         closeCart();
+
+        showToast('success', 'Order Logged! 💬', 'Opening WhatsApp to complete your order...');
+        window.open(`https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(waText)}`, '_blank');
       });
     }
 
-    document.addEventListener('click', (e) => {
-      const minusBtn = e.target.closest('.btn-cart-minus');
-      const plusBtn = e.target.closest('.btn-cart-plus');
-      const deleteBtn = e.target.closest('.btn-cart-delete');
-
-      if (minusBtn) {
-        const idx = parseInt(minusBtn.dataset.index, 10);
-        updateCartQty(idx, -1);
-      } else if (plusBtn) {
-        const idx = parseInt(plusBtn.dataset.index, 10);
-        updateCartQty(idx, 1);
-      } else if (deleteBtn) {
-        const idx = parseInt(deleteBtn.dataset.index, 10);
-        updateCartQty(idx, -999);
-      }
-    });
+    // Place order button in cart opens online checkout modal
+    const placeOrderBtn = document.getElementById('place-order-btn');
+    if (placeOrderBtn) {
+      placeOrderBtn.addEventListener('click', () => {
+        if (state.cart.length === 0) return;
+        closeCart();
+        openOrderModal();
+      });
+    }
   }
 
   // --- 9. BESTSELLERS CAROUSEL CONTROLLER ---

@@ -5,73 +5,37 @@ import React from 'react';
 export default function CartDrawer() {
   return (
     <>
-      {/* Background Dimming Backdrop Overlay */}
-      <div className="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
-
-      {/* Luxury Cart Drawer (The Rolling Oven Style) */}
-      <aside className="cart-sidebar cart-drawer" id="cart-sidebar" data-lenis-prevent="true" aria-label="Shopping Cart">
-        {/* Drawer Header */}
+      <div className="cart-overlay" id="cart-overlay"></div>
+      <aside className="cart-sidebar" id="cart-sidebar" data-lenis-prevent="true">
         <div className="cart-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '1.4rem' }}>🍫</span>
-            <div>
-              <h3 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--cream)', fontWeight: 700 }}>Your Brownie Box</h3>
-              <span className="cart-header-count-label" id="cart-header-count" style={{ fontSize: '0.78rem', color: 'var(--cream-muted)' }}>
-                0 items selected
-              </span>
-            </div>
-          </div>
-          <button className="cart-close-btn cart-close-circle-btn" id="cart-close-btn" aria-label="Close cart">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
+          <h3>Your Cart</h3>
+          <button className="cart-close-btn" id="cart-close-btn" aria-label="Close cart">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
             </svg>
           </button>
         </div>
-
-        {/* Chennai Free Delivery Progress Bar */}
-        <div className="cart-delivery-progress-wrap" id="cart-delivery-progress-box">
-          <div className="cart-delivery-msg" id="cart-delivery-msg">
-            <span>🛵 Add ₹500 more for <strong>FREE Delivery</strong> across Chennai!</span>
-          </div>
-          <div className="cart-delivery-track">
-            <div className="cart-delivery-fill" id="cart-delivery-fill" style={{ width: '0%' }}></div>
-          </div>
-        </div>
-
-        {/* Scrollable Items Body */}
-        <div className="cart-items cart-body" id="cart-items">
-          {/* Empty State */}
-          <div className="cart-empty" id="cart-empty-state">
+        <div className="cart-items" id="cart-items">
+          <div className="cart-empty" id="cart-empty">
             <span className="cart-empty-icon">🍫</span>
             <p>Your cart is empty</p>
             <span className="cart-empty-sub">Add some freshly baked brownies!</span>
           </div>
-
-          {/* Dynamic Items Container */}
-          <div className="cart-items-container" id="cart-items-container"></div>
         </div>
-
-        {/* Drawer Footer with Totals & 2-Button Checkout */}
         <div className="cart-footer" id="cart-footer" style={{ display: 'none' }}>
-          <div className="cart-total" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <span style={{ fontSize: '1rem', color: 'var(--cream-muted)' }}>Total Amount</span>
-            <span className="cart-total-price mono-font" id="cart-total-price" style={{ fontSize: '1.45rem', fontWeight: 700, color: 'var(--caramel-bright)' }}>
-              ₹0
-            </span>
+          <div className="cart-total">
+            <span>Total</span>
+            <span className="cart-total-price" id="cart-total-price">₹0</span>
           </div>
-
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {/* 1. Primary WhatsApp Direct Order Button (Rolling Oven Style) */}
-            <button className="btn btn-whatsapp btn-full magnetic-btn" id="whatsapp-order-btn" type="button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '14px', borderRadius: '12px', background: '#25D366', color: '#ffffff', border: 'none', fontWeight: 700, fontSize: '0.98rem', cursor: 'pointer' }}>
+            <button className="btn btn-whatsapp btn-full" id="whatsapp-order-btn" type="button">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z" />
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
               </svg>
               <span>Order via WhatsApp</span>
             </button>
-
-            {/* 2. Secondary Cash on Delivery Online Form Checkout (Rolling Oven Style) */}
-            <button className="btn btn-primary btn-full magnetic-btn" id="place-order-btn" type="button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '13px', borderRadius: '12px', background: 'linear-gradient(135deg, var(--caramel), var(--caramel-dark))', color: '#140a05', border: '1px solid rgba(255, 235, 175, 0.4)', fontWeight: 700, fontSize: '0.94rem', cursor: 'pointer' }}>
+            <button className="btn btn-primary btn-full" id="place-order-btn" type="button">
               <span>Checkout Online (COD)</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14" />
@@ -79,10 +43,6 @@ export default function CartDrawer() {
               </svg>
             </button>
           </div>
-
-          <p style={{ textAlign: 'center', margin: '14px 0 0', fontSize: '0.76rem', color: 'var(--cream-muted)' }}>
-            🛵 Cash on Delivery (COD) Available &bull; 100% Belgian Chocolate
-          </p>
         </div>
       </aside>
     </>
