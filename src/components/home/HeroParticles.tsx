@@ -60,17 +60,21 @@ export default function HeroParticles() {
       { core: '#B86E2A', glow: 'rgba(184, 110, 42, 0.2)' },   // Deep Bronze
     ];
 
-    // Helper: Dynamic brownie position tracking
+    // Helper: Dynamic brownie / video canvas position tracking
     function getBrownieAnchor() {
-      const brownieWrapper = document.querySelector('.hero-brownie-wrapper');
+      const brownieWrapper =
+        document.querySelector('.hero-transparent-canvas') ||
+        document.querySelector('.hero-transparent-video-wrapper') ||
+        document.querySelector('.hero-brownie-wrapper') ||
+        document.querySelector('.hero-visual');
       if (brownieWrapper && container) {
         const rect = brownieWrapper.getBoundingClientRect();
         const heroRect = container.getBoundingClientRect();
         return {
           cx: rect.left - heroRect.left + rect.width * 0.5,
-          cy: rect.top - heroRect.top + rect.height * 0.5,
-          w: rect.width,
-          h: rect.height,
+          cy: rect.top - heroRect.top + rect.height * 0.52,
+          w: Math.max(rect.width * 0.85, 300),
+          h: Math.max(rect.height * 0.85, 280),
         };
       }
       return {

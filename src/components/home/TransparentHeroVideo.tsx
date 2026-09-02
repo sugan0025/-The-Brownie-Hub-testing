@@ -4,9 +4,11 @@ import React, { useEffect, useRef } from 'react';
 
 /**
  * TransparentHeroVideo
- * Renders the chocolate flow video on a WebGL Canvas, using a GPU fragment shader
- * to key out the baked-in grey/white checkerboard pattern in real-time at 60+ FPS.
- * Fallback to 2D Canvas with pixel processing if WebGL is unavailable.
+ * Renders the chocolate flow video on a WebGL Canvas with GPU fragment shader:
+ * 1. Precision chroma/luma keying eliminating all grey/white checkerboard pixels.
+ * 2. Spill suppression & defringing eliminating the faint white halo/border around the edges.
+ * 3. Soft bottom-edge & side-edge feathering so the plate dissolves naturally into the dark chocolate surface.
+ * Fallback to 2D Canvas with matching defringe logic if WebGL is unavailable.
  */
 export default function TransparentHeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -29,7 +31,7 @@ export default function TransparentHeroVideo() {
     }
 
     if (gl) {
-      // --- WebGL GPU Hardware-Accelerated Chroma/Luma Keying ---
+      // --- WebGL GPU Hardware-Accelerated Chroma/Luma Keying with Defringing ---
       const vsSource = `
         attribute vec2 a_position;
         attribute vec2 a_texCoord;
@@ -40,7 +42,7 @@ export default function TransparentHeroVideo() {
         }
       `;
 
-      // Fragment shader: Identifies neutral grey/white checkerboard pixels and keys them out
+      // Fragment shader with edge defringe and smooth bottom plate edge dissolver
       const fsSource = `
         precision mediump float;
         uniform sampler2D u_video;
@@ -52,18 +54,30 @@ export default function TransparentHeroVideo() {
           float g = color.g;
           float b = color.b;
 
-          // Difference between color channels (saturation indicator)
-          float maxDiff = max(abs(r - g), max(abs(g - b), abs(r - b)));
+          float maxVal = max(r, max(g, b));
           float minVal = min(r, min(g, b));
+          float maxDiff = maxVal - minVal;
 
-          // Checkerboard pattern is neutral grey (0.7-0.85) or white (0.9-1.0) with very low saturation (< 0.09)
-          if (minVal > 0.68 && maxDiff < 0.09) {
-            // Smoothly feather edge between 0.68 and 0.82
-            float alpha = smoothstep(0.82, 0.68, minVal);
-            gl_FragColor = vec4(color.rgb, alpha * color.a);
-          } else {
-            gl_FragColor = color;
+          // Key out neutral grey and white checkerboard with expanded anti-halo threshold
+          float alpha = 1.0;
+          if (minVal > 0.44 && maxDiff < 0.14) {
+            alpha = smoothstep(0.70, 0.44, minVal);
           }
+
+          // Defringe: Darken residual white/grey bleed on semi-transparent transition borders
+          vec3 cleanRgb = mix(color.rgb * 0.75, color.rgb, alpha);
+
+          // Smooth bottom edge fade: Prevents flat cut-off on the bottom plate
+          // v_texCoord.y is 0 at bottom in WebGL texture coords
+          float bottomFade = smoothstep(0.012, 0.075, v_texCoord.y);
+          alpha *= bottomFade;
+
+          // Smooth side boundaries
+          float leftFade = smoothstep(0.005, 0.025, v_texCoord.x);
+          float rightFade = smoothstep(0.995, 0.975, v_texCoord.x);
+          alpha *= leftFade * rightFade;
+
+          gl_FragColor = vec4(cleanRgb, alpha * color.a);
         }
       `;
 
@@ -86,7 +100,7 @@ export default function TransparentHeroVideo() {
           gl.linkProgram(program);
           gl.useProgram(program);
 
-          // Geometry: Quad
+          // Quad Geometry
           const positionBuffer = gl.createBuffer();
           gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
           gl.bufferData(
@@ -106,7 +120,7 @@ export default function TransparentHeroVideo() {
           gl.enableVertexAttribArray(positionLocation);
           gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
-          // Texture coords (inverted Y for WebGL texture coordinate system)
+          // Texture coordinates (inverted Y for WebGL texture orientation)
           const texCoordBuffer = gl.createBuffer();
           gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
           gl.bufferData(
@@ -129,7 +143,7 @@ export default function TransparentHeroVideo() {
           texture = gl.createTexture();
           gl.bindTexture(gl.TEXTURE_2D, texture);
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          gl.TEXTURE_WRAP_T && gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
@@ -158,7 +172,7 @@ export default function TransparentHeroVideo() {
       video.play().catch(() => {});
       animId = requestAnimationFrame(renderWebGL);
     } else {
-      // --- Fallback: 2D Canvas pixel processing ---
+      // --- Fallback: 2D Canvas with defringing & bottom plate fade ---
       const ctx = canvas.getContext('2d', { willReadFrequently: true });
       if (!ctx) return;
 
@@ -172,20 +186,33 @@ export default function TransparentHeroVideo() {
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
           const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
           const d = frame.data;
-          const len = d.length;
+          const w = canvas.width;
+          const h = canvas.height;
 
-          for (let i = 0; i < len; i += 4) {
-            const r = d[i];
-            const g = d[i + 1];
-            const b = d[i + 2];
-            const maxDiff = Math.max(Math.abs(r - g), Math.abs(g - b), Math.abs(r - b));
-            const minVal = Math.min(r, g, b);
+          for (let y = 0; y < h; y++) {
+            const bottomNorm = (h - 1 - y) / h; // 0 at bottom
+            const bottomFade = bottomNorm < 0.07 ? bottomNorm / 0.07 : 1.0;
 
-            if (minVal > 175 && maxDiff < 22) {
-              if (minVal > 210) {
-                d[i + 3] = 0;
-              } else {
-                d[i + 3] = Math.max(0, Math.min(255, ((210 - minVal) / 35) * 255));
+            for (let x = 0; x < w; x++) {
+              const i = (y * w + x) * 4;
+              const r = d[i];
+              const g = d[i + 1];
+              const b = d[i + 2];
+              const maxDiff = Math.max(Math.abs(r - g), Math.abs(g - b), Math.abs(r - b));
+              const minVal = Math.min(r, g, b);
+
+              if (minVal > 115 && maxDiff < 35) {
+                if (minVal > 175) {
+                  d[i + 3] = 0;
+                } else {
+                  const alphaFactor = Math.max(0, Math.min(1, (175 - minVal) / 60));
+                  d[i + 3] = Math.round(d[i + 3] * alphaFactor * bottomFade);
+                  d[i] = Math.round(r * 0.75);
+                  d[i + 1] = Math.round(g * 0.75);
+                  d[i + 2] = Math.round(b * 0.75);
+                }
+              } else if (bottomFade < 1.0) {
+                d[i + 3] = Math.round(d[i + 3] * bottomFade);
               }
             }
           }
