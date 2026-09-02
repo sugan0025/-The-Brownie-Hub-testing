@@ -11,7 +11,11 @@ import React from 'react';
  */
 export default function TransparentHeroVideo() {
   return (
-    <div className="hero-transparent-video-container">
+    <div
+      className="hero-transparent-video-container"
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+    >
       <video
         className="hero-transparent-canvas"
         autoPlay
@@ -19,6 +23,11 @@ export default function TransparentHeroVideo() {
         muted
         playsInline
         preload="auto"
+        controlsList="nodownload nofullscreen noremoteplayback"
+        disablePictureInPicture
+        disableRemotePlayback
+        onContextMenu={(e) => e.preventDefault()}
+        onDragStart={(e) => e.preventDefault()}
         aria-label="The Brownie Hub artisanal dessert with warm chocolate dripping in real time"
       >
         <source src="/videos/chocolate-flow-transparent.webm" type="video/webm" />
@@ -27,8 +36,17 @@ export default function TransparentHeroVideo() {
           alt="The Brownie Hub artisanal dessert with warm chocolate dripping in real time"
           className="hero-transparent-canvas"
           loading="eager"
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
         />
       </video>
+      {/* Invisible Interactive Click/Long-Press Shield */}
+      <div
+        className="hero-video-anti-save-shield"
+        aria-hidden="true"
+        onContextMenu={(e) => e.preventDefault()}
+        onDragStart={(e) => e.preventDefault()}
+      />
     </div>
   );
 }
