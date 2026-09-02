@@ -3,10 +3,17 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
-// Lazy-load Three.js particles to avoid SSR issues
+// Lazy-load Three.js particles and Transparent WebGL Video to avoid SSR issues
 const HeroParticles = dynamic(() => import('./HeroParticles'), {
   ssr: false,
   loading: () => null,
+});
+
+const TransparentHeroVideo = dynamic(() => import('./TransparentHeroVideo'), {
+  ssr: false,
+  loading: () => (
+    <div className="hero-transparent-placeholder" aria-hidden="true" />
+  ),
 });
 
 export default function HeroSection() {
@@ -79,20 +86,9 @@ export default function HeroSection() {
           {/* Subtle Ambient Back-Glow */}
           <div className="hero-visual-glow" aria-hidden="true"></div>
 
-          {/* Video Showcase Foreground Container */}
-          <div className="hero-video-wrapper">
-            <video
-              className="hero-video-element"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              aria-label="The Brownie Hub rich chocolate flowing over dessert"
-            >
-              <source src="/videos/chocolate-flow.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          {/* Transparent Live Confectionery Animation */}
+          <div className="hero-transparent-video-wrapper">
+            <TransparentHeroVideo />
           </div>
 
           {/* Floating Glass Badge */}
