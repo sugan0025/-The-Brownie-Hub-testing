@@ -79,14 +79,20 @@ export default function HeroSection() {
           {/* Subtle Ambient Back-Glow */}
           <div className="hero-visual-glow" aria-hidden="true"></div>
 
-          {/* Brownie Foreground Container */}
-          <div className="hero-brownie-wrapper">
-            <img
-              src="/images/brownies/hero.png"
-              alt="The Brownie Hub Handcrafted Fudgy Brownie Stack"
-              className="hero-brownie-img"
-              loading="eager"
-            />
+          {/* Video Showcase Foreground Container */}
+          <div className="hero-video-wrapper">
+            <video
+              className="hero-video-element"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label="The Brownie Hub rich chocolate flowing over dessert"
+            >
+              <source src="/videos/chocolate-flow.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           {/* Floating Glass Badge */}
