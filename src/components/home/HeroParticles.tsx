@@ -3,20 +3,25 @@
 import React, { useEffect, useRef } from 'react';
 
 interface Particle {
-  angle: number;         // Current orbital angle around the ring (0 to 2*PI)
-  speed: number;         // Orbital velocity (radians/sec)
-  radiusOffsetX: number; // Slight radial variation X
-  radiusOffsetY: number; // Slight radial variation Y
-  verticalOffset: number;// Z/Y vertical wave amplitude
-  size: number;          // Particle radius
-  baseSize: number;      // Base radius
+  isOrbit: boolean;       // true: orbits around the dessert, false: ambient atmospheric drift
+  angle: number;          // Orbital angle or phase (0 to 2*PI)
+  speed: number;          // Orbital or drift velocity
+  radiusOffsetX: number;  // Radial variation X
+  radiusOffsetY: number;  // Radial variation Y
+  verticalOffset: number; // Wave amplitude
+  x: number;              // Current X position (for ambient)
+  y: number;              // Current Y position (for ambient)
+  vx: number;             // X drift velocity
+  vy: number;             // Y drift velocity
+  size: number;           // Current size
+  baseSize: number;       // Base size
   type: 'bokeh' | 'ember' | 'spark';
-  color: string;         // Core color
-  glowColor: string;     // Halo color
-  alpha: number;         // Current opacity
-  maxAlpha: number;      // Peak opacity (toned down for subtle elegance)
-  twinkleSpeed: number;  // Subtle breathing twinkle
-  phase: number;         // Phase offset for breathing
+  color: string;          // Core color
+  glowColor: string;      // Glow color
+  alpha: number;          // Current opacity
+  maxAlpha: number;       // Peak opacity
+  twinkleSpeed: number;   // Twinkle rate
+  phase: number;          // Phase offset
 }
 
 export default function HeroParticles() {
@@ -51,7 +56,12 @@ export default function HeroParticles() {
     }
     resizeCanvas();
 
-    // Muted, Luxury Warm Amber Palette (Subtle & Elegant, not harsh or blinding)
+    const resizeObserver = new ResizeObserver(() => {
+      resizeCanvas();
+    });
+    resizeObserver.observe(container);
+
+    // Muted, Luxury Warm Amber Palette
     const PALETTE = [
       { core: '#FFF6E0', glow: 'rgba(255, 235, 175, 0.45)' }, // Warm Champagne
       { core: '#F7D58B', glow: 'rgba(247, 213, 139, 0.35)' }, // Soft Gold
@@ -60,72 +70,84 @@ export default function HeroParticles() {
       { core: '#B86E2A', glow: 'rgba(184, 110, 42, 0.2)' },   // Deep Bronze
     ];
 
-    // Helper: Dynamic brownie / video canvas position tracking
-    function getBrownieAnchor() {
-      const brownieWrapper =
-        document.querySelector('.hero-transparent-canvas') ||
+    // Helper: Dynamic brownie / dessert anchor tracking
+    function getDessertAnchor() {
+      const isMobile = width <= 960;
+      const visualEl =
+        document.querySelector('.hero-transparent-video-container') ||
         document.querySelector('.hero-transparent-video-wrapper') ||
-        document.querySelector('.hero-brownie-wrapper') ||
         document.querySelector('.hero-visual');
-      if (brownieWrapper && container) {
-        const rect = brownieWrapper.getBoundingClientRect();
+
+      if (visualEl && container) {
+        const rect = visualEl.getBoundingClientRect();
         const heroRect = container.getBoundingClientRect();
+
+        // Exact center coordinates inside the hero container
+        const cx = isMobile
+          ? width * 0.5
+          : rect.left - heroRect.left + rect.width * 0.5;
+        const cy = rect.top - heroRect.top + rect.height * 0.48;
+
         return {
-          cx: rect.left - heroRect.left + rect.width * 0.5,
-          cy: rect.top - heroRect.top + rect.height * 0.52,
-          w: Math.max(rect.width * 0.85, 300),
-          h: Math.max(rect.height * 0.85, 280),
+          cx: Math.max(0, Math.min(width, cx)),
+          cy: Math.max(100, Math.min(height, cy)),
+          w: Math.max(rect.width, 260),
+          h: Math.max(rect.height, 220),
+          isMobile,
         };
       }
+
+      // Proportional fallback based on mobile vs desktop layout
       return {
-        cx: width * 0.68,
-        cy: height * 0.52,
-        w: width * 0.35,
-        h: height * 0.52,
+        cx: isMobile ? width * 0.5 : width * 0.72,
+        cy: isMobile ? height * 0.76 : height * 0.50,
+        w: isMobile ? width * 0.82 : width * 0.42,
+        h: isMobile ? 300 : 440,
+        isMobile,
       };
     }
 
-    // ─── Orbital Ring Parameters ───
-    const PARTICLE_COUNT = 90; // Balanced count for clean, high-end minimalism
-    const RING_TILT = -0.22;   // ~ -12.5 deg 3D perspective tilt
-    const cosTilt = Math.cos(RING_TILT);
-    const sinTilt = Math.sin(RING_TILT);
+    const ORBIT_COUNT = 55;   // Halo ring particles orbiting the dessert
+    const AMBIENT_COUNT = 35; // Atmospheric drifting sparkles across the hero
+    const TOTAL_PARTICLES = ORBIT_COUNT + AMBIENT_COUNT;
 
     const particles: Particle[] = [];
 
-    function initParticle(initialAngle?: number): Particle {
+    function initParticle(isOrbit: boolean, initialAngle?: number): Particle {
       const angle = initialAngle !== undefined ? initialAngle : Math.random() * Math.PI * 2;
       const r = Math.random();
 
       let type: 'bokeh' | 'ember' | 'spark' = 'ember';
-      let baseSize = 4;
+      let baseSize = 3.5;
       let maxAlpha = 0.35;
 
-      if (r < 0.2) {
-        // Soft background bokeh circle (subdued, out-of-focus)
+      if (r < 0.22) {
         type = 'bokeh';
-        baseSize = 10 + Math.random() * 14;
+        baseSize = 8 + Math.random() * 12;
         maxAlpha = 0.12 + Math.random() * 0.12;
-      } else if (r < 0.75) {
-        // Glowing Amber Ring Embers
+      } else if (r < 0.72) {
         type = 'ember';
-        baseSize = 3.5 + Math.random() * 3.5;
+        baseSize = 3.0 + Math.random() * 3.0;
         maxAlpha = 0.35 + Math.random() * 0.25;
       } else {
-        // Delicate Diamond Sparkles
         type = 'spark';
-        baseSize = 1.8 + Math.random() * 1.6;
-        maxAlpha = 0.45 + Math.random() * 0.25;
+        baseSize = 1.6 + Math.random() * 1.6;
+        maxAlpha = 0.45 + Math.random() * 0.3;
       }
 
       const pal = PALETTE[Math.floor(Math.random() * PALETTE.length)];
 
       return {
+        isOrbit,
         angle,
-        speed: (0.15 + Math.random() * 0.2) * (Math.random() > 0.1 ? 1 : -0.8), // Smooth orbital drift (18-30s per loop)
-        radiusOffsetX: (Math.random() - 0.5) * 45,
-        radiusOffsetY: (Math.random() - 0.5) * 35,
-        verticalOffset: (Math.random() - 0.5) * 24,
+        speed: (0.16 + Math.random() * 0.22) * (Math.random() > 0.1 ? 1 : -0.8),
+        radiusOffsetX: (Math.random() - 0.5) * 36,
+        radiusOffsetY: (Math.random() - 0.5) * 28,
+        verticalOffset: (Math.random() - 0.5) * 20,
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 12,
+        vy: -8 - Math.random() * 16, // Gentle upward atmospheric drift
         size: baseSize,
         baseSize,
         type,
@@ -133,18 +155,23 @@ export default function HeroParticles() {
         glowColor: pal.glow,
         alpha: maxAlpha * 0.5,
         maxAlpha,
-        twinkleSpeed: 1.2 + Math.random() * 2,
+        twinkleSpeed: 1.2 + Math.random() * 2.2,
         phase: Math.random() * Math.PI * 2,
       };
     }
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      // Distribute evenly around the ring on initial load
-      const initialAngle = (i / PARTICLE_COUNT) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
-      particles.push(initParticle(initialAngle));
+    // 1. Initialize Orbit Particles
+    for (let i = 0; i < ORBIT_COUNT; i++) {
+      const initialAngle = (i / ORBIT_COUNT) * Math.PI * 2 + (Math.random() - 0.5) * 0.15;
+      particles.push(initParticle(true, initialAngle));
     }
 
-    // ─── Mouse Interaction ───
+    // 2. Initialize Ambient Atmosphere Particles
+    for (let i = 0; i < AMBIENT_COUNT; i++) {
+      particles.push(initParticle(false));
+    }
+
+    // Mouse Interaction
     const mouse = { x: -1000, y: -1000, radius: 120 };
     const handleMouseMove = (e: MouseEvent) => {
       const heroRect = container.getBoundingClientRect();
@@ -153,7 +180,6 @@ export default function HeroParticles() {
     };
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // ─── Animation Loop ───
     let animId: number;
     let lastTime = performance.now();
     let isVisible = true;
@@ -162,7 +188,6 @@ export default function HeroParticles() {
       isVisible = !document.hidden;
     };
     document.addEventListener('visibilitychange', handleVisibility);
-    window.addEventListener('resize', resizeCanvas);
 
     function render(now: number) {
       animId = requestAnimationFrame(render);
@@ -170,88 +195,111 @@ export default function HeroParticles() {
 
       const dt = Math.min((now - lastTime) / 1000, 0.08);
       lastTime = now;
-      const time = now * 0.001;
-      const b = getBrownieAnchor();
+      const b = getDessertAnchor();
 
       // Clear Canvas
       ctx.clearRect(0, 0, width, height);
 
-      // Base Elliptical Ring Radii
-      const ringRadiusX = Math.max(160, b.w * 0.56);
-      const ringRadiusY = Math.max(90, b.h * 0.3);
-      const ringCenterX = b.cx;
-      const ringCenterY = b.cy - b.h * 0.04;
+      // Adaptive Ring Proportions
+      const ringTilt = b.isMobile ? -0.08 : -0.15;
+      const cosTilt = Math.cos(ringTilt);
+      const sinTilt = Math.sin(ringTilt);
 
-      // ─── 1. SUBTLE AMBIENT RING GLOW (Very soft, muted halo) ───
+      const ringRadiusX = b.isMobile
+        ? Math.min(width * 0.44, 185)
+        : Math.min(b.w * 0.46, 270);
+      const ringRadiusY = b.isMobile
+        ? ringRadiusX * 0.46
+        : ringRadiusX * 0.44;
+
+      const ringCenterX = b.cx;
+      const ringCenterY = b.cy;
+
+      // ─── 1. AMBIENT HALO GLOW (Centered directly on the dessert) ───
       ctx.save();
       ctx.globalCompositeOperation = 'screen';
 
-      // Soft subtle halo around brownie
       const haloGrad = ctx.createRadialGradient(
         ringCenterX,
         ringCenterY,
-        ringRadiusY * 0.4,
+        ringRadiusY * 0.3,
         ringCenterX,
         ringCenterY,
-        ringRadiusX * 1.3
+        ringRadiusX * 1.25
       );
       haloGrad.addColorStop(0, 'rgba(232, 182, 110, 0.06)');
-      haloGrad.addColorStop(0.5, 'rgba(201, 134, 60, 0.03)');
+      haloGrad.addColorStop(0.5, 'rgba(201, 134, 60, 0.025)');
       haloGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
       ctx.fillStyle = haloGrad;
       ctx.beginPath();
-      ctx.arc(ringCenterX, ringCenterY, ringRadiusX * 1.3, 0, Math.PI * 2);
+      ctx.arc(ringCenterX, ringCenterY, ringRadiusX * 1.25, 0, Math.PI * 2);
       ctx.fill();
 
-      // Delicate translucent orbital ring track
-      ctx.strokeStyle = 'rgba(247, 213, 139, 0.04)';
-      ctx.lineWidth = 1.5;
+      // Subtle translucent orbital guide track
+      ctx.strokeStyle = 'rgba(247, 213, 139, 0.035)';
+      ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.ellipse(ringCenterX, ringCenterY, ringRadiusX, ringRadiusY, RING_TILT, 0, Math.PI * 2);
+      ctx.ellipse(ringCenterX, ringCenterY, ringRadiusX, ringRadiusY, ringTilt, 0, Math.PI * 2);
       ctx.stroke();
 
       ctx.restore();
 
-      // ─── 2. PARTICLES FORMING THE RING ───
+      // ─── 2. PARTICLE SIMULATION ───
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
 
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
+      for (let i = 0; i < TOTAL_PARTICLES; i++) {
         const p = particles[i];
-
-        // Orbit around the ring
-        p.angle += p.speed * dt;
-        if (p.angle > Math.PI * 2) p.angle -= Math.PI * 2;
-        if (p.angle < 0) p.angle += Math.PI * 2;
-
         p.phase += p.twinkleSpeed * dt;
 
-        // Un-tilted orbital point
-        const rx = ringRadiusX + p.radiusOffsetX + Math.sin(p.phase * 0.6) * 8;
-        const ry = ringRadiusY + p.radiusOffsetY + Math.cos(p.phase * 0.6) * 6;
-        const rawX = Math.cos(p.angle) * rx;
-        const rawY = Math.sin(p.angle) * ry;
+        let px = 0;
+        let py = 0;
+        let depthFactor = 1.0;
 
-        // Apply 3D tilt rotation: [x', y'] = [x*cos - y*sin, x*sin + y*cos]
-        let px = ringCenterX + (rawX * cosTilt - rawY * sinTilt);
-        let py = ringCenterY + (rawX * sinTilt + rawY * cosTilt) + Math.sin(p.phase) * p.verticalOffset;
+        if (p.isOrbit) {
+          // --- ORBITAL PARTICLES ---
+          p.angle += p.speed * dt;
+          if (p.angle > Math.PI * 2) p.angle -= Math.PI * 2;
+          if (p.angle < 0) p.angle += Math.PI * 2;
 
-        // Mouse interaction (gentle displacement)
+          const rx = ringRadiusX + p.radiusOffsetX + Math.sin(p.phase * 0.6) * 6;
+          const ry = ringRadiusY + p.radiusOffsetY + Math.cos(p.phase * 0.6) * 5;
+          const rawX = Math.cos(p.angle) * rx;
+          const rawY = Math.sin(p.angle) * ry;
+
+          px = ringCenterX + (rawX * cosTilt - rawY * sinTilt);
+          py = ringCenterY + (rawX * sinTilt + rawY * cosTilt) + Math.sin(p.phase) * p.verticalOffset;
+
+          // Depth: particles in front (sin(p.angle) > 0) are brighter and larger
+          depthFactor = 0.72 + Math.sin(p.angle) * 0.28;
+        } else {
+          // --- AMBIENT ATMOSPHERIC DRIFT PARTICLES ---
+          p.x += p.vx * dt + Math.sin(p.phase * 0.5) * 0.4;
+          p.y += p.vy * dt;
+
+          if (p.y < -20) {
+            p.y = height + 20;
+            p.x = Math.random() * width;
+          }
+          if (p.x < -20) p.x = width + 20;
+          if (p.x > width + 20) p.x = -20;
+
+          px = p.x;
+          py = p.y;
+          depthFactor = 0.75 + Math.sin(p.phase * 0.8) * 0.25;
+        }
+
+        // Mouse displacement
         const dx = px - mouse.x;
         const dy = py - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < mouse.radius && dist > 1) {
-          const force = (1 - dist / mouse.radius) * 16;
+          const force = (1 - dist / mouse.radius) * 14;
           px += (dx / dist) * force;
           py += (dy / dist) * force;
         }
 
-        // Depth perception: particles in front (lower half of ring) are slightly brighter & larger
-        // sin(p.angle) > 0 is front, sin(p.angle) < 0 is behind
-        const depthFactor = 0.75 + Math.sin(p.angle) * 0.25; // 0.5 (back) to 1.0 (front)
-
-        // Subtle breathing twinkle
         const twinkle = 0.8 + Math.sin(p.phase * 1.8) * 0.2;
         const currentAlpha = p.maxAlpha * depthFactor * twinkle;
         const currentSize = p.baseSize * depthFactor;
@@ -259,7 +307,6 @@ export default function HeroParticles() {
         if (currentAlpha <= 0.01) continue;
 
         if (p.type === 'bokeh') {
-          // Soft Out-of-Focus Bokeh Disc
           const grad = ctx.createRadialGradient(px, py, 0, px, py, currentSize);
           grad.addColorStop(0, p.glowColor.replace(/[\d\.]+\)$/, `${currentAlpha * 0.8})`));
           grad.addColorStop(0.6, p.glowColor.replace(/[\d\.]+\)$/, `${currentAlpha * 0.3})`));
@@ -270,7 +317,6 @@ export default function HeroParticles() {
           ctx.arc(px, py, currentSize, 0, Math.PI * 2);
           ctx.fill();
         } else if (p.type === 'ember') {
-          // Warm Glowing Amber Ring Ember
           const haloSize = currentSize * 2.2;
           const grad = ctx.createRadialGradient(px, py, 0, px, py, haloSize);
           grad.addColorStop(0, p.color);
@@ -282,7 +328,6 @@ export default function HeroParticles() {
           ctx.arc(px, py, haloSize, 0, Math.PI * 2);
           ctx.fill();
 
-          // Core Point
           ctx.fillStyle = p.color;
           ctx.globalAlpha = currentAlpha;
           ctx.beginPath();
@@ -290,7 +335,6 @@ export default function HeroParticles() {
           ctx.fill();
           ctx.globalAlpha = 1;
         } else {
-          // Delicate Diamond Spark
           ctx.fillStyle = p.color;
           ctx.globalAlpha = currentAlpha;
           ctx.beginPath();
@@ -307,7 +351,7 @@ export default function HeroParticles() {
 
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener('resize', resizeCanvas);
+      resizeObserver.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('visibilitychange', handleVisibility);
     };
