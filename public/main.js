@@ -82,7 +82,7 @@
   // --- 3. UTM ATTRIBUTION CAPTURE ---
   function initUtmCapture() {
     const urlParams = new URLSearchParams(window.location.search);
-    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', 'ref', 'referrer'];
     let found = false;
     const captured = {};
 
@@ -96,12 +96,17 @@
 
     if (found) {
       try {
-        localStorage.setItem('tbh_utm_params', JSON.stringify(captured));
+        const payload = JSON.stringify(captured);
+        sessionStorage.setItem('tbh_utm_session', payload);
+        localStorage.setItem('tbh_utm_params', payload);
+        document.cookie = `tbh_utm=${encodeURIComponent(payload)}; path=/; max-age=2592000; SameSite=Lax`;
         state.utm = captured;
       } catch (e) {}
     } else {
       try {
-        const stored = localStorage.getItem('tbh_utm_params');
+        const sessionStored = sessionStorage.getItem('tbh_utm_session');
+        const localStored = localStorage.getItem('tbh_utm_params');
+        const stored = sessionStored || localStored;
         if (stored) state.utm = JSON.parse(stored);
       } catch (e) {}
     }
@@ -795,7 +800,8 @@
           counts[label] = (counts[label] || 0) + 1;
         });
         const breakdownStr = Object.entries(counts).map(([f, c]) => `${c}x ${f}`).join(', ') || 'Custom Assorted';
-        const msg = `Hi The Brownie Hub! I would like to order a ${state.builder.name} (₹${computedPrice}) with: ${breakdownStr}. Please confirm delivery in Chennai!`;
+        const utmStr = state.utm.utm_source ? ` [Ref: ${state.utm.utm_source}]` : '';
+        const msg = `Hi The Brownie Hub! I would like to order a ${state.builder.name} (₹${computedPrice}) with: ${breakdownStr}.${utmStr} Please confirm delivery in Chennai!`;
         whatsappBtn.href = `https://wa.me/${BAKERY_PHONE}?text=${encodeURIComponent(msg)}`;
       }
 
@@ -839,7 +845,7 @@
         }
 
         const name = card.dataset.name;
-        const dietary = card.dataset.dietary;
+        const dietary = card.dataset.dietary || 'nonveg';
         const image = card.dataset.image || '/images/brownies/classic-fudge.jpg';
 
         state.builder.slots.push({
@@ -883,24 +889,24 @@
         let flavorList = [];
         if (preset === 'classic') {
           flavorList = [
-            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
-            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
-            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
-            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'nonveg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'nonveg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'nonveg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'nonveg', image: '/images/brownies/classic-fudge.jpg' },
           ];
         } else if (preset === 'double') {
           flavorList = [
-            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
-            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
-            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
-            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'nonveg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'nonveg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'nonveg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'nonveg', image: '/images/brownies/double-chocolate.jpg' },
           ];
         } else if (preset === 'combo') {
           flavorList = [
-            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
-            { name: 'Signature Classic Brownie', dietary: 'veg', image: '/images/brownies/classic-fudge.jpg' },
-            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
-            { name: 'Double Chocolate Brownie', dietary: 'veg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'nonveg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Signature Classic Brownie', dietary: 'nonveg', image: '/images/brownies/classic-fudge.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'nonveg', image: '/images/brownies/double-chocolate.jpg' },
+            { name: 'Double Chocolate Brownie', dietary: 'nonveg', image: '/images/brownies/double-chocolate.jpg' },
           ];
         }
 
@@ -1426,10 +1432,11 @@
       });
     }
 
-    // --- 16b. JANK-FREE SCROLL SPY WITH REQUESTANIMATIONFRAME THROTTLING ---
+    // --- 16b. JANK-FREE SCROLL SPY WITH REQUESTANIMATIONFRAME THROTTLING & URL SYNC ---
     const trackedSections = ['hero', 'bestsellers', 'builder', 'menu', 'about', 'faq', 'contact'];
     const navLinks = document.querySelectorAll('.nav-links .nav-link, .mobile-nav-links .mobile-nav-link');
     let isScrollTicking = false;
+    let lastActiveSection = '';
 
     function updateActiveNavOnScroll() {
       if (window.location.pathname !== '/' && window.location.pathname !== '') return;
@@ -1461,6 +1468,19 @@
           link.classList.remove('active');
         }
       });
+
+      // Synchronize URL hash while preserving all active UTM query parameters
+      if (lastActiveSection !== currentSectionId) {
+        lastActiveSection = currentSectionId;
+        const search = window.location.search || '';
+        const targetHash = currentSectionId === 'hero' ? '' : `#${currentSectionId}`;
+        const newUrl = `${window.location.pathname}${search}${targetHash}`;
+        if (window.location.hash !== targetHash && (window.location.hash !== '' || targetHash !== '')) {
+          try {
+            window.history.replaceState(null, '', newUrl);
+          } catch (e) {}
+        }
+      }
 
       isScrollTicking = false;
     }

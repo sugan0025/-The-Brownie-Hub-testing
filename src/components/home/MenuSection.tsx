@@ -5,12 +5,10 @@ import Link from 'next/link';
 import { INDIVIDUAL_BROWNIES, CURATED_BOXES } from '../../lib/products';
 
 export default function MenuSection() {
-  const [activeTab, setActiveTab] = useState<'all' | 'veg' | 'nonveg' | 'boxes'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'brownies' | 'boxes'>('all');
 
   const filteredBrownies = INDIVIDUAL_BROWNIES.filter((b) => {
-    if (activeTab === 'all') return true;
-    if (activeTab === 'veg') return b.dietary === 'veg';
-    if (activeTab === 'nonveg') return b.dietary === 'nonveg';
+    if (activeTab === 'all' || activeTab === 'brownies') return true;
     return false;
   });
 
@@ -24,7 +22,7 @@ export default function MenuSection() {
           </span>
           <h2 className="section-title">The Complete Brownie Catalog</h2>
           <p className="section-desc">
-            Engineered with single-origin Belgian couverture and churned butter. Strictly marked the way Indian food safety standards require &mdash; glowing green dot for 100% Eggless and copper dot for Farm Fresh Eggs.
+            Engineered with single-origin Belgian couverture and churned butter. Handcrafted using farm-fresh eggs for our signature rich, dense fudge and crackly paper-thin crinkle crust.
           </p>
 
           {/* Magic UI Dynamic Filter Tabs */}
@@ -36,10 +34,10 @@ export default function MenuSection() {
               ✨ All Items (4)
             </button>
             <button
-              className={`filter-pill-btn magnetic-btn ${activeTab === 'veg' ? 'active' : ''}`}
-              onClick={() => setActiveTab('veg')}
+              className={`filter-pill-btn magnetic-btn ${activeTab === 'brownies' ? 'active' : ''}`}
+              onClick={() => setActiveTab('brownies')}
             >
-              <span className="dietary-dot veg"></span> 100% Eggless Brownies (2)
+              <span className="dietary-dot nonveg"></span> Contains Farm Fresh Egg (2)
             </button>
             <button
               className={`filter-pill-btn magnetic-btn ${activeTab === 'boxes' ? 'active' : ''}`}
@@ -77,8 +75,8 @@ export default function MenuSection() {
                   {b.badge && <span className="menu-spotlight-badge">{b.badge}</span>}
 
                   <div className="menu-dietary-indicator-chip glass-card">
-                    <span className={`dietary-dot ${b.dietary}`}></span>
-                    <span>{b.dietary === 'veg' ? '100% Veg' : 'Farm Egg'}</span>
+                    <span className="dietary-dot nonveg"></span>
+                    <span>Contains Egg</span>
                   </div>
 
                   <button className="menu-card-heart-btn" aria-label={`Save ${b.name} to favorites`} onClick={(e) => e.preventDefault()}>

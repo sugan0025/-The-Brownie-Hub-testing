@@ -8,8 +8,8 @@ export default function Footer() {
           <div className="footer-col">
             <div className="footer-brand-name">The Brownie Hub</div>
             <p className="footer-brand-desc">
-              Handcrafted small-batch veg and egg brownies baked daily in Chennai, Tamil Nadu.
-              Bespoke assorted gift boxes, corporate catering, and weekend offline baking masterclasses.
+              Handcrafted small-batch artisanal brownies baked daily with farm-fresh eggs &amp; Belgian couverture in Chennai, Tamil Nadu.
+              Bespoke assorted gift boxes, corporate catering, and bulk celebratory orders.
             </p>
             <div style={{ marginTop: '20px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <a
@@ -85,7 +85,7 @@ export default function Footer() {
           <div>&copy; 2026 The Brownie Hub (Chennai). All rights reserved.</div>
           <div style={{ display: 'flex', gap: '20px', fontSize: '0.82rem', flexWrap: 'wrap' }}>
             <span>100% Pure Butter &amp; Couverture</span>
-            <span>Veg &amp; Eggless Separate Lines</span>
+            <span>Farm Fresh Eggs &amp; Pure Couverture</span>
             <span>Pan-Chennai Delivery</span>
           </div>
         </div>

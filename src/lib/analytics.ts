@@ -86,7 +86,7 @@ export const Analytics = {
         item_id: item.id || `item_${idx}`,
         item_name: item.name,
         price: item.price,
-        item_category: item.dietary === 'veg' ? 'Eggless Brownie' : 'Contains Egg Brownie',
+        item_category: 'Brownie (Contains Farm Egg)',
         index: idx + 1,
       })),
     });

@@ -4209,8 +4209,8 @@ select.form-input option:checked,
 }
 
 .dietary-dot.nonveg {
-  background: var(--nonveg);
-  box-shadow: 0 0 6px rgba(160, 82, 45, 0.45);
+  background: #e8590c;
+  box-shadow: 0 0 6px rgba(232, 89, 12, 0.6);
 }
 
 /* === REDUCED MOTION === */

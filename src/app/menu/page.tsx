@@ -5,11 +5,11 @@ import MenuSection from '../../components/home/MenuSection';
 import TrustBarSection from '../../components/home/TrustBarSection';
 
 export const metadata: Metadata = {
-  title: 'Artisanal Brownie Menu | 100% Eggless & Fresh Couverture',
+  title: 'Artisanal Brownie Menu | Handcrafted with Farm-Fresh Eggs & Pure Couverture',
   description: 'Explore our handcrafted brownie menu in Chennai. Single-origin Belgian dark chocolate, double chocolate fudge, and curated keepsake boxes.',
   openGraph: {
     title: 'The Brownie Hub — Complete Artisanal Menu',
-    description: 'Freshly baked handcrafted brownies in Chennai.',
+    description: 'Freshly baked handcrafted brownies with farm-fresh eggs in Chennai.',
     images: ['/images/brownies/pack-4-classic.jpg'],
   },
 };

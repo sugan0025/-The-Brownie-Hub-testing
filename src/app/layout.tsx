@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Work_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Suspense } from "react";
 import Script from "next/script";
 import Navbar from "../components/Navbar";
 import CartDrawer from "../components/CartDrawer";
@@ -7,6 +8,7 @@ import OrderModal from "../components/OrderModal";
 import ToastContainer from "../components/ToastContainer";
 import Footer from "../components/Footer";
 import FloatingWhatsApp from "../components/FloatingWhatsApp";
+import UtmTracker from "../components/UtmTracker";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -34,12 +36,12 @@ export const metadata: Metadata = {
     template: "%s | The Brownie Hub Chennai",
   },
   description:
-    "Handcrafted small-batch veg and egg brownies baked fresh daily in Chennai. Build your custom assorted gift box (4/6/12) with fast 60–90 min hyper-fresh delivery across Chennai.",
+    "Handcrafted small-batch artisanal brownies baked fresh daily with farm-fresh eggs and Belgian chocolate in Chennai. Build your custom assorted gift box with fast 60–90 min delivery across Chennai.",
   keywords: [
     "The Brownie Hub",
     "The Brownie Hub Chennai",
     "Best brownies in Chennai",
-    "Eggless brownies Chennai",
+    "Artisanal brownies Chennai",
     "Custom brownie box Chennai",
     "Fudge brownies online order Chennai",
     "Couverture chocolate brownies Chennai",
@@ -164,6 +166,11 @@ export default function RootLayout({
         <Script src="https://unpkg.com/three@0.168.0/build/three.min.js" strategy="afterInteractive" />
       </head>
       <body className={`${fraunces.variable} ${workSans.variable} ${ibmPlexMono.variable}`}>
+        {/* ===== UTM ATTRIBUTION TRACKER ===== */}
+        <Suspense fallback={null}>
+          <UtmTracker />
+        </Suspense>
+
         {/* ===== PARTICLES CANVAS ===== */}
         <canvas id="particles-canvas"></canvas>
 

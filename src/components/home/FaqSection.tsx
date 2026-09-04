@@ -9,8 +9,8 @@ export default function FaqSection() {
       a: 'Our brownies stay moist and fresh for up to 7 days at cool room temperature in an airtight box, or up to 14 days refrigerated. Pro tip: Microwave any brownie for 10–15 seconds before eating for molten, oven-fresh gooeyness!',
     },
     {
-      q: 'Are the veg (eggless) brownies prepared separately?',
-      a: 'Yes, 100%! We maintain dedicated bowls, whisks, and baking trays for our 100% Eggless line. Every box is sealed with official green/brown dietary security labels.',
+      q: 'Do your brownies contain egg?',
+      a: 'Yes! All our brownies are crafted using farm-fresh eggs, pure creamery butter, and genuine Belgian couverture chocolate for that signature rich crinkle top and dense, fudgy core. We bake daily without artificial preservatives or premixes.',
     },
     {
       q: 'Where do you deliver in Chennai & what are the delivery times?',

@@ -58,7 +58,7 @@ export default function BoxBuilderSection() {
                   >
                     <div className="flavor-pick-thumb">
                       <img src={b.image} alt={b.name} loading="lazy" />
-                      <span className="flavor-thumb-tag">100% Eggless</span>
+                      <span className="flavor-thumb-tag">Contains Egg</span>
                     </div>
                     <div className="flavor-pick-info">
                       <div className="flavor-title-row">

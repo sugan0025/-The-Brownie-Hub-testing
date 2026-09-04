@@ -12,7 +12,7 @@ export default function BentoShowcaseSection() {
       price: 69,
       badge: 'Bestseller',
       image: '/images/brownies/classic-fudge.jpg',
-      dietary: 'veg',
+      dietary: 'nonveg',
     },
     {
       id: 'double-chocolate-brownie',
@@ -21,7 +21,7 @@ export default function BentoShowcaseSection() {
       price: 99,
       badge: 'Chocoholic Favorite',
       image: '/images/brownies/double-chocolate.jpg',
-      dietary: 'veg',
+      dietary: 'nonveg',
     },
     {
       id: 'pack-4-classic-brownies',
@@ -30,7 +30,7 @@ export default function BentoShowcaseSection() {
       price: 256,
       badge: 'Value Pack',
       image: '/images/brownies/pack-4-classic.jpg',
-      dietary: 'veg',
+      dietary: 'nonveg',
     },
     {
       id: 'pack-4-double-chocolate-brownies',
@@ -39,7 +39,7 @@ export default function BentoShowcaseSection() {
       price: 376,
       badge: 'Chocoholic Box',
       image: '/images/brownies/pack-4-double-chocolate.jpg',
-      dietary: 'veg',
+      dietary: 'nonveg',
     },
     /* [UPCOMING / ARCHIVED ITEMS KEPT SAFE IN CODE]
     {
