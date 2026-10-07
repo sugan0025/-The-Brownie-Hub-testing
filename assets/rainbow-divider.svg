@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="4" viewBox="0 0 1200 4" fill="none">
+  <defs>
+    <linearGradient id="rainbowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E28743">
+        <animate attributeName="stop-color" values="#E28743;#f97583;#8957e5;#388bfd;#3ecf8e;#E28743" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="25%" stop-color="#f97583">
+        <animate attributeName="stop-color" values="#f97583;#8957e5;#388bfd;#3ecf8e;#E28743;#f97583" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#8957e5">
+        <animate attributeName="stop-color" values="#8957e5;#388bfd;#3ecf8e;#E28743;#f97583;#8957e5" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="75%" stop-color="#388bfd">
+        <animate attributeName="stop-color" values="#388bfd;#3ecf8e;#E28743;#f97583;#8957e5;#388bfd" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#3ecf8e">
+        <animate attributeName="stop-color" values="#3ecf8e;#E28743;#f97583;#8957e5;#388bfd;#3ecf8e" dur="8s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="4" rx="2" fill="url(#rainbowGrad)" filter="url(#glow)"/>
+</svg>

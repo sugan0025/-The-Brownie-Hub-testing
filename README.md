@@ -7,7 +7,7 @@
 <!-- ╚═══════════════════════════════╝ -->
 <div align="center">
 
-<img src="./assets/header-banner.svg" width="100%" alt="The Brownie Hub Animated Header" />
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/header-banner.svg" width="100%" alt="The Brownie Hub Animated Header" />
 
 <br><br>
 
@@ -20,7 +20,7 @@
 
 <!-- Badges Row 1: Deployment & Stack -->
 <a href="https://the-brownie-hub.vercel.app">
-  <img src="https://img.shields.io/badge/▶_LIVE_STOREFRONT-the--brownie--hub.vercel.app-E28743?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  <img src="https://img.shields.io/badge/%E2%96%B6_LIVE_STOREFRONT-the--brownie--hub.vercel.app-E28743?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
 </a>
 &nbsp;
 <a href="https://nextjs.org/">
@@ -57,7 +57,7 @@
 </div>
 
 <!-- Animated Glowing Divider -->
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4300-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║       EXECUTIVE SUMMARY       ║ -->
@@ -77,7 +77,7 @@ Engineering Stack   : Next.js 16 (Turbopack) • TypeScript • Three.js • GSA
 ```
 
 <!-- Animated Glowing Divider -->
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4300-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║      FROSTED GLASS CARDS      ║ -->
@@ -89,28 +89,28 @@ Engineering Stack   : Next.js 16 (Turbopack) • TypeScript • Three.js • GSA
 
 <!-- Row 1: High-Speed SSG + GA4 Telemetry -->
 <a href="https://the-brownie-hub.vercel.app">
-  <img src="./assets/card-engine.svg" width="48%" alt="High-Speed SSG Storefront" />
+  <img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/card-engine.svg" width="48%" alt="High-Speed SSG Storefront" />
 </a>
 &nbsp;&nbsp;
 <a href="#-analytics--growth-intelligence-ga4">
-  <img src="./assets/card-telemetry.svg" width="48%" alt="E-Commerce Telemetry &amp; CRO" />
+  <img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/card-telemetry.svg" width="48%" alt="E-Commerce Telemetry &amp; CRO" />
 </a>
 
 <br><br>
 
 <!-- Row 2: Zero-Trust Security + Multi-Channel Dispatch -->
 <a href="#️-zero-trust-price-engine--security">
-  <img src="./assets/card-security.svg" width="48%" alt="Zero-Trust Edge Security" />
+  <img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/card-security.svg" width="48%" alt="Zero-Trust Edge Security" />
 </a>
 &nbsp;&nbsp;
 <a href="#-real-time-d2c-order-pipeline">
-  <img src="./assets/card-dispatch.svg" width="48%" alt="Dual Proxy Dispatch Pipeline" />
+  <img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/card-dispatch.svg" width="48%" alt="Dual Proxy Dispatch Pipeline" />
 </a>
 
 </div>
 
 <!-- Animated Glowing Divider -->
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4300-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║    FEATURE ARCHITECTURE       ║ -->
@@ -145,7 +145,7 @@ Engineering Stack   : Next.js 16 (Turbopack) • TypeScript • Three.js • GSA
 * **Rich Microdata**: Schema.org `Product` JSON-LD markup with pricing, availability, and allergen disclosures.
 
 <!-- Animated Glowing Divider -->
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4300-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║    PROJECT ARCHITECTURE MAP   ║ -->
@@ -225,7 +225,7 @@ the-brownie-hub-testing/
 ```
 
 <!-- Animated Glowing Divider -->
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4300-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║        GETTING STARTED        ║ -->
@@ -256,7 +256,7 @@ npm run build
 
 <div align="center">
 
-<img src="./assets/footer-banner.svg" width="100%" alt="The Brownie Hub Footer Banner" />
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/footer-banner.svg" width="100%" alt="The Brownie Hub Footer Banner" />
 
 <br>
 
