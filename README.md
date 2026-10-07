@@ -7,12 +7,12 @@
 <!-- ╚═══════════════════════════════╝ -->
 <div align="center">
 
-<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/header-banner.svg" width="100%" alt="The Brownie Hub Animated Header" />
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/header-banner.svg" width="100%" alt="The Brownie Hub Animated Header" />
 
 <br><br>
 
 <!-- Animated Typing SVG -->
-<a href="https://git.io/typing-svg">
+<a href="https://readme-typing-svg.demolab.com">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=19&duration=3000&pause=1000&color=E28743&center=true&vCenter=true&repeat=true&width=750&height=45&lines=Artisanal+Belgian+Brownies+%E2%80%A2+Next.js+16+SSG+%E2%80%A2+Three.js;Interactive+Keepsake+Box+Builder+%284%2C+6%2C+12+Packs%29;Offline+Baking+Masterclasses+%26+Workshop+Engine+Chennai;Live+on+Vercel+Edge+%E2%80%A2+GA4+E-Commerce+Telemetry" alt="Typing SVG" />
 </a>
 
@@ -57,7 +57,7 @@
 </div>
 
 <!-- Animated Glowing Divider -->
-<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║       EXECUTIVE SUMMARY       ║ -->
@@ -77,7 +77,7 @@ Engineering Stack   : Next.js 16 (Turbopack) • TypeScript • Three.js • GSA
 ```
 
 <!-- Animated Glowing Divider -->
-<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║      FROSTED GLASS CARDS      ║ -->
@@ -89,28 +89,28 @@ Engineering Stack   : Next.js 16 (Turbopack) • TypeScript • Three.js • GSA
 
 <!-- Row 1: High-Speed SSG + GA4 Telemetry -->
 <a href="https://the-brownie-hub.vercel.app">
-  <img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/card-engine.svg" width="48%" alt="High-Speed SSG Storefront" />
+  <img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/card-engine.svg" width="48%" alt="High-Speed SSG Storefront" />
 </a>
 &nbsp;&nbsp;
 <a href="#-analytics--growth-intelligence-ga4">
-  <img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/card-telemetry.svg" width="48%" alt="E-Commerce Telemetry &amp; CRO" />
+  <img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/card-telemetry.svg" width="48%" alt="E-Commerce Telemetry &amp; CRO" />
 </a>
 
 <br><br>
 
 <!-- Row 2: Zero-Trust Security + Multi-Channel Dispatch -->
 <a href="#️-zero-trust-price-engine--security">
-  <img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/card-security.svg" width="48%" alt="Zero-Trust Edge Security" />
+  <img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/card-security.svg" width="48%" alt="Zero-Trust Edge Security" />
 </a>
 &nbsp;&nbsp;
 <a href="#-real-time-d2c-order-pipeline">
-  <img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/card-dispatch.svg" width="48%" alt="Dual Proxy Dispatch Pipeline" />
+  <img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/card-dispatch.svg" width="48%" alt="Dual Proxy Dispatch Pipeline" />
 </a>
 
 </div>
 
 <!-- Animated Glowing Divider -->
-<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║    FEATURE ARCHITECTURE       ║ -->
@@ -145,7 +145,7 @@ Engineering Stack   : Next.js 16 (Turbopack) • TypeScript • Three.js • GSA
 * **Rich Microdata**: Schema.org `Product` JSON-LD markup with pricing, availability, and allergen disclosures.
 
 <!-- Animated Glowing Divider -->
-<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║    PROJECT ARCHITECTURE MAP   ║ -->
@@ -154,7 +154,7 @@ Engineering Stack   : Next.js 16 (Turbopack) • TypeScript • Three.js • GSA
 <h2>🗂️ Real-World Project Tree Structure</h2>
 
 ```
-the-brownie-hub-testing/
+The-Brownie-Hub/
 ├── 📂 assets/                              # Vector SVGs, SMIL animations & live architecture flows
 │   ├── 🎨 architecture-diagram.svg         # Real-time SMIL animated system architecture
 │   ├── 🛒 cart-flow-banner.svg             # 5-stage D2C commerce pipeline visual
@@ -213,19 +213,19 @@ the-brownie-hub-testing/
 │   │   └── WorkshopModal.tsx               # Masterclass seat reservation modal dialog
 │   │
 │   └── 📂 lib/                             # Core Data Models, Analytics & Validations
-│       ├── analytics.ts                    # GA4 e-commerce helper utilities
-│       ├── products.ts                     # Single Source of Truth brownie catalog (13 items)
-│       ├── validations.ts                  # Zod schemas (order, contact, workshop, feedback)
-│       └── workshops.ts                    # Masterclass curriculum, pricing & schedule data
-│
-├── ⚙️ next.config.ts                       # Next.js compiler optimizations
-├── 📦 package.json                         # Dependencies & npm scripts
-├── 📘 PROJECT_MEMORY_DOSSIER.md            # Executive MBA analytics memory archive
-└── 📖 README.md                            # Comprehensive project documentation
+│   │   ├── analytics.ts                    # GA4 e-commerce helper utilities
+│   │   ├── products.ts                     # Single Source of Truth brownie catalog (13 items)
+│   │   ├── validations.ts                  # Zod schemas (order, contact, workshop, feedback)
+│   │   └── workshops.ts                    # Masterclass curriculum, pricing & schedule data
+│   │
+│   └── ⚙️ next.config.ts                   # Next.js compiler optimizations
+│   └── 📦 package.json                     # Dependencies & npm scripts
+│   └── 📘 PROJECT_MEMORY_DOSSIER.md        # Executive MBA analytics memory archive
+│   └── 📖 README.md                        # Comprehensive project documentation
 ```
 
 <!-- Animated Glowing Divider -->
-<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/rainbow-divider.svg" width="100%">
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/rainbow-divider.svg" width="100%">
 
 <!-- ╔═══════════════════════════════╗ -->
 <!-- ║        GETTING STARTED        ║ -->
@@ -235,8 +235,8 @@ the-brownie-hub-testing/
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/sugan0025/-The-Brownie-Hub-testing.git
-cd the-brownie-hub-testing
+git clone https://github.com/sugan0025/The-Brownie-Hub.git
+cd The-Brownie-Hub
 npm install
 ```
 
@@ -256,7 +256,7 @@ npm run build
 
 <div align="center">
 
-<img src="https://cdn.jsdelivr.net/gh/sugan0025/-The-Brownie-Hub-testing@main/assets/footer-banner.svg" width="100%" alt="The Brownie Hub Footer Banner" />
+<img src="https://cdn.jsdelivr.net/gh/sugan0025/The-Brownie-Hub@main/assets/footer-banner.svg" width="100%" alt="The Brownie Hub Footer Banner" />
 
 <br>
 
